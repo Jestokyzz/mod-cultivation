@@ -12,8 +12,8 @@
   "publish_policy": "candidate branch only until explicit user acceptance",
   "files": {
     ".gitignore": {
-      "sha256": "524f79df5a2d2ad170a7a296c379be995a5bb42a75b66945f9aa60cc298f0c5a",
-      "bytes": 380
+      "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
+      "bytes": 387
     },
     "CHANGELOG_RU.md": {
       "sha256": "3a5bb9f42a6a3116c9ad5ead7f6ebd7b7b57e7de19adaa940053977d4e37f820",
@@ -151,6 +151,14 @@
       "sha256": "250a8718e53f484e28a30a3fcd8a6b832db09afc5094e512b1a2532364d6acb6",
       "bytes": 5760
     },
+    "installer/Install-Cultivation.ps1": {
+      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
+      "bytes": 11367
+    },
+    "installer/README_RU.md": {
+      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
+      "bytes": 2173
+    },
     "LICENSE": {
       "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
       "bytes": 18091
@@ -160,8 +168,8 @@
       "bytes": 897
     },
     "README_RU.md": {
-      "sha256": "f6b2dda2007ab629726a9c5d23788c5fba4b2b0acd89db281761578541bfa2e9",
-      "bytes": 6566
+      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
+      "bytes": 7531
     },
     "src/Cultivation.h": {
       "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
@@ -314,6 +322,10 @@
     "tools/package_celestial_metadata.py": {
       "sha256": "f85b6d90860bbd35b850e75a040fac89755ad3740ed8b4e6ecb06047edf98529",
       "bytes": 3486
+    },
+    "tools/package_full_candidate.ps1": {
+      "sha256": "0b3e634f0233f16c144d383ca4b50a45782e2dbb4fa49275af457d10633286df",
+      "bytes": 7065
     },
     "tools/package_metadata.py": {
       "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",

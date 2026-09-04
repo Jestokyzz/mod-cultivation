@@ -3,6 +3,7 @@
 /client_patch/staging/
 /client_patch/addon/
 /generated/
+/dist/
 /data/sql/legacy/
 /tools/test_talent_ui.py
 
