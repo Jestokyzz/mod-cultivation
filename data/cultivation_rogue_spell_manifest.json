@@ -1,0 +1,4709 @@
+{
+  "schema_version": 6,
+  "sha_presentation_revision": {
+    "date": "2026-09-04",
+    "candidate": "v2.0.0-candidate1",
+    "status": "candidate-unaccepted",
+    "source": "Native Spell.Description is the single source for Sha talent previews and display-only spellbook records; display rows resolve audited constant stock references only.",
+    "format": "Russian stock base remains yellow; modified values replace the original inline in Sha purple. Only finisher additions start on a new line. AuraDescription is independent of cast Description in both locales.",
+    "gameplay": "Candidate48 preserves candidate47 gameplay and Fatal Concoction presentation. The Celestial Stealth Mastery technical aura now uses the same Celestial framed ability_rogue_surpriseattack2 icon 6192 as its display passive, per GUI correction. Live acceptance pending.",
+    "regression": "tools/test_sha_presentation.py plus the Sha static/runtime matrix; unchanged gameplay fields; exact Fatal Concoction icon binding; exact Celestial Stealth Mastery name and framed icon 6192, with unframed 6196 forbidden for that aura. GUI acceptance pending."
+  },
+  "tooltip_presentation_revision": {
+    "date": "2026-09-02",
+    "status": "candidate-unaccepted",
+    "header": "path name top-right in path color; TalentUI bodies are generated per locale/path/rank; each actual PlayerTalentFrame talent button runs a post-OnEnter presentation after Blizzard builds the native tooltip",
+    "path_detection_regression": "before first talent learn: IsSpellKnown=false and spell hyperlinks unavailable, but numeric Celestial/Sha spellbook or action-bar evidence must select the correct 0/1 tooltip, header and icon; late Blizzard_TalentUI load must hook every actual PlayerTalentFrameTalent button after its stock OnEnter, without requiring PLAYER_TALENT_UPDATE or a durable GameTooltip.SetTalent hook; the final native 0/N description line is replaced directly because its rendered text may differ from SetSpellByID(stockId); contradictory evidence is fail-closed",
+    "addition": "new values and mechanics only in path color; no lower path title or blank separator; ASCII minus and literal percent",
+    "standard": "exact pre-path stock wording stays Blizzard yellow; replaced values are path-colored in place",
+    "inline_audit": "57 path variants across 36 abilities use fail-closed stock-source replacement; changed periodic totals, control durations and native metadata are colored at their exact source positions",
+    "metadata": "changed native energy, range and cooldown numbers are path-colored without recoloring their labels",
+    "gameplay_changes": true,
+    "regression": "test_tooltip_presentation.py, test_talent_ui.py with bypassed/replaced GameTooltip.SetTalent, actual talent-button OnEnter, deliberately mismatched native 0/N wording and custom spell-cache misses at 0/1 -> 1/1 -> 0/1, plus repeated path/action-bar protocol cycle"
+  },
+  "tooltip_inline_edits": {
+    "evasion": {
+      "ruRU": {
+        "sha": {
+          "replace": [{"old": "$d", "new": "{path}8 сек.{/path}"}],
+          "addition": "Уклонение восстанавливает 5 ед. энергии."
+        }
+      },
+      "enUS": {
+        "sha": {
+          "replace": [{"old": "$d", "new": "{path}8 sec{/path}"}],
+          "addition": "Dodging restores 5 energy."
+        }
+      }
+    },
+    "hemorrhage": {
+      "ruRU": {
+        "sha": {
+          "native_only": true,
+          "replace": [
+            {"old": "$s2%", "new": "{path}${$m2*1.2}%{/path}"},
+            {"old": "${$m2*1.45}%", "new": "{path}${$m2*1.45*1.2}%{/path}"},
+            {"old": "усиливает физический урон, причиненный цели", "new": "усиливает физический урон, причиненный цели {path}только этим разбойником{/path}"},
+            {"old": "$<bonus>", "new": "{path}${$<bonus>*3}{/path}"},
+            {"old": "$n", "new": "{path}5{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "master_poisoner": {
+      "ruRU": {
+        "sha": {
+          "replace": [{"old": "(?s)^.+$", "regex": true, "new": "{path}Продолжительность ваших ядов уменьшается вдвое, вероятность наложения повышается на 20 процентных пунктов. Наложение первого Смертельного яда на 4 сек. усиливает наносящие урон яды на 20% и замедление калечащего яда до 70%.{/path}"}],
+          "addition": ""
+        }
+      },
+      "enUS": {
+        "sha": {
+          "replace": [{"old": "(?s)^.+$", "regex": true, "new": "{path}Your poisons last half as long and have a 20 percentage point higher application chance. The first application increases damaging poison damage by 20% and Crippling Poison's slow to 70% for 4 sec.{/path}"}],
+          "addition": ""
+        }
+      }
+    },
+    "sinister_strike": {
+      "ruRU": {
+        "sha": {
+          "replace": [{"old": "Длина серии приемов увеличивается на $s2.", "new": "{path}При успешном попадании с вероятностью 20% наносит дополнительный удар силой 60%, способный активировать яд.{/path} Длина серии приемов увеличивается на $s2."}],
+          "addition": ""
+        }
+      }
+    },
+    "kidney_shot": {
+      "ruRU": {
+        "sha": {
+          "replace": [],
+          "addition": "Во время оглушения цель получает на 15% больше урона из всех источников.",
+          "addition_separator": "\n"
+        }
+      }
+    },
+    "safe_fall": {
+      "ruRU": {
+        "sha": {
+          "replace": [{"old": "Снижает урон от падения.", "new": "Снижает урон от падения {path}на 70%{/path}."}],
+          "addition": "Если исходный урон составляет не менее 10% максимального здоровья и разбойник выжил, восстанавливает 30 ед. энергии. Следующая специальная атака в течение 5 сек. наносит на 20% больше урона и создаёт 1 приём серии. Восстановление: 20 сек."
+        }
+      }
+    },
+    "vanish": {
+      "ruRU": {
+        "sha": {
+          "replace": [],
+          "addition": "Восстанавливает 40 ед. энергии за 4 сек. Первый специальный удар из незаметности получает +30% итогового критического урона, после чего разбойник 6 сек. получает на 10% больше урона."
+        }
+      }
+    },
+    "sprint": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}100%{/path}"},
+            {"old": "$d", "new": "{path}8 сек.{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "cloak_of_shadows": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}100%{/path}"},
+            {"old": "$d", "new": "{path}4 сек.{/path}"}
+          ],
+          "addition": "После окончания действия получаемый магический урон уменьшается на 20% на 4 сек."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}3 сек.{/path}"}
+          ],
+          "addition": "Собственные яды наносят на 20% больше урона и не могут промахнуться или быть сопротивлены."
+        }
+      }
+    },
+    "feint": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$d", "new": "{path}8 сек.{/path}", "optional": true},
+            {"old": "$s2%", "new": "{path}70%{/path}", "optional": true}
+          ],
+          "addition": "",
+          "addition_when_unmatched": "Уменьшает получаемый урон от атак с действием по площади на 70% на 8 сек."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}3 сек.{/path}", "optional": true},
+            {"old": "$s2%", "new": "{path}30%{/path}", "optional": true}
+          ],
+          "addition": "Следующая специальная прямая атака стоит на 15 ед. энергии меньше.",
+          "addition_when_unmatched": "Уменьшает получаемый урон от атак с действием по площади на 30% на 3 сек. Следующая специальная прямая атака стоит на 15 ед. энергии меньше."
+        }
+      }
+    },
+    "gouge": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}2,5 сек.{/path}"},
+            {"old": "$s2", "new": "{path}2{/path}"},
+            {"old": "Любой урон, нанесенный противнику, выводит его из паралича.", "new": "Любой урон, нанесенный противнику, выводит его из паралича, {path}кроме собственных ядов и кровотечений{/path}."}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "rupture": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "${($m1+$b1*1+0.015*$AP)*4}", "new": "{path}$?s56801[${($m1+$b1*1+0.015*$AP)*10}][${($m1+$b1*1+0.015*$AP)*6}]{/path}"},
+            {"old": "${($m1+$b1*2+0.024*$AP)*5}", "new": "{path}$?s56801[${($m1+$b1*2+0.024*$AP)*12}][${($m1+$b1*2+0.024*$AP)*7}]{/path}"},
+            {"old": "${($m1+$b1*3+0.03*$AP)*6}", "new": "{path}$?s56801[${($m1+$b1*3+0.03*$AP)*13}][${($m1+$b1*3+0.03*$AP)*9}]{/path}"},
+            {"old": "${($m1+$b1*4+0.03428571*$AP)*7}", "new": "{path}$?s56801[${($m1+$b1*4+0.03428571*$AP)*14}][${($m1+$b1*4+0.03428571*$AP)*10}]{/path}"},
+            {"old": "${($m1+$b1*5+0.0375*$AP)*8}", "new": "{path}$?s56801[${($m1+$b1*5+0.0375*$AP)*16}][${($m1+$b1*5+0.0375*$AP)*12}]{/path}"},
+            {"old": "$<dur1>", "new": "{path}$?s56801[${20}][${12}]{/path}"},
+            {"old": "$<dur2>", "new": "{path}$?s56801[${24}][${14}]{/path}"},
+            {"old": "$<dur3>", "new": "{path}$?s56801[${26}][${18}]{/path}"},
+            {"old": "$<dur4>", "new": "{path}$?s56801[${28}][${20}]{/path}"},
+            {"old": "$<dur5>", "new": "{path}$?s56801[${32}][${24}]{/path}"}
+          ],
+          "addition": "Частота нанесения урона не меняется.",
+          "addition_separator": "\n"
+        },
+        "sha": {
+          "replace": [
+            {"old": "$<dur1>", "new": "{path}$?s56801[${13*3/5}][${8*3/5}]{/path}"},
+            {"old": "$<dur2>", "new": "{path}$?s56801[${15*3/5}][${10*3/5}]{/path}"},
+            {"old": "$<dur3>", "new": "{path}$?s56801[${17*3/5}][${12*3/5}]{/path}"},
+            {"old": "$<dur4>", "new": "{path}$?s56801[${19*3/5}][${14*3/5}]{/path}"},
+            {"old": "$<dur5>", "new": "{path}$?s56801[${21*3/5}][${16*3/5}]{/path}"}
+          ],
+          "addition": "Число тиков и полный стандартный урон сохраняются.",
+          "addition_separator": "\n"
+        }
+      }
+    },
+    "slice_and_dice": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "${(9+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((9+$<glyph>)*(100+$<mult>)/100)*3/2}{/path}"},
+            {"old": "${(12+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((12+$<glyph>)*(100+$<mult>)/100)*3/2}{/path}"},
+            {"old": "${(15+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((15+$<glyph>)*(100+$<mult>)/100)*3/2}{/path}"},
+            {"old": "${(18+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((18+$<glyph>)*(100+$<mult>)/100)*3/2}{/path}"},
+            {"old": "${(21+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((21+$<glyph>)*(100+$<mult>)/100)*3/2}{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "$s2%", "new": "{path}60%{/path}"},
+            {"old": "${(9+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((9+$<glyph>)*(100+$<mult>)/100)/2}{/path}"},
+            {"old": "${(12+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((12+$<glyph>)*(100+$<mult>)/100)/2}{/path}"},
+            {"old": "${(15+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((15+$<glyph>)*(100+$<mult>)/100)/2}{/path}"},
+            {"old": "${(18+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((18+$<glyph>)*(100+$<mult>)/100)/2}{/path}"},
+            {"old": "${(21+$<glyph>)*(100+$<mult>)/100}", "new": "{path}${((21+$<glyph>)*(100+$<mult>)/100)/2}{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "deadly_throw": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "Завершающий (удар|прием),", "regex": true, "new": "Завершающий \\1, {path}выпускающий 1 клинок раз в секунду в течение 3 сек.,{/path}"},
+            {"old": "(наносящий увеличенный урон от метательного оружия в зависимости от длины серии|увеличивающий урон, наносимый метательным оружием; величина наносимого урона зависит от количества очков серии):", "regex": true, "new": "наносящий урон от метательного оружия в зависимости от длины серии. {path}Урон каждого клинка:{/path}"},
+            {"old": "\\$\\{([^{}]+)\\}", "regex": true, "count": 10, "new": "{path}${(\\1)*0.5}{/path}"}
+          ],
+          "addition": "Ресурсы расходуются один раз. Не прерывает произнесение заклинаний.",
+          "addition_separator": "\n"
+        },
+        "celestial": {
+          "replace": [],
+          "addition": "При использовании с 5 приемами серии прерывает заклинание и препятствует произнесению заклинаний той же школы в течение 3 сек.",
+          "addition_separator": "\n"
+        }
+      }
+    },
+    "fan_of_knives": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$a1", "new": "{path}12{/path}"}
+          ],
+          "addition": "Каждая поражённая цель восстанавливает 4 ед. энергии."
+        },
+        "sha": {
+          "replace": [
+            {"old": "наносящий ${$m1*1.5}% от урона оружия при броске кинжалами, и $s1% при броске другим оружием", "new": "{path}при котором каждое оружие наносит два удара силой 65%. Каждый удар отдельно может активировать яд{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "dismantle": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}6 сек.{/path}"}
+          ],
+          "addition": "Во время действия эффекта разбойник наносит цели на 15% больше урона и получает 20% скорости атаки."
+        }
+      }
+    },
+    "tricks_of_the_trade": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "на $57933s1% на время действия эффекта", "new": "на {path}10%{/path} в течение {path}10 сек.{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "на $57933s1% на время действия эффекта", "new": "на {path}25%{/path} в течение {path}4 сек.{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "envenom": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "на 1 секунду и 1 секунду дополнительно за каждый прием серии", "new": "{path}на 2 секунды и 2 секунды дополнительно за каждый прием серии{/path}"}
+          ],
+          "addition": "Прямой урон уменьшается на 10%.",
+          "addition_separator": "\n"
+        },
+        "sha": {
+          "replace": [
+            {"old": "После удара вероятность отравить цель смертельным ядом повышается на $s3%, а частота наложения быстродействующего яда — на $s2% на 1 секунду и 1 секунду дополнительно за каждый прием серии.", "new": "{path}После удара стандартное повышение вероятности наложения ядов не возникает.{/path}"}
+          ],
+          "addition": "Мгновенно наносит 40% оставшегося урона собственного «Смертельного яда» и удаляет его дозы.",
+          "addition_separator": "\n"
+        }
+      }
+    },
+    "hunger_for_blood": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$63848d", "new": "{path}2 мин.{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "$63848s1%", "new": "{path}12%{/path}"},
+            {"old": "$63848d", "new": "{path}12 сек.{/path}"}
+          ],
+          "addition": "После окончания действия наносимый урон уменьшается на 5% на 6 сек."
+        }
+      }
+    },
+    "cold_blood": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "следующей атакующей способности", "new": "{path}следующих двух атакующих способностей{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "повышает вероятность критического удара следующей атакующей способности на $s1%", "new": "{path}следующая специальная прямая атакующая способность гарантированно наносит критический удар и получает +40% итогового критического урона{/path}"}
+          ],
+          "addition": "После этого разбойник в течение 6 сек. получает на 10% больше урона."
+        }
+      }
+    },
+    "blade_flurry": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}30%{/path}"},
+            {"old": "$d", "new": "{path}20 сек.{/path}"}
+          ],
+          "addition": "Способность поражает до 5 целей, включая основную; дополнительный урон равномерно распределяется между вторичными целями."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}50%{/path}"},
+            {"old": "$d", "new": "{path}8 сек.{/path}"},
+            {"old": "при этом также наносится удар ближайшему противнику", "new": "при этом также наносится удар ближайшему противнику {path}силой 100% нанесённого урона{/path}"}
+          ],
+          "addition": "Стоимость атакующих способностей увеличивается на 20%."
+        }
+      }
+    },
+    "adrenaline_rush": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$d", "new": "{path}20 сек.{/path}"}
+          ],
+          "addition": "Пока действует эффект, максимальный запас энергии увеличен на 50."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}200%{/path}"},
+            {"old": "$d", "new": "{path}10 сек.{/path}"}
+          ],
+          "addition": "После окончания действия скорость восполнения энергии уменьшается на 50% на 4 сек."
+        }
+      }
+    },
+    "killing_spree": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "пока не будет совершено 5 атак", "new": "пока не будет совершено {path}7 атак{/path}"},
+            {"old": "$61851s3%", "new": "{path}30%{/path}"}
+          ],
+          "addition": "Во время серии и в течение 4 сек. после неё получаемый урон увеличивается на 20%."
+        }
+      }
+    },
+    "riposte": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$s2%", "new": "{path}30%{/path}"}
+          ],
+          "addition": "Также разоружает цель на 3 сек."
+        },
+        "sha": {
+          "replace": [
+            {"old": " и замедляет скорость атаки ближнего боя противника на $s2% на $d", "new": ""}
+          ],
+          "addition": "Восстанавливает 20 ед. энергии и увеличивает скорость атаки на 25% на 6 сек."
+        }
+      }
+    },
+    "expose_armor": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$?s56803[18][6] сек.", "new": "{path}12 сек.{/path}"},
+            {"old": "$?s56803[24][12] сек.", "new": "{path}24 сек.{/path}"},
+            {"old": "$?s56803[30][18] сек.", "new": "{path}36 сек.{/path}"},
+            {"old": "$?s56803[36][24] сек.", "new": "{path}48 сек.{/path}"},
+            {"old": "$?s56803[42][30] сек.", "new": "{path}60 сек.{/path}"}
+          ],
+          "addition": "При использовании с 5 приемами серии успешное попадание восстанавливает 10 ед. энергии.",
+          "addition_separator": "\n"
+        },
+        "sha": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}35%{/path}"},
+            {"old": "$?s56803[18][6] сек.", "new": "{path}2 сек.{/path}"},
+            {"old": "$?s56803[24][12] сек.", "new": "{path}4 сек.{/path}"},
+            {"old": "$?s56803[30][18] сек.", "new": "{path}6 сек.{/path}"},
+            {"old": "$?s56803[36][24] сек.", "new": "{path}8 сек.{/path}"},
+            {"old": "$?s56803[42][30] сек.", "new": "{path}10 сек.{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "garrote": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$1330d", "new": "{path}4 сек.{/path}", "optional": true, "fallback_addition": "Противник немеет на 4 сек."},
+            {"old": "${($m1+$AP*0.07)*6}", "new": "{path}${($m1+$AP*0.07)*8}{/path}"},
+            {"old": "$d", "new": "{path}24 сек.{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "$1330d", "new": "{path}1 сек.{/path}", "optional": true, "fallback_addition": "Противник немеет на 1 сек."},
+            {"old": "$d", "new": "{path}9 сек.{/path}"}
+          ],
+          "addition": "Следующее «Потрошение», применённое в течение 6 сек., игнорирует 30% брони цели."
+        }
+      }
+    },
+    "shadowstep": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$36563s2%", "new": "{path}40%{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "shadow_dance": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$d", "new": "{path}10 сек.{/path}"}
+          ],
+          "addition": "Урон способностей, требующих незаметности, уменьшается на 20%, а стоимость «Подлого трюка» и «Гарроты» — на 15 ед. энергии."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}5 сек.{/path}"},
+            {"old": "\"Подлый трюк\", ", "new": ""}
+          ],
+          "addition": "«Подлый трюк» использовать невозможно. «Внезапный удар» и «Удар в спину» стоят на 20 ед. энергии меньше и наносят на 30% больше урона."
+        }
+      }
+    },
+    "preparation": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {
+              "old": "При активации этой способности немедленно обнуляется время восстановления способностей \"Ускользание\", \"Спринт\", \"Исчезновение\", \"Хладнокровие\" и \"Шаг сквозь тень\".",
+              "new": "{path}Пассивно сокращает{/path} время восстановления способностей «Хладнокровие», «Шаг сквозь тень», «Исчезновение», «Ускользание» и «Спринт» {path}на 30%.{/path}"
+            }
+          ],
+          "addition": "«Символ подготовки» также добавляет «Долой оружие», «Пинок» и «Шквал клинков». Уже идущая перезарядка не изменяется."
+        },
+        "sha": {
+          "replace": [
+            {"old": "\"Ускользание\", \"Спринт\", \"Исчезновение\", \"Хладнокровие\" и \"Шаг сквозь тень\"", "new": "{path}\"Танец теней\", \"Шаг сквозь тень\", \"Пинок\" и \"Долой оружие\"{/path}"}
+          ],
+          "addition": "Восстанавливает 40 ед. энергии."
+        }
+      }
+    },
+    "premeditation": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$s1", "new": "{path}3{/path}"},
+            {"old": "$d", "new": "{path}30 сек.{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}6 сек.{/path}"}
+          ],
+          "addition": "Восстанавливает 40 ед. энергии."
+        }
+      }
+    },
+    "cheap_shot": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "Оглушает цель на $d.", "new": "Оглушает цель на {path}3 сек. против существ и игроков{/path}."}
+          ],
+          "addition": "На время действия цель получает на 10% больше урона из всех источников."
+        }
+      }
+    },
+    "ambush": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$m2%", "new": "{path}${$m2*1.35}%{/path}"},
+            {"old": "${$m1*2.75}", "new": "{path}${$m1*2.75*1.35}{/path}"}
+          ],
+          "addition": "Стоимость увеличена до 75 ед. энергии. Итоговый критический урон увеличен на 20%."
+        }
+      }
+    },
+    "backstab": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$m2%", "new": "{path}${$m2*1.3}%{/path}"},
+            {"old": "${$m1*1.5}", "new": "{path}${$m1*1.5*1.3}{/path}"}
+          ],
+          "addition": "Итоговый критический урон увеличен на 20%. После «Шага сквозь тень» можно атаковать спереди."
+        }
+      }
+    },
+    "blind": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "в течение $d", "new": "в течение {path}5 сек.{/path}"},
+            {"old": "Любой нанесенный урон снимает эффект.", "new": "Любой нанесенный урон снимает эффект, {path}кроме ваших эффектов периодического урона{/path}."}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "sap": {
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "$d", "new_by_rank": ["{path}37,5 сек. против существ или 12 сек. против игроков{/path}", "{path}52,5 сек. против существ или 12 сек. против игроков{/path}", "{path}67,5 сек. против существ или 12 сек. против игроков{/path}", "{path}90 сек. против существ или 12 сек. против игроков{/path}"]}
+          ],
+          "addition": "Досрочное снятие эффекта замедляет цель на 70% и уменьшает наносимый ею урон на 20% на 4 сек."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$d", "new": "{path}6 сек. против существ и игроков{/path}"},
+            {"old": "Прием производится из состояния незаметности и эффективен только против гуманоидов вне боя.", "new": "Прием {path}не требует состояния незаметности и может применяться к находящемуся в бою гуманоиду{/path}.", "optional": true},
+            {"old": "Действует только на гуманоидов, зверей, демонов и драконов вне боя.", "new": "Действует только на гуманоидов, зверей, демонов и драконов {path}и может применяться к находящейся в бою цели{/path}.", "optional": true}
+          ],
+          "addition": "Не требует состояния незаметности. Длина серии приемов увеличивается на 2."
+        }
+      }
+    },
+    "ghostly_strike": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "$s1%", "new": "{path}${$m1*1.4}%{/path}"},
+            {"old": "${$m1*1.44}%", "new": "{path}${$m1*1.44*1.4}%{/path}"},
+            {"old": "и увеличивающий вероятность уклонения от атак на $s2% на $d", "new": "{path}и после успешного попадания увеличивающий скорость атаки на 20% и уменьшающий итоговую броню цели на 20% на 6 сек.{/path}"},
+            {"old": "$s3", "new": "{path}2{/path}"}
+          ],
+          "addition": "Стоимость 25 ед. энергии.",
+          "native_only": true
+        }
+      }
+    },
+    "shiv": {
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "Мгновенная атака оружием в левой руке, отравляющая противника ядом.", "new": "{path}Две мгновенные атаки оружием в левой руке, наносящие 100% и 50% урона и отдельно накладывающие яд.{/path}"}
+          ],
+          "addition": "Наложенные яды на 4 сек. становятся сильнее на 20%; эффект не складывается с «Отравляющими веществами». После окончания действия восстановление энергии уменьшается на 20% на 3 сек."
+        }
+      }
+    },
+    "overkill": {
+      "enUS": {"sha": {
+        "replace": [{"old": "While stealthed, and for 20 seconds after breaking stealth, you regenerate $58427s1% additional energy.", "new": "After leaving Stealth, energy regeneration {path}increases by 100% for 6 sec, then decreases by 30% for 4 sec.{/path}"}],
+        "addition": ""
+      }},
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "20 секунд", "new": "{path}30 секунд{/path}"}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "Дополнительно накапливает $58427s1% энергии в режиме незаметности и в течение 20 секунд после выхода из него.", "new": "После выхода из состояния незаметности скорость восстановления энергии {path}увеличивается на 100% на 8 сек.{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    },
+    "seal_fate": {
+      "enUS": {"sha": {
+        "replace": [{"old": "an additional combo point.", "new": "an additional combo point{path}, with a 20% chance on activation to grant 2 instead of 1.{/path}"}],
+        "addition": "The empowered activation has a 2 sec internal cooldown."
+      }},
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "на 1 прием", "new": "на 1 прием{path}, а с вероятностью {chance}% при срабатывании — на 2 приема вместо 1{/path}"}
+          ],
+          "addition": "Усиленное срабатывание может происходить не чаще одного раза в 2 сек."
+        }
+      }
+    },
+    "combat_potency": {
+      "enUS": {"sha": {
+        "replace": [
+          {"old": "$h%", "new": "{path}25%{/path}"},
+          {"old": "$35542s1", "new": "{path}10{/path}", "optional": true},
+          {"old": "$35545s1", "new": "{path}10{/path}", "optional": true},
+          {"old": "$35546s1", "new": "{path}10{/path}", "optional": true},
+          {"old": "$35547s1", "new": "{path}10{/path}", "optional": true},
+          {"old": "$35548s1", "new": "{path}10{/path}", "optional": true}
+        ],
+        "addition": "Each activation also increases attack speed by 5% for 4 sec, stacking up to 3 times."
+      }},
+      "ruRU": {
+        "celestial": {
+          "replace": [
+            {"old": "с вероятностью \\$h% позволит накопить \\$\\d+s1 ед\\. энергии", "new": "{path}позволяет накопить {rank} ед. энергии{/path}", "regex": true}
+          ],
+          "addition": ""
+        },
+        "sha": {
+          "replace": [
+            {"old": "$h%", "new": "{path}25%{/path}"},
+            {"old": "\\$\\d+s1", "new": "{path}10{/path}", "regex": true}
+          ],
+          "addition": "При срабатывании скорость атаки увеличивается на 5% на 4 сек. Эффект суммируется до 3 раз."
+        }
+      }
+    },
+    "cheat_death": {
+      "enUS": {"sha": {
+        "replace": [
+          {"old": "90%", "new": "{path}80%{/path}"},
+          {"old": "$45182d", "new": "{path}2 sec{/path}"}
+        ],
+        "addition": "Instead of healing, restores 60 energy, resets Shadowstep and increases damage dealt by 10% for 6 sec."
+      }},
+      "ruRU": {
+        "celestial": {
+          "replace": [],
+          "addition": "За время действия эффекта восстанавливается 10% максимального запаса здоровья, а наносимый урон уменьшается на 20%."
+        },
+        "sha": {
+          "replace": [
+            {"old": "на следующие $45182d. весь получаемый урон снизится на 90%", "new": "на следующие {path}2 сек.{/path} весь получаемый урон снизится на {path}80%{/path}"}
+          ],
+          "addition": "Разбойник восстанавливает 60 ед. энергии за 2 сек., завершает восстановление «Шага сквозь тень» и увеличивает наносимый урон на 25%."
+        }
+      }
+    },
+    "honor_among_thieves": {
+      "enUS": {"sha": {
+        "replace": [{"old": "(?s)^.+$", "regex": true, "new": "{path}Your own qualifying critical attacks have a 50% chance to generate a combo point, at most twice per second. Allies' critical effects no longer generate combo points.{/path}"}],
+        "addition": ""
+      }},
+      "ruRU": {
+        "sha": {
+          "replace": [
+            {"old": "Когда любой член вашей группы наносит критический урон способностью или заклинанием или совершает критическое исцеление, вы с $s1%-й вероятностью увеличиваете длину серии против текущей цели на один прием. Данный эффект срабатывает не чаще одного раза в несколько секунд.", "new": "{path}Критические эффекты союзников больше не создают приёмы серии. Собственные подходящие критические атаки с вероятностью 50% создают дополнительный приём серии, но не более 2 раз в секунду.{/path}"}
+          ],
+          "addition": ""
+        }
+      }
+    }
+  },
+  "visibility_revision": {
+    "status": "candidate-development-not-accepted",
+    "stock_text_source": "official ruRU patch chain, exact base rank",
+    "standard_token_binding": "qualified stock spell ID; retain dynamic expressions",
+    "display_passives": "separate effect-free records; active-spec exact-rank ownership",
+    "confirmed_causes": [
+      "unqualified stock tokens bound to modified effects",
+      "mechanic passive inherited hidden-clientside flag",
+      "Sha Combat Potency haste used an unconditional branch outside the energy proc roll",
+      "successful Celestial Feint self guard inherited native threat-target miss energy refund",
+      "technical presentation heuristic misclassified useful native buffs and proc windows as hidden trackers"
+    ],
+    "required_gates": [
+      "validate_rogue_path_tooltips.py",
+      "test_visibility_schema3.py",
+      "GUI acceptance pending"
+    ]
+  },
+  "celestial_revision": {
+    "radius_id": 9000,
+    "ambush_range_id": 9000,
+    "suppression_group": 1900,
+    "suppression_strong": "celestial_damage_suppression_20",
+    "suppression_weak": "celestial_damage_suppression_15",
+    "retired_auras": [
+      86513,
+      86515,
+      86516,
+      86532,
+      86569,
+    86575,
+    86563,
+      86587
+    ],
+    "icons": {
+      "feint": 539,
+      "sprint_freedom": 517,
+      "suppression": 1904,
+      "sap": 249
+    },
+    "visible_auras": [
+      "celestial_feint_guard",
+      "celestial_sprint_immunity",
+      "celestial_sap_guard",
+      "celestial_shiv_protection",
+      "celestial_stealth_mastery",
+      "celestial_cold_blood_window",
+      "celestial_damage_suppression_20",
+      "celestial_damage_suppression_15"
+    ],
+    "aura_local_trackers": {
+      "blind": "AuraApplication removal, original caster GUID, once per actual application",
+      "control": "AuraRemoveMode and technical cleanup guard"
+    },
+    "vanish_protected_spell_ids": [],
+    "vanish_protected_aura_types": []
+  },
+  "spell_id_range": {
+    "first": 86000,
+    "last": 86999
+  },
+  "skill_line": 253,
+  "skill_line_ability_id_first": 31000,
+  "rbac_permission": 1001,
+  "path_icons": {
+    "first": 6100,
+    "count": 94,
+    "source": "content_locked_full",
+    "asset_catalogs": ["content_locked_full", "content_locked_seven_v1", "content_locked_stealth_mastery_v1"],
+    "seven_icon_revision": "User-confirmed 2026-08-31: same approved Sage/Demon style and +2px frame; stock spell icons unchanged",
+    "frame": "+2px",
+    "celestial_color": "7CEBFF",
+    "sha_color": "D84CFF",
+    "shared_icons": [
+      {
+        "logical_name": "damage_vulnerability",
+        "icon_id": 6194,
+        "virtual_path": "Interface\\Icons\\ability_deathknight_hemorrhagicfever",
+        "source_png": "artifacts/rogue_pw_icons/user_shared_v1/source/png/ability_deathknight_hemorrhagicfever.png",
+        "source_png_sha256": "bf7cb446c36a670c38d7bc44a441040c298c6937a6d90f93548edb20a10336ff"
+      },
+      {
+        "logical_name": "sha_blood_thrill",
+        "icon_id": 6195,
+        "virtual_path": "Interface\\Icons\\sha_ability_rogue_bloodyeye_nightmare",
+        "source_png": "artifacts/rogue_pw_icons/user_shared_v1/source/png/sha_ability_rogue_bloodyeye_nightmare.png",
+        "source_png_sha256": "fa348aea01a703d8f887c776d783f114ca0714853d9c5675f7f707927c2cd30b"
+      },
+      {
+        "logical_name": "stealth_mastery",
+        "icon_id": 6196,
+        "virtual_path": "Interface\\Icons\\ability_rogue_surpriseattack2",
+        "source_png": "artifacts/rogue_pw_icons/content_locked_stealth_mastery_v1/source/png/stealth_mastery.png",
+        "source_png_sha256": "928eff55843988c3f5da67104abfce3a4f142f8630043e0a04051b6dc85edf42"
+      }
+    ]
+  },
+  "active_spells": [
+    {
+      "logical_name": "stealth",
+      "base_spell_chain": [
+        1784
+      ],
+      "celestial_first": 86000,
+      "sha_first": 86200,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6100,
+        "sha": 6101
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1784": {
+          "SpellIconID": 250,
+          "ActiveIconID": 30
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "После 3 сек. непрерывного пребывания в состоянии незаметности штраф к скорости передвижения снимается, а уровень незаметности повышается на 1. Эффект действует до выхода из незаметности.",
+          "sha": "Первая специальная прямая атака из незаметности или в течение 3 сек. после выхода стоит на 20 энергии меньше и наносит на 10% больше прямого урона."
+        },
+        "enUS": {
+          "celestial": "After 3 continuous seconds in Stealth, removes its movement penalty and increases stealth level by 1. Benefits end on leaving Stealth.",
+          "sha": "The first direct special attack begun in Stealth or within 3 sec after leaving costs 20 less energy and deals 10% more direct damage. Consumed when the attack begins."
+        }
+      }
+    },
+    {
+      "logical_name": "vanish",
+      "base_spell_chain": [
+        1856,
+        1857,
+        26889
+      ],
+      "celestial_first": 86001,
+      "sha_first": 86201,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6102,
+        "sha": 6103
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1856": {
+          "SpellIconID": 252,
+          "ActiveIconID": 30
+        },
+        "1857": {
+          "SpellIconID": 252,
+          "ActiveIconID": 30
+        },
+        "26889": {
+          "SpellIconID": 252,
+          "ActiveIconID": 30
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Снимает все эффекты периодического урона, замедления и обездвиживания.",
+          "sha": "Перезарядка короче на 45 сек. Восстанавливает 40 ед. энергии за 4 сек. Первый специальный удар из незаметности получает +30% итогового критического урона, после чего разбойник 6 сек. получает на 10% больше урона."
+        },
+        "enUS": {
+          "celestial": "Removes harmful periodic damage, slow and root effects. Other control effects are not removed.",
+          "sha": "Cooldown reduced by 45 sec. Restores 40 energy over 4 sec. The first special attack from Stealth gains 30% final critical damage, then increases damage taken by 10% for 6 sec. A non-critical attack also consumes the window."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Позволяет разбойнику скрыться с глаз, войдя в состояние улучшенной незаметности на 10 сек. {path}Снимает эффекты периодического урона, замедления и сковывания.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "sprint",
+      "base_spell_chain": [
+        2983,
+        8696,
+        11305
+      ],
+      "celestial_first": 86004,
+      "sha_first": 86204,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6104,
+        "sha": 6105
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "2983": {
+          "SpellIconID": 516,
+          "ActiveIconID": 0
+        },
+        "8696": {
+          "SpellIconID": 516,
+          "ActiveIconID": 0
+        },
+        "11305": {
+          "SpellIconID": 516,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "При применении снимает эффекты замедления и обездвиживания и даёт невосприимчивость к ним на 4 сек.",
+          "sha": "Повышает скорость на 100% на 8 сек."
+        },
+        "enUS": {
+          "celestial": "Removes slows and roots and grants immunity to them for 4 seconds. Normal Sprint speed and duration remain.",
+          "sha": "Increases movement speed by 100% for 8 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "evasion",
+      "base_spell_chain": [
+        5277,
+        26669
+      ],
+      "celestial_first": 86007,
+      "sha_first": 86207,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6106,
+        "sha": 6107
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "5277": {
+          "SpellIconID": 178,
+          "ActiveIconID": 0
+        },
+        "26669": {
+          "SpellIconID": 178,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Базовое время действия увеличено до 20 сек. Пока эффект активен, получаемый физический урон уменьшается на 15%.",
+          "sha": "Длится 8 сек., восстановление 2 мин. Каждое уклонение восстанавливает 5 ед. энергии."
+        },
+        "enUS": {
+          "celestial": "Base duration 20 seconds. Reduces all physical damage taken by 15% while active.",
+          "sha": "Lasts 8 sec, with a 2-minute cooldown. Each dodge restores 5 energy."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Увеличивает вероятность того, что разбойник уклонится от удара, на 50%, уменьшает вероятность получить удар в дальнем бою на 25%. Время действия - {path}20{/path} сек. {path}Пока действует эффект, физический урон от попавших атак уменьшается на 15%.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "cloak_of_shadows",
+      "base_spell_chain": [
+        31224
+      ],
+      "celestial_first": 86009,
+      "sha_first": 86209,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6108,
+        "sha": 6109
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "31224": {
+          "SpellIconID": 1933,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Вероятность избежать враждебных заклинаний повышена до 100%, но время действия сокращено до 4 сек. После окончания получаемый магический урон уменьшается на 20% на 4 сек.",
+          "sha": "Длится 3 сек., перезарядка 60 сек. Собственные яды наносят на 20% больше урона и не могут промахнуться или быть сопротивлены."
+        },
+        "enUS": {
+          "celestial": "Retains the normal magic cleanse. Avoids hostile spells with 100% chance for 4 sec, then reduces magic damage taken by 20% for 4 sec.",
+          "sha": "Lasts 3 sec with a 60-sec cooldown. Retains the normal magic cleanse. Your poisons deal 20% more damage and cannot miss or be resisted while active."
+        }
+      }
+    },
+    {
+      "logical_name": "feint",
+      "base_spell_chain": [
+        1966,
+        6768,
+        8637,
+        11303,
+        25302,
+        27448,
+        48658,
+        48659
+      ],
+      "celestial_first": 86010,
+      "sha_first": 86210,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6110,
+        "sha": 6111
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1966": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "6768": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "8637": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "11303": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "25302": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "27448": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "48658": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        },
+        "48659": {
+          "SpellIconID": 539,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия увеличено до 8 сек., а получаемый урон от атак по области уменьшается на 70%.",
+          "sha": "Стоит 0 энергии и на 3 сек. уменьшает AoE-урон на 30%; следующая специальная прямая атака стоит на 15 энергии меньше."
+        },
+        "enUS": {
+          "celestial": "Reduces damage taken from area attacks by 70% for 8 seconds.",
+          "sha": "Costs no energy. Reduces area damage taken by 30% for 3 sec. The next direct special attack within that time costs 15 less energy."
+        }
+      }
+    },
+    {
+      "logical_name": "kick",
+      "base_spell_chain": [
+        1766
+      ],
+      "celestial_first": 86018,
+      "sha_first": 86218,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6112,
+        "sha": 6113
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1766": {
+          "SpellIconID": 246,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Успешное прерывание восстанавливает затраченную энергию.",
+          "sha": "Успешное прерывание на 6 сек. увеличивает прямой урон этого разбойника по цели на 10%."
+        },
+        "enUS": {
+          "celestial": "A successful interrupt refunds the actual energy spent and extends the interrupted school lockout by 1 sec.",
+          "sha": "A successful interrupt marks the target for 6 sec, increasing direct special-attack damage from you by 10%. Does not increase autos, poisons, bleeds or allies' damage."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Пинок, прерывающий произнесение противником заклинания в момент удара и препятствующий произнесению последующих заклинаний той же школы в течение {path}6 сек.{/path}\n{path}Успешное прерывание восстанавливает затраченную энергию{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "gouge",
+      "base_spell_chain": [
+        1776
+      ],
+      "celestial_first": 86019,
+      "sha_first": 86219,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6114,
+        "sha": 6115
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1776": {
+          "SpellIconID": 245,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Не может быть уклонён, парирован или блокирован. Перед наложением снимает с цели все эффекты периодического урона.",
+          "sha": "Длится 2,5 сек. и создаёт 2 приёма серии; собственные яды и кровотечения не снимают эффект."
+        },
+        "enUS": {
+          "celestial": "Cannot be dodged, parried or blocked. On successful application removes every harmful periodic-damage aura regardless of caster.",
+          "sha": "Lasts 2.5 sec and grants 2 combo points. Your poisons and bleeds never break it; direct attacks and allies' damage retain normal break rules."
+        }
+      }
+    },
+    {
+      "logical_name": "kidney_shot",
+      "base_spell_chain": [
+        408,
+        8643
+      ],
+      "celestial_first": 86020,
+      "sha_first": 86220,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6116,
+        "sha": 6117
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "408": {
+          "SpellIconID": 499,
+          "ActiveIconID": 0
+        },
+        "8643": {
+          "SpellIconID": 499,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Использует стандартную продолжительность оглушения: от 2 до 6 сек. в зависимости от длины серии.",
+        "sha": "Продолжительность оглушения зависит от длины серии: от 1 до 5 сек. Во время оглушения цель получает на 15% больше урона из всех источников."
+        },
+        "enUS": {
+          "celestial": "Stun duration is increased by 1 second before diminishing returns.",
+        "sha": "Stun duration is 1 to 5 sec based on combo points. During the stun, the target takes 15% more damage from all sources. Normal diminishing returns apply."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Завершающий прием, оглушающий цель. Продолжительность оглушения зависит от длины серии:\n1 прием: {path}2 секунды{/path}\n2 приема: {path}3 секунды{/path}\n3 приема: {path}4 секунды{/path}\n4 приема: {path}5 секунд{/path}\n5 приемов: {path}6 секунд{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "rupture",
+      "base_spell_chain": [
+        1943,
+        8639,
+        8640,
+        11273,
+        11274,
+        11275,
+        26867,
+        48671,
+        48672
+      ],
+      "celestial_first": 86022,
+      "sha_first": 86222,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6118,
+        "sha": 6119
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1943": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "8639": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "8640": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "11273": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "11274": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "11275": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "26867": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "48671": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        },
+        "48672": {
+          "SpellIconID": 500,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия увеличено на 40%. Частота нанесения урона не меняется.",
+          "sha": "Полный стандартный урон наносится за 60% стандартной длительности при сохранении числа тиков."
+        },
+        "enUS": {
+          "celestial": "Extends duration by 40%, retaining the normal tick interval and adding complete ticks. Includes combo points, talents and glyphs.",
+          "sha": "Deals the normal total bleed damage in 60% of its normal duration, preserving the number of ticks."
+        }
+      }
+    },
+    {
+      "logical_name": "slice_and_dice",
+      "base_spell_chain": [
+        5171,
+        6774
+      ],
+      "celestial_first": 86031,
+      "sha_first": 86231,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6120,
+        "sha": 6121
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "5171": {
+          "SpellIconID": 515,
+          "ActiveIconID": 0
+        },
+        "6774": {
+          "SpellIconID": 515,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Итоговое время действия увеличено на 50%.",
+          "sha": "Скорость атаки +60%; итоговая длительность уменьшена вдвое."
+        },
+        "enUS": {
+          "celestial": "Retains normal attack speed and increases final duration by 50%.",
+          "sha": "Increases attack speed by 60% and halves final duration."
+        }
+      }
+    },
+    {
+      "logical_name": "eviscerate",
+      "base_spell_chain": [
+        2098,
+        6760,
+        6761,
+        6762,
+        8623,
+        8624,
+        11299,
+        11300,
+        31016,
+        26865,
+        48667,
+        48668
+      ],
+      "celestial_first": 86033,
+      "sha_first": 86233,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6122,
+        "sha": 6123
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "2098": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "6760": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "6761": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "6762": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "8623": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "8624": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "11299": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "11300": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "31016": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "26865": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "48667": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        },
+        "48668": {
+          "SpellIconID": 514,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "При использовании с 5 приемами серии игнорирует 25% брони цели и после успешного попадания восстанавливает 10 ед. энергии.",
+          "sha": "Может потратить до 30 дополнительной текущей энергии, повышая итоговый урон на 1% за единицу."
+        },
+        "enUS": {
+          "celestial": "At 5 combo points this hit ignores 25% armor and restores 10 energy on a successful hit. Otherwise works normally.",
+          "sha": "Consumes up to 30 additional available energy. Each additional energy increases final damage by 1%. Additional cost participates in normal failed-attack refunds."
+        }
+      }
+    },
+    {
+      "logical_name": "deadly_throw",
+      "base_spell_chain": [
+        26679,
+        48673,
+        48674
+      ],
+      "celestial_first": 86045,
+      "sha_first": 86245,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6124,
+        "sha": 6125
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "26679": {
+          "SpellIconID": 2097,
+          "ActiveIconID": 0
+        },
+        "48673": {
+          "SpellIconID": 2097,
+          "ActiveIconID": 0
+        },
+        "48674": {
+          "SpellIconID": 2097,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Дальность действия увеличена до 40 м. При использовании с 5 приемами серии прерывает заклинание и блокирует его школу на 3 сек.",
+          "sha": "Не прерывает. Выпускает 1 клинок раз в секунду в течение 3 сек.; каждый наносит 50% рассчитанного урона, ресурс тратится один раз."
+        },
+        "enUS": {
+          "celestial": "Range increased to 40 yards. At 5 combo points interrupts a current spell and locks its school for 3 sec. Retains the normal slow.",
+          "sha": "No longer interrupts. Launches 1 blade each second for 3 sec, each dealing 50% of normal calculated damage. Pays energy and combo points once; only the first blade slows and additional blades cannot proc poisons."
+        }
+      }
+    },
+    {
+      "logical_name": "fan_of_knives",
+      "base_spell_chain": [
+        51723
+      ],
+      "celestial_first": 86048,
+      "sha_first": 86248,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6126,
+        "sha": 6127
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51723": {
+          "SpellIconID": 2904,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Радиус действия увеличен до 12 м. Каждая поражённая цель восстанавливает 4 ед. энергии.",
+          "sha": "Стоит 70 энергии. Каждое оружие наносит по 2 удара силой 65%; каждый удар отдельно может активировать яд."
+        },
+        "enUS": {
+          "celestial": "12-yard radius. Each unique target hit restores 4 energy.",
+          "sha": "Costs 70 energy. Each weapon strikes twice, each strike dealing 65% of that weapon's normal Fan of Knives damage. Each strike can separately apply its weapon poison."
+        }
+      }
+    },
+    {
+      "logical_name": "dismantle",
+      "base_spell_chain": [
+        51722
+      ],
+      "celestial_first": 86049,
+      "sha_first": 86249,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6128,
+        "sha": 6129
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51722": {
+          "SpellIconID": 2908,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "После окончания разоружения наносимый целью урон уменьшается на 20% на 6 сек.",
+          "sha": "Разоружает на 6 сек.; в это время разбойник наносит цели на 15% больше урона и получает +20% скорости атаки."
+        },
+        "enUS": {
+          "celestial": "After the disarm ends, the target deals 20% less damage for 6 seconds.",
+          "sha": "Disarms for 6 sec. While disarmed, that target takes 15% more damage from you and you gain 20% attack speed against it. Bonuses end with the disarm."
+        }
+      }
+    },
+    {
+      "logical_name": "tricks_of_the_trade",
+      "base_spell_chain": [
+        57934
+      ],
+      "celestial_first": 86050,
+      "sha_first": 86250,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6130,
+        "sha": 6131
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "57934": {
+          "SpellIconID": 3413,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Бонус к урону цели составляет 10% и действует 10 сек.",
+          "sha": "Стандартно перенаправляет угрозу; союзник получает +25% урона на 4 сек."
+        },
+        "enUS": {
+          "celestial": "Retains normal threat redirection and first-attack activation. The ally gains 10% damage for 10 sec.",
+          "sha": "Retains normal threat redirection and first-attack activation. The ally gains 25% damage for 4 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "mutilate",
+      "base_spell_chain": [
+        1329,
+        34411,
+        34412,
+        34413,
+        48663,
+        48666
+      ],
+      "celestial_first": 86051,
+      "sha_first": 86251,
+      "type": "assassination_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6132,
+        "sha": 6133
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1329": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        },
+        "34411": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        },
+        "34412": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        },
+        "34413": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        },
+        "48663": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        },
+        "48666": {
+          "SpellIconID": 2117,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "При успешном попадании возвращает 10 ед. энергии, если в начале применения на цели было 5 доз вашего «Смертельного яда».",
+          "sha": "При менее чем 5 дозах собственного «Смертельного яда» наносит на 20% больше прямого урона и после успешного попадания добавляет до 2 доз. Стоимость применения стандартная."
+        },
+        "enUS": {
+          "celestial": "A successful hit refunds 10 energy if the target had 5 doses of your Deadly Poison when the attack began.",
+          "sha": "If your Deadly Poison had fewer than 5 doses when the attack began, deals 20% more direct damage and applies up to 2 additional doses on a successful hit. Energy cost remains standard."
+        }
+      }
+    },
+    {
+      "logical_name": "envenom",
+      "base_spell_chain": [
+        32645,
+        32684,
+        57992,
+        57993
+      ],
+      "celestial_first": 86057,
+      "sha_first": 86257,
+      "type": "assassination",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6134,
+        "sha": 6135
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "32645": {
+          "SpellIconID": 2237,
+          "ActiveIconID": 0
+        },
+        "32684": {
+          "SpellIconID": 2237,
+          "ActiveIconID": 0
+        },
+        "57992": {
+          "SpellIconID": 2237,
+          "ActiveIconID": 0
+        },
+        "57993": {
+          "SpellIconID": 2237,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Прямой урон уменьшается на 10%, но эффект, повышающий вероятность наложения ядов, действует вдвое дольше.",
+          "sha": "Не создаёт стандартное окно ядов; мгновенно наносит 40% оставшегося урона собственного Deadly Poison и удаляет его дозы."
+        },
+        "enUS": {
+          "celestial": "Direct damage reduced by 10%. The normal increased-poison-application buff lasts twice as long. Other normal rules remain.",
+          "sha": "Retains normal direct damage but grants no poison-application buff. Detonates 40% of your Deadly Poison's remaining periodic damage, then removes all your doses. The detonation cannot trigger poisons."
+        }
+      }
+    },
+    {
+      "logical_name": "hunger_for_blood",
+      "base_spell_chain": [
+        51662
+      ],
+      "celestial_first": 86061,
+      "sha_first": 86261,
+      "type": "assassination_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6136,
+        "sha": 6137
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51662": {
+          "SpellIconID": 2961,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Не требует энергии. Время действия увеличено до 2 мин.",
+          "sha": "Стоит 30 энергии, перезарядка 30 сек. Требует кровотечение; даёт +12% урона на 12 сек., затем −5% урона на 6 сек."
+        },
+        "enUS": {
+          "celestial": "Costs 0 and lasts 2 min. Retains the standard damage bonus, bleed requirement and immediate removal when the last suitable bleed disappears.",
+          "sha": "Costs 30 energy, has a 30-sec cooldown and requires a bleeding target. Increases damage by 12% for 12 sec, then reduces damage by 5% for 6 sec. Recasting does not remove the penalty."
+        }
+      }
+    },
+    {
+      "logical_name": "cold_blood",
+      "base_spell_chain": [
+        14177
+      ],
+      "celestial_first": 86062,
+      "sha_first": 86262,
+      "type": "assassination_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6138,
+        "sha": 6139
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "14177": {
+          "SpellIconID": 32,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Повышает вероятность критического удара следующих двух атакующих способностей на 100%.",
+          "sha": "Следующая специальная прямая атака гарантированно критическая и получает +40% итогового критического урона; затем разбойник 6 сек. получает на 10% больше урона."
+        },
+        "enUS": {
+          "celestial": "Grants 2 charges. The next two eligible active direct-damage abilities gain 100 percentage points of critical chance; one charge is consumed per cast, including a miss.",
+          "sha": "The next direct special attack is a guaranteed critical hit with 40% increased final critical damage. After that attack, damage taken is increased by 10% for 6 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "sinister_strike",
+      "base_spell_chain": [
+        1752,
+        1757,
+        1758,
+        1759,
+        1760,
+        8621,
+        11293,
+        11294,
+        26861,
+        26862,
+        48637,
+        48638
+      ],
+      "celestial_first": 86063,
+      "sha_first": 86263,
+      "type": "combat",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6140,
+        "sha": 6141
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "1752": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "1757": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "1758": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "1759": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "1760": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "8621": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "11293": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "11294": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "26861": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "26862": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "48637": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        },
+        "48638": {
+          "SpellIconID": 130,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Каждый третий успешный «Коварный удар» восстанавливает 10 ед. энергии и создаёт 2 приема серии вместо 1.",
+          "sha": "Успешный удар с вероятностью 20% наносит дополнительный удар силой 60%, способный активировать яд."
+        },
+        "enUS": {
+          "celestial": "Every third successful hit restores 10 energy and grants one additional combo point. Misses do not advance the counter.",
+          "sha": "A successful hit has a 20% chance to strike again for 60% of its calculated damage. The extra hit costs no energy, grants no combo point and may apply a weapon poison."
+        }
+      }
+    },
+    {
+      "logical_name": "blade_flurry",
+      "base_spell_chain": [
+        13877
+      ],
+      "celestial_first": 86075,
+      "sha_first": 86275,
+      "type": "combat_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6142,
+        "sha": 6143
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "13877": {
+          "SpellIconID": 1477,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Бонус к скорости атаки увеличен на 10%, а время действия — на 5 сек. Способность поражает до 5 целей, включая основную; дополнительный урон равномерно распределяется между вторичными целями.",
+          "sha": "Длится 8 сек., даёт +50% скорости атаки, копирует 100% урона в одну цель и повышает стоимость атакующих способностей на 20%."
+        },
+        "enUS": {
+          "celestial": "Retains the standard effect, adds 10 percentage points of attack speed and lasts 5 seconds longer. One full original damage event is divided evenly among up to 4 secondary targets.",
+          "sha": "Lasts 8 sec and grants 50% attack speed. Eligible attacks copy 100% damage to one additional target. Attacking abilities cost 20% more energy after normal reductions."
+        }
+      }
+    },
+    {
+      "logical_name": "adrenaline_rush",
+      "base_spell_chain": [
+        13750
+      ],
+      "celestial_first": 86076,
+      "sha_first": 86276,
+      "type": "combat_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6144,
+        "sha": 6145
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "13750": {
+          "SpellIconID": 235,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия увеличено на 5 сек. Пока эффект активен, максимальный запас энергии повышен на 50.",
+        "sha": "Даёт +200% восстановления энергии на 10 сек., затем −50% восстановления на 4 сек."
+        },
+        "enUS": {
+          "celestial": "Retains standard energy regeneration, lasts 5 seconds longer and increases maximum energy by 50. Only this bonus is removed on expiry; excess energy is clipped.",
+        "sha": "Increases energy regeneration by 200% for 10 sec, then reduces it by 50% for 4 sec. Maximum energy does not increase."
+        }
+      }
+    },
+    {
+      "logical_name": "killing_spree",
+      "base_spell_chain": [
+        51690
+      ],
+      "celestial_first": 86077,
+      "sha_first": 86277,
+      "type": "combat_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6146,
+        "sha": 6147
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51690": {
+          "SpellIconID": 2907,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Во время серии получаемый урон уменьшается на 50%. Пока изначально выбранная цель доступна, все атаки в первую очередь направляются в неё.",
+          "sha": "Выполняет 7 атак с бонусом урона 30%; во время серии и 4 сек. после неё получаемый урон выше на 20%."
+        },
+        "enUS": {
+          "celestial": "Final cooldown is reduced by 30 seconds. Retains standard attacks and damage, prioritizing the original selected target while valid.",
+          "sha": "Performs 7 attacks with a 30% damage bonus and cannot be manually cancelled. Increases damage taken by 20% during the sequence and for 4 sec afterwards."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Разбойник проходит сквозь тень, от противника к противнику, в радиусе 10 м, атакуя каждые 0,5 секунды обоими оружиями, пока не будет совершено 5 атак. Во время действия эффекта наносимый урон возрастает на 20%, {path}а получаемый уменьшается на 50%.{/path} Разбойник может атаковать одну цель несколько раз. Не затрагивает невидимые или незаметные цели. {path}Пока изначально выбранная цель доступна, все атаки в первую очередь направляются в нее.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "riposte",
+      "base_spell_chain": [
+        14251
+      ],
+      "celestial_first": 86078,
+      "sha_first": 86278,
+      "type": "combat_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6148,
+        "sha": 6149
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "14251": {
+          "SpellIconID": 278,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Снижает скорость атаки цели на 30% и разоружает её на 3 сек.",
+          "sha": "Не замедляет и не разоружает; восстанавливает 20 энергии и даёт +25% скорости атаки на 6 сек."
+        },
+        "enUS": {
+          "celestial": "Retains the parry requirement. Reduces target attack speed by 30% and additionally disarms for 3 sec, respecting normal immunities and diminishing returns.",
+          "sha": "Retains the parry requirement but neither slows nor disarms. A successful hit restores 20 energy and increases attack speed by 25% for 6 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "expose_armor",
+      "base_spell_chain": [
+        8647
+      ],
+      "celestial_first": 86079,
+      "sha_first": 86279,
+      "type": "combat",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "tooltip_addition_separator": "\n",
+      "custom_icon_ids": {
+        "celestial": 6150,
+        "sha": 6151
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "8647": {
+          "SpellIconID": 563,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия составляет 12 сек. за каждый потраченный прием серии. При использовании с 5 приемами серии успешное попадание восстанавливает 10 ед. энергии.",
+          "sha": "Снижает броню цели на 35%. Длится 2 сек. за приём серии, до 10 сек."
+        },
+        "enUS": {
+          "celestial": "Lasts 12 sec per combo point, up to 60 sec. At 5 points a successful application restores 10 energy. Armor reduction is unchanged.",
+          "sha": "Reduces the target's armor by 35%. Lasts 2 sec per combo point, up to 10 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "hemorrhage",
+      "base_spell_chain": [
+        16511,
+        17347,
+        17348,
+        26864,
+        48660
+      ],
+      "celestial_first": 86080,
+      "sha_first": 86280,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6152,
+        "sha": 6153
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "16511": {
+          "SpellIconID": 153,
+          "ActiveIconID": 0
+        },
+        "17347": {
+          "SpellIconID": 153,
+          "ActiveIconID": 0
+        },
+        "17348": {
+          "SpellIconID": 153,
+          "ActiveIconID": 0
+        },
+        "26864": {
+          "SpellIconID": 153,
+          "ActiveIconID": 0
+        },
+        "48660": {
+          "SpellIconID": 153,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Наносимый урон уменьшен на 10%, но способность накладывает 20 зарядов эффекта. Ваши завершающие приемы не расходуют эти заряды.",
+          "sha": "Прямой урон выше на 20%; создаёт 5 персональных зарядов с утроенным дополнительным уроном."
+        },
+        "enUS": {
+          "celestial": "Direct damage reduced by 10%. Creates 20 personal charges of normal bonus physical damage for 60 sec. Your finishers and allies do not consume charges.",
+          "sha": "Direct damage increased by 20%. Creates 5 personal charges, each granting triple normal bonus damage. Only your eligible attacks consume them."
+        }
+      }
+    },
+    {
+      "logical_name": "ambush",
+      "base_spell_chain": [
+        8676,
+        8724,
+        8725,
+        11267,
+        11268,
+        11269,
+        27441,
+        48689,
+        48690,
+        48691
+      ],
+      "celestial_first": 86085,
+      "sha_first": 86285,
+      "type": "subtlety",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6154,
+        "sha": 6155
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "8676": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "8724": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "8725": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "11267": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "11268": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "11269": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "27441": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "48689": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "48690": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        },
+        "48691": {
+          "SpellIconID": 856,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Дальность действия составляет 8 м. Длина серии приемов увеличивается на 3.",
+          "sha": "Стоимость 75 ед. энергии. Наносит на 35% больше прямого урона; итоговый критический урон дополнительно усилен на 20%."
+        },
+        "enUS": {
+          "celestial": "Range is 8 yards and awards 3 combo points.",
+          "sha": "Costs 75 energy and deals 35% more direct damage. A critical hit additionally gains 20% final critical damage."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Внезапный удар, наносящий противнику $m2% урона от оружия и дополнительно ${$m1*2.75} ед. урона. Вы должны находиться за спиной цели в состоянии незаметности и держать кинжал в правой руке. Длина серии приемов увеличивается на {path}3{/path}."
+        }
+      }
+    },
+    {
+      "logical_name": "garrote",
+      "base_spell_chain": [
+        703,
+        8631,
+        8632,
+        8633,
+        11289,
+        11290,
+        26839,
+        26884,
+        48675,
+        48676
+      ],
+      "celestial_first": 86095,
+      "sha_first": 86295,
+      "type": "subtlety",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6156,
+        "sha": 6157
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "703": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "8631": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "8632": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "8633": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "11289": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "11290": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "26839": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "26884": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "48675": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        },
+        "48676": {
+          "SpellIconID": 498,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия кровотечения увеличено на 6 сек., а длительность немоты — на 1 сек.",
+          "sha": "Молчание длится 1 сек.; полный урон кровотечения наносится за 9 сек. Следующее «Потрошение» за 6 сек. игнорирует 30% брони."
+        },
+        "enUS": {
+          "celestial": "Silence lasts 1 sec longer and the bleed lasts 6 sec longer with the normal tick interval and additional complete ticks.",
+          "sha": "Silences for 1 sec and deals normal total bleed damage over 9 sec. For 6 sec, your next successful Eviscerate against that target ignores 30% armor."
+        }
+      }
+    },
+    {
+      "logical_name": "shadowstep",
+      "base_spell_chain": [
+        36554
+      ],
+      "celestial_first": 86105,
+      "sha_first": 86305,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6158,
+        "sha": 6159
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "36554": {
+          "SpellIconID": 2363,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Не требует энергии и может быть применён к противнику или союзнику. Время восстановления уменьшено на 10 сек. Снимает эффекты замедления и сковывания. Больше не увеличивает урон следующей атаки на 20%.",
+          "sha": "Только противник, дальность 35 м, перезарядка 15 сек., стоимость 20 энергии. Следующая специальная атака наносит на 40% больше прямого урона."
+        },
+        "enUS": {
+          "celestial": "Costs no energy and can target an enemy or ally. Cooldown reduced by 10 sec. Removes snares and roots. No longer increases the damage of the next attack by 20%.",
+          "sha": "Enemy targets only. Range 35 yards, cooldown 15 sec, cost 20 energy. No movement boost; the next eligible direct special attack deals 40% more damage."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Проходя сквозь тень, разбойник появляется за спиной противника {path}или союзника{/path}. Скорость его передвижения увеличивается на 70% в течение 3 сек. Угроза, создаваемая примененной после этого способностью, уменьшается на 50%. Время действия - 10 сек. {path}Снимает эффекты замедления и сковывания. Больше не увеличивает урон следующей атаки на 20%.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "shadow_dance",
+      "base_spell_chain": [
+        51713
+      ],
+      "celestial_first": 86106,
+      "sha_first": 86306,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6160,
+        "sha": 6161
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51713": {
+          "SpellIconID": 2959,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия увеличено до 10 сек. Урон способностей, требующих незаметности, уменьшен на 20%, а стоимость «Подлого трюка» и «Гарроты» снижена на 15 ед. энергии.",
+        "sha": "Длится 5 сек. Невозможно использовать «Подлый трюк». «Внезапный удар» и «Удар в спину» стоят на 20 энергии меньше и наносят на 30% больше урона."
+        },
+        "enUS": {
+          "celestial": "Lasts 10 sec. Stealth-requiring abilities deal 20% less direct damage. Cheap Shot and Garrote cost 15 less energy.",
+        "sha": "Lasts 5 sec. Cheap Shot cannot be used. Ambush and Backstab cost 20 less energy and deal 30% more direct damage against all targets."
+        }
+      }
+    },
+    {
+      "logical_name": "preparation",
+      "base_spell_chain": [
+        14185
+      ],
+      "celestial_first": 86107,
+      "sha_first": 86307,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6162,
+        "sha": 6163
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "14185": {
+          "SpellIconID": 207,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+            "celestial": "Пассивно сокращает время восстановления способностей «Хладнокровие», «Шаг сквозь тень», «Исчезновение», «Ускользание» и «Спринт» на 30%. «Символ подготовки» также добавляет «Долой оружие», «Пинок» и «Шквал клинков». Уже идущая перезарядка не изменяется.",
+        "sha": "Восстановление: 6 мин. 30 сек. Сбрасывает время восстановления «Танца теней», «Шага сквозь тень», «Пинка» и «Долой оружие» и восстанавливает 40 ед. энергии."
+        },
+        "enUS": {
+          "celestial": "Passively reduces final cooldown of Cold Blood, Shadowstep, Vanish, Evasion and Sprint by 30%. Glyph of Preparation also adds Dismantle, Kick and Blade Flurry. Running cooldowns are unchanged.",
+        "sha": "Cooldown: 6 min 30 sec. Resets your path variants of Shadow Dance, Shadowstep, Kick and Dismantle and restores 40 energy. Does not reset Sprint, Evasion, Cloak, passive internal cooldowns or penalties."
+        }
+      }
+    },
+    {
+      "logical_name": "premeditation",
+      "base_spell_chain": [
+        14183
+      ],
+      "celestial_first": 86108,
+      "sha_first": 86308,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "custom_icon_ids": {
+        "celestial": 6164,
+        "sha": 6165
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "14183": {
+          "SpellIconID": 98,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Создаёт 3 приема серии вместо 2. Созданные приемы серии сохраняются 30 сек.",
+          "sha": "Создаёт 2 приёма серии и восстанавливает 40 энергии; созданные приёмы исчезают через 6 сек., если не использованы."
+        },
+        "enUS": {
+          "celestial": "Creates 3 combo points that remain available for 30 sec. Retains normal target rules.",
+          "sha": "Creates 2 combo points and restores 40 energy. Unused created points expire after 6 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "cheap_shot",
+      "base_spell_chain": [
+        1833
+      ],
+      "celestial_first": 86109,
+      "sha_first": 86309,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 244,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "cheap_shot",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6178, "sha": 6179},
+      "stock_icon_reference": {
+        "1833": {
+          "SpellIconID": 244,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Стоимость снижена на 10 ед. энергии, а продолжительность оглушения увеличена на 0,5 сек. Создаёт 3 приема серии. После окончания оглушения наносимый целью урон уменьшается на 15% на 4 сек.",
+          "sha": "Стоимость снижена на 20 ед. энергии (минимум 10). Оглушает существ и игроков на 3 сек. На время действия цель получает на 10% больше урона из всех источников."
+        },
+        "enUS": {
+          "celestial": "Costs 10 less energy, stuns for 0.5 seconds longer before diminishing returns and awards 3 combo points total. After normal expiry or early removal the target deals 15% less damage for 4 seconds.",
+          "sha": "Costs 20 less energy (minimum 10), stuns creatures and players for 3 sec, and makes the target take 10% more damage from all sources while active."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Оглушает цель на {path}4,5{/path} сек. Вы должны находиться в состоянии незаметности. Длина серии приемов увеличивается на {path}3{/path}. {path}После окончания оглушения наносимый целью урон уменьшается на 15% на 4 сек.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "backstab",
+      "base_spell_chain": [
+        53,
+        2589,
+        2590,
+        2591,
+        8721,
+        11279,
+        11280,
+        11281,
+        25300,
+        26863,
+        48656,
+        48657
+      ],
+      "celestial_first": 86110,
+      "sha_first": 86310,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 243,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "backstab",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6180, "sha": 6181},
+      "stock_icon_reference": {
+        "53": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "2589": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "2590": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "2591": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "8721": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "11279": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "11280": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "11281": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "25300": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "26863": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "48656": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        },
+        "48657": {
+          "SpellIconID": 243,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Если цель находится под вашим контролем, стоимость снижается на 10 ед. энергии. Наносимый урон уменьшен на 10%. Создаёт 2 приема серии. Успешное попадание по такой цели восстанавливает 10 ед. энергии.",
+          "sha": "Стандартная стоимость. Прямой урон увеличен на 30%, итоговый критический урон — на 20%. После «Шага сквозь тень» можно атаковать спереди."
+        },
+        "enUS": {
+          "celestial": "Costs 10 less energy if the target is under your control. Deals 10% less direct damage and awards 2 combo points. A successful hit against such a target restores 10 energy.",
+          "sha": "Standard cost; 30% more direct damage and 20% more final critical damage against all targets. Shadowstep permits frontal use."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Удар в спину, наносящий цели $m2% урона от оружия и дополнительно ${$m1*1.5} единиц урона. Для удара нужно находиться за спиной цели и держать кинжал в правой руке. Длина серии приемов увеличивается на {path}2{/path}. {path}Если цель находится под вашим контролем, стоимость снижается на 10 ед. энергии. Наносимый урон уменьшается на 10%. При успешном попадании по такой цели восстанавливается 10 ед. энергии.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "blind",
+      "base_spell_chain": [
+        2094
+      ],
+      "celestial_first": 86122,
+      "sha_first": 86322,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 48,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "blind",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6182, "sha": 6183},
+      "stock_icon_reference": {
+        "2094": {
+          "SpellIconID": 48,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Перед наложением снимает с цели все эффекты периодического урона.",
+          "sha": "Перезарядка сокращена на 60 сек. Длится 5 сек. Ваши эффекты периодического урона не снимают контроль."
+        },
+        "enUS": {
+          "celestial": "On successful application removes every harmful periodic-damage aura regardless of caster. Range, cost, duration and cooldown remain standard.",
+          "sha": "Cooldown reduced by 60 sec and duration is 5 sec against all targets. Your periodic damage effects do not break it."
+        }
+      }
+    },
+    {
+      "logical_name": "sap",
+      "base_spell_chain": [
+        6770,
+        2070,
+        11297,
+        51724
+      ],
+      "celestial_first": 86123,
+      "sha_first": 86323,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 249,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "sap",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6186, "sha": 6187},
+      "stock_icon_reference": {
+        "6770": {
+          "SpellIconID": 249,
+          "ActiveIconID": 0
+        },
+        "2070": {
+          "SpellIconID": 249,
+          "ActiveIconID": 0
+        },
+        "11297": {
+          "SpellIconID": 249,
+          "ActiveIconID": 0
+        },
+        "51724": {
+          "SpellIconID": 249,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Дальность действия увеличена на 5 м. Против существ продолжительность увеличена на 50%, против игроков — на 2 сек. Досрочное снятие эффекта замедляет цель на 70% и уменьшает наносимый ею урон на 20% на 4 сек.",
+        "sha": "Стандартная стоимость 65 ед. энергии. Действует на находящуюся в бою цель 6 сек. против существ и игроков. Длина серии приёмов увеличивается на 2. Восстановление: 10 сек."
+        },
+        "enUS": {
+          "celestial": "Range +5 yards. Duration is increased by 50% against creatures or by 2 seconds against players before diminishing returns. Early gameplay removal slows the target by 70% and reduces its damage dealt by 20% for 4 seconds.",
+        "sha": "Standard 65 energy cost. Can affect a target in combat for 6 sec against creatures and players and awards 2 combo points. Cooldown: 10 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "ghostly_strike",
+      "base_spell_chain": [
+        14278
+      ],
+      "celestial_first": 86127,
+      "sha_first": 86327,
+      "type": "subtlety_talent",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 596,
+      "skill_line": 253,
+      "talent_requirement": 14278,
+      "cooldown_group": "base",
+      "replacement_group": "ghostly_strike",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6188, "sha": 6189},
+      "stock_icon_reference": {
+        "14278": {
+          "SpellIconID": 596,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Стоимость снижена на 10 ед. энергии, а наносимый урон уменьшен на 20%. Бонус к уклонению увеличен на 15%, а время действия — на 3 сек. Первое успешное уклонение восстанавливает 20 ед. энергии.",
+        "sha": "Стоимость 25 ед. энергии, перезарядка 15 сек., 2 приёма серии. Урон увеличен на 40%. Вместо уклонения успешный удар даёт +20% скорости атаки и уменьшает итоговую броню цели на 20% на 6 сек."
+        },
+        "enUS": {
+          "celestial": "Costs 10 less energy and deals 20% less direct damage. Increases dodge chance by 30% for 10 sec. Grants 1 combo point. The first real dodge restores 20 energy.",
+        "sha": "Costs 25 energy; 15-second cooldown, 2 combo points and 40% more damage against all targets. No dodge bonus. A successful hit instead grants 20% attack speed and reduces the target's final armor by 20% for 6 seconds."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Удар, наносящий урон, равный {path}80%{/path} стандартного урона оружия ({path}115,2%{/path} если вы вооружены кинжалом), и увеличивающий вероятность уклонения от атак на {path}30%{/path} на {path}10{/path} сек. Длина серии приемов увеличивается на 1. {path}Первое успешное уклонение во время действия эффекта восстанавливает 20 ед. энергии.{/path}"
+        }
+      }
+    },
+    {
+      "logical_name": "shiv",
+      "base_spell_chain": [
+        5938
+      ],
+      "celestial_first": 86128,
+      "sha_first": 86328,
+      "type": "common",
+      "visible": true,
+      "script_name": "spell_cultivation_rogue_active",
+      "seven_extension": true,
+      "icon_id": 1834,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "shiv",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6190, "sha": 6191},
+      "stock_icon_reference": {
+        "5938": {
+          "SpellIconID": 1834,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Стоимость снижена на 10 ед. энергии. Успешное попадание накладывает на цель «Фатальное снадобье», делая находящиеся на ней болезни невосприимчивыми к рассеиванию на 8 сек.",
+          "sha": "Стоимость +15 один раз. Два удара левой рукой: 100% и 50% урона, по одной попытке яда; всего 1 приём серии. Ваши яды по цели на 4 сек. сильнее на 20%; не складывается с «Отравляющими веществами». После окна восстановление энергии снижается на 20% на 3 сек."
+        },
+        "enUS": {
+          "celestial": "Reduces the actual standard weapon-derived cost by 10, minimum 0. Retains the standard off-hand hit, 1 combo point and one poison attempt. A hit applies Fatal Concoction for 8 seconds, preventing dispels of harmful diseases.",
+          "sha": "Costs 15 more energy once. Two off-hand hits at 100% and 50%, one poison attempt each and only 1 combo point total. Your poisons deal 20% more damage to this target for 4 seconds; strongest bonus with Master Poisoner. Afterwards energy regeneration is reduced by 20% for 3 seconds."
+        }
+      },
+      "full_descriptions": {
+        "ruRU": {
+          "celestial": "Мгновенная атака оружием в левой руке, отравляющая противника ядом. Чем медленнее действует ваше оружие, тем больше потребуется энергии для этого удара. \"Отравляющий укол\" или яд, накладываемый этой способностью, не могут иметь критического эффекта. Длина серии приемов увеличивается на 1. {path}Успешное попадание накладывает на цель \"Фатальное снадобье\", делая находящиеся на ней болезни невосприимчивыми к рассеиванию на 8 сек.{/path}"
+        }
+      }
+    }
+  ],
+  "passive_spells": [
+    {
+      "logical_name": "overkill",
+      "base_spell_chain": [
+        58426
+      ],
+      "celestial_first": 86400,
+      "sha_first": 86420,
+      "type": "assassination_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6166,
+        "sha": 6167
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "58426": {
+          "SpellIconID": 2285,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Эффект восстановления энергии после выхода из незаметности действует 30 сек.",
+        "sha": "После выхода из незаметности восстановление энергии повышается на 100% на 8 сек."
+        },
+        "enUS": {
+          "celestial": "Retains the normal regeneration bonus after leaving Stealth, extending it to 30 sec.",
+        "sha": "After leaving Stealth, increases energy regeneration by 100% for 8 sec."
+        }
+      }
+    },
+    {
+      "logical_name": "seal_fate",
+      "base_spell_chain": [
+        14186,
+        14190,
+        14193,
+        14194,
+        14195
+      ],
+      "celestial_first": 86401,
+      "sha_first": 86421,
+      "type": "assassination_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6168,
+        "sha": 6169
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "14186": {
+          "SpellIconID": 55,
+          "ActiveIconID": 0
+        },
+        "14190": {
+          "SpellIconID": 55,
+          "ActiveIconID": 0
+        },
+        "14193": {
+          "SpellIconID": 55,
+          "ActiveIconID": 0
+        },
+        "14194": {
+          "SpellIconID": 55,
+          "ActiveIconID": 0
+        },
+        "14195": {
+          "SpellIconID": 55,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Приемы серии, созданные сверх максимума, восстанавливают по 5 ед. энергии, но не более 10 ед. энергии в секунду.",
+        "sha": "С вероятностью {chance}% срабатывание создаёт 2 дополнительных приёма серии вместо 1. Шанс равен 20% за каждый изученный уровень таланта. Внутреннее восстановление усиленного срабатывания — 2 сек."
+        },
+        "enUS": {
+          "celestial": "Retains normal combo-point procs. Each point lost above 5 converts to 5 energy, up to 10 energy per second.",
+        "sha": "A normal proc has a {chance}% chance to grant 2 additional points instead of 1 (20% per learned rank), with a 2-sec internal cooldown on the empowered proc. Normal procs remain available."
+        }
+      }
+    },
+    {
+      "logical_name": "master_poisoner",
+      "base_spell_chain": [
+        31226,
+        31227,
+        58410
+      ],
+      "celestial_first": 86406,
+      "sha_first": 86426,
+      "type": "assassination_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6170,
+        "sha": 6171
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "31226": {
+          "SpellIconID": 1960,
+          "ActiveIconID": 0
+        },
+        "31227": {
+          "SpellIconID": 1960,
+          "ActiveIconID": 0
+        },
+        "58410": {
+          "SpellIconID": 1960,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Время действия наложенных вами ядов увеличено на 50%.",
+        "sha": "Продолжительность ваших ядов уменьшается вдвое, вероятность наложения повышается на 20 процентных пунктов. Наложение первого Смертельного яда на 4 сек. усиливает наносящие урон яды на 20% и замедление калечащего яда до 70%."
+        },
+        "enUS": {
+          "celestial": "The final duration of poisons applied by you is increased by 50% after other modifiers.",
+        "sha": "Your poisons last half as long and have 20 percentage points more application chance. The first Deadly Poison application creates a 4-second window: damaging poisons deal 20% more damage and Crippling Poison slows by 70%."
+        }
+      }
+    },
+    {
+      "logical_name": "combat_potency",
+      "base_spell_chain": [
+        35541,
+        35550,
+        35551,
+        35552,
+        35553
+      ],
+      "celestial_first": 86409,
+      "sha_first": 86429,
+      "type": "combat_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6172,
+        "sha": 6173
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "35541": {
+          "SpellIconID": 2260,
+          "ActiveIconID": 0
+        },
+        "35550": {
+          "SpellIconID": 2260,
+          "ActiveIconID": 0
+        },
+        "35551": {
+          "SpellIconID": 2260,
+          "ActiveIconID": 0
+        },
+        "35552": {
+          "SpellIconID": 2260,
+          "ActiveIconID": 0
+        },
+        "35553": {
+          "SpellIconID": 2260,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Стандартное случайное срабатывание заменено. Каждая успешная атака оружием в левой руке восстанавливает {rank} ед. энергии.",
+          "sha": "Удары оружием в левой руке с вероятностью 25% восстанавливают 10 ед. энергии и повышают скорость атаки на 5% на 4 сек. Эффект суммируется до 3 раз."
+        },
+        "enUS": {
+          "celestial": "Every eligible successful off-hand hit that could trigger the standard talent restores energy equal to the talent rank, from 1 to 5, with 100% chance.",
+          "sha": "Successful off-hand weapon hits have a 25% chance to restore 10 energy and increase attack speed by 5% for 4 seconds, stacking up to 3 times."
+        }
+      }
+    },
+    {
+      "logical_name": "cheat_death",
+      "base_spell_chain": [
+        31228,
+        31229,
+        31230
+      ],
+      "celestial_first": 86414,
+      "sha_first": 86434,
+      "type": "subtlety_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6174,
+        "sha": 6175
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "31228": {
+          "SpellIconID": 2109,
+          "ActiveIconID": 0
+        },
+        "31229": {
+          "SpellIconID": 2109,
+          "ActiveIconID": 0
+        },
+        "31230": {
+          "SpellIconID": 2109,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "После предотвращения смертельного удара получаемый урон уменьшается на 90% на 4 сек., а 10% максимального запаса здоровья восстанавливается за это время. Пока эффект активен, наносимый урон уменьшается на 20%.",
+        "sha": "После предотвращения смерти получаемый урон уменьшается на 80% на 2 сек. Разбойник восстанавливает 60 ед. энергии за 2 сек., завершает восстановление «Шага сквозь тень» и увеличивает наносимый урон на 25%. Стандартное внутреннее восстановление сохраняется."
+        },
+        "enUS": {
+          "celestial": "Retains normal activation conditions and internal cooldown. After preventing death, reduces damage taken by 90% for 4 sec, heals 10% maximum health over that time and reduces damage dealt by 20%.",
+        "sha": "Retains normal activation conditions and internal cooldown. After preventing death, reduces damage taken by 80% for 2 sec, restores 60 energy over 2 sec, resets Shadowstep and increases damage dealt by 25%."
+        }
+      }
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "base_spell_chain": [
+        51698,
+        51700,
+        51701
+      ],
+      "celestial_first": 86417,
+      "sha_first": 86437,
+      "type": "subtlety_passive",
+      "visible": true,
+      "script_name": "",
+      "custom_icon_ids": {
+        "celestial": 6176,
+        "sha": 6177
+      },
+      "icon_source": "approved_path_frame",
+      "stock_icon_reference": {
+        "51698": {
+          "SpellIconID": 2903,
+          "ActiveIconID": 0
+        },
+        "51700": {
+          "SpellIconID": 2903,
+          "ActiveIconID": 0
+        },
+        "51701": {
+          "SpellIconID": 2903,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "До 2 избыточных приёмов серии сохраняются в резерве и автоматически возвращаются после следующего завершающего приёма по той же цели.",
+          "sha": "Критические эффекты союзников больше не создают приёмы серии. Собственные подходящие критические атаки с вероятностью 50% создают дополнительный приём серии, но не более 2 раз в секунду."
+        },
+        "enUS": {
+          "celestial": "Up to 2 excess combo points are reserved and returned after your next finisher against the same target.",
+          "sha": "Allied critical effects no longer grant combo points. Your direct critical attacks have a 50% chance to grant an additional combo point, at most twice per second."
+        }
+      }
+    },
+    {
+      "logical_name": "safe_fall",
+      "base_spell_chain": [
+        1860
+      ],
+      "celestial_first": 86440,
+      "sha_first": 86441,
+      "type": "common_passive",
+      "visible": true,
+      "script_name": "",
+      "seven_extension": true,
+      "icon_id": 1658,
+      "skill_line": 253,
+      "talent_requirement": null,
+      "cooldown_group": "base",
+      "replacement_group": "safe_fall",
+      "icon_source": "approved_path_frame",
+      "custom_icon_ids": {"celestial": 6184, "sha": 6185},
+      "stock_icon_reference": {
+        "1860": {
+          "SpellIconID": 1658,
+          "ActiveIconID": 0
+        }
+      },
+      "descriptions": {
+        "ruRU": {
+          "celestial": "Полностью предотвращает урон от падения и не нарушает незаметность. После падения, которое должно было нанести урон, скорость передвижения повышается на 30% на 4 сек., а первые 2 сек. разбойник невосприимчив к отбрасыванию. Эффект может сработать не чаще одного раза в 10 сек.",
+          "sha": "Урон падения снижен на 70%. Если исходный урон не меньше 10% максимального здоровья и вы выжили: +30 энергии, следующая специальная атака за 5 сек. наносит на 20% больше урона и создаёт 1 приём серии; восстановление 20 сек."
+        },
+        "enUS": {
+          "celestial": "Prevents real fall damage. A dangerous landing grants 30% movement speed for 4 seconds and knockback immunity for 2 seconds; 10-second internal cooldown.",
+          "sha": "Reduces real fall damage by 70%. Surviving a fall worth at least 10% maximum health before reduction restores 30 energy and empowers one special attack within 5 seconds by 20% plus 1 combo point; 20-second internal cooldown."
+        }
+      }
+    }
+  ],
+  "technical_spells": {
+    "celestial_preparation_glyph_cooldown": 86599,
+    "celestial_damage_suppression_20": 86597,
+    "celestial_damage_suppression_15": 86598,
+    "celestial_cheap_shot_guard": 86575,
+    "sha_cheap_shot_mark": 86576,
+    "sha_blind_strike": 86577,
+    "celestial_safe_fall_speed": 86578,
+    "celestial_safe_fall_knockback": 86579,
+    "sha_safe_fall_dive": 86580,
+    "celestial_sap_guard": 86581,
+    "sha_sap_icd": 86582,
+    "sha_sap_strike": 86583,
+    "celestial_ghostly_strike_tracker": 86584,
+    "sha_ghostly_strike_fury": 86585,
+    "sha_ghostly_strike_armor": 86801,
+    "celestial_shiv_protection": 86586,
+    "celestial_shiv_icd": 86587,
+    "sha_shiv_vulnerability": 86588,
+    "sha_shiv_regen_penalty": 86589,
+    "celestial_safe_fall_icd": 86590,
+    "sha_safe_fall_icd": 86591,
+    "sha_opener_armor": 86592,
+    "celestial_shiv_hit": 86593,
+    "sha_shiv_hit": 86594,
+    "sha_shiv_second": 86595,
+    "sha_shadowstep_position": 86596,
+    "celestial_path_passive": 86500,
+    "sha_path_passive": 86501,
+    "celestial_finisher_regen": 86502,
+    "celestial_finisher_guard": 86503,
+    "sha_blood_thrill": 86504,
+    "sha_blood_thrill_icd": 86505,
+    "sha_vanish_exposure": 86506,
+    "sha_sprint_exhaustion": 86507,
+    "celestial_sprint_immunity": 86508,
+    "sha_evasion_haste": 86509,
+    "celestial_cloak_guard": 86510,
+    "sha_feint_discount": 86511,
+    "sha_kick_mark": 86512,
+    "celestial_kidney_guard": 86513,
+    "sha_kidney_mark": 86514,
+    "celestial_fan_guard": 86515,
+    "celestial_dismantle_guard": 86516,
+    "sha_dismantle_mark": 86517,
+    "sha_hunger_penalty": 86518,
+    "sha_overkill_bonus": 86519,
+    "sha_overkill_penalty": 86520,
+    "sha_cold_blood_exposure": 86521,
+    "sha_master_poisoner_window": 86522,
+    "sha_combat_potency_haste": 86523,
+    "celestial_adrenaline_max_energy": 86524,
+    "sha_adrenaline_penalty": 86525,
+    "celestial_killing_spree_guard": 86526,
+    "sha_killing_spree_exposure": 86527,
+    "sha_riposte_haste": 86528,
+    "sha_expose_armor_mark": 86529,
+    "celestial_hemorrhage_charges": 86530,
+    "sha_hemorrhage_charges": 86531,
+    "celestial_ambush_guard": 86532,
+    "sha_garrote_window": 86533,
+    "sha_shadowstep_damage": 86534,
+    "celestial_cheat_death_guard": 86535,
+    "celestial_cheat_death_heal": 86536,
+    "sha_cheat_death_damage": 86537,
+    "sha_honor_rate_limit": 86538,
+    "celestial_eviscerate_armor": 86539,
+    "sha_garrote_eviscerate_armor": 86540,
+    "sha_expose_armor_ignore": 86541,
+    "celestial_stealth_mastery": 86542,
+    "sha_stealth_window": 86543,
+    "sha_vanish_window": 86544,
+    "celestial_gouge_protection": 86545,
+    "sha_gouge_protection": 86546,
+    "celestial_deadly_throw_lockout": 86547,
+    "sha_deadly_throw_blade": 86548,
+    "sha_fan_extra_attack": 86549,
+    "celestial_blade_flurry_copy": 86550,
+    "sha_sinister_extra_attack": 86551,
+    "celestial_premeditation_timer": 86552,
+    "sha_premeditation_timer": 86553,
+    "sha_cold_blood_window": 86554,
+    "celestial_tricks_boost": 86555,
+    "sha_tricks_boost": 86556,
+    "sha_hunger_buff": 86557,
+    "celestial_overkill_bonus": 86558,
+    "celestial_cold_blood_window": 86559,
+    "celestial_riposte_disarm": 86560,
+    "celestial_feint_guard": 86561,
+    "sha_feint_guard": 86562,
+    "celestial_hunger_grace": 86563,
+    "sha_evasion_energy_icd": 86564,
+    "sha_ambush_cost_marker": 86565,
+    "sha_shadow_dance_cost_marker": 86566,
+    "celestial_shadow_dance_cost_marker": 86567,
+    "sha_dismantle_haste": 86568,
+    "celestial_vanish_dot_protection": 86569,
+    "celestial_fan_offhand": 86570,
+    "sha_fan_offhand": 86571,
+    "sha_blade_flurry_copy": 86572,
+    "sha_envenom_detonation": 86573,
+    "sha_cloak_poison_penetration": 86574,
+    "sha_vanish_energy": 86800
+  },
+  "stock_sources": {
+    "duration": {
+      "path": "generated/schema3-audit/stock-SpellDuration.dbc",
+      "sha256": "caa2cbec7fa711bba180af10c253ab0d111609ec2bda1c354fef09e54bc279e4"
+    },
+    "talent_tab": {
+      "path": "generated/schema3-audit/stock-TalentTab.dbc",
+      "sha256": "fad702f4004952fca86d5d191874c7158b7e7ef3249a5e155c5e2240b346d358"
+    },
+    "spell": {
+      "path": "generated/schema3-audit/stock-Spell.dbc",
+      "sha256": "f2cba35613f3399c73bc176eb757edcc5d3785e8103ce70d0d0fecda39572858"
+    },
+    "icon": {
+      "path": "generated/schema3-audit/stock-SpellIcon.dbc",
+      "sha256": "2b12326641dba1554878b3f53c993e1211e50b3839ccdbeca378a23e7b3248db"
+    },
+    "talent": {
+      "path": "generated/schema3-audit/stock-Talent.dbc",
+      "sha256": "23aefff3add151bf504c4d0bab247e2e622f9cf29a473d091cb9f11127d99d68"
+    },
+    "variables": {
+      "path": "generated/schema3-audit/stock-SpellDescriptionVariables.dbc",
+      "sha256": "8b7179ad7561b920ebcba721c1efefb7fc5697f4e7cb8eb30ce30a542daa6d85"
+    }
+  },
+  "stock_scoped_variables": {
+    "1943": 9000,
+    "8639": 9001,
+    "8640": 9002,
+    "11273": 9003,
+    "11274": 9004,
+    "11275": 9005,
+    "26867": 9006,
+    "48671": 9007,
+    "48672": 9008,
+    "5171": 9009,
+    "6774": 9010,
+    "2098": 9011,
+    "6760": 9012,
+    "6761": 9013,
+    "6762": 9014,
+    "8623": 9015,
+    "8624": 9016,
+    "11299": 9017,
+    "11300": 9018,
+    "26865": 9019,
+    "31016": 9020,
+    "48667": 9021,
+    "48668": 9022,
+    "1329": 9023,
+    "34411": 9024,
+    "34412": 9025,
+    "34413": 9026,
+    "48663": 9027,
+    "48666": 9028,
+    "1752": 9029,
+    "1757": 9030,
+    "1758": 9031,
+    "1759": 9032,
+    "1760": 9033,
+    "8621": 9034,
+    "11293": 9035,
+    "11294": 9036,
+    "26861": 9037,
+    "26862": 9038,
+    "48637": 9039,
+    "48638": 9040,
+    "16511": 9041,
+    "17347": 9042,
+    "17348": 9043,
+    "26864": 9044,
+    "48660": 9045
+  },
+  "talent_ui": {
+    "addon": "RoguePathsUI",
+    "interface": 30300,
+    "tab_order": [182, 181, 183],
+    "mappings": [
+      {
+        "logical_name": "mutilate",
+        "talent_id": 1719,
+        "tab_id": 182,
+        "tier": 8,
+        "column": 1,
+        "rank_spells": [
+          1329
+        ]
+      },
+      {
+        "logical_name": "hunger_for_blood",
+        "talent_id": 2071,
+        "tab_id": 182,
+        "tier": 10,
+        "column": 1,
+        "rank_spells": [
+          51662
+        ]
+      },
+      {
+        "logical_name": "cold_blood",
+        "talent_id": 280,
+        "tab_id": 182,
+        "tier": 4,
+        "column": 1,
+        "rank_spells": [
+          14177
+        ]
+      },
+      {
+        "logical_name": "blade_flurry",
+        "talent_id": 223,
+        "tab_id": 181,
+        "tier": 4,
+        "column": 1,
+        "rank_spells": [
+          13877
+        ]
+      },
+      {
+        "logical_name": "adrenaline_rush",
+        "talent_id": 205,
+        "tab_id": 181,
+        "tier": 6,
+        "column": 1,
+        "rank_spells": [
+          13750
+        ]
+      },
+      {
+        "logical_name": "killing_spree",
+        "talent_id": 2076,
+        "tab_id": 181,
+        "tier": 10,
+        "column": 1,
+        "rank_spells": [
+          51690
+        ]
+      },
+      {
+        "logical_name": "riposte",
+        "talent_id": 301,
+        "tab_id": 181,
+        "tier": 2,
+        "column": 1,
+        "rank_spells": [
+          14251
+        ]
+      },
+      {
+        "logical_name": "hemorrhage",
+        "talent_id": 681,
+        "tab_id": 183,
+        "tier": 4,
+        "column": 3,
+        "rank_spells": [
+          16511
+        ]
+      },
+      {
+        "logical_name": "shadowstep",
+        "talent_id": 1714,
+        "tab_id": 183,
+        "tier": 8,
+        "column": 1,
+        "rank_spells": [
+          36554
+        ]
+      },
+      {
+        "logical_name": "shadow_dance",
+        "talent_id": 2081,
+        "tab_id": 183,
+        "tier": 10,
+        "column": 1,
+        "rank_spells": [
+          51713
+        ]
+      },
+      {
+        "logical_name": "preparation",
+        "talent_id": 284,
+        "tab_id": 183,
+        "tier": 4,
+        "column": 1,
+        "rank_spells": [
+          14185
+        ]
+      },
+      {
+        "logical_name": "premeditation",
+        "talent_id": 381,
+        "tab_id": 183,
+        "tier": 6,
+        "column": 1,
+        "rank_spells": [
+          14183
+        ]
+      },
+      {
+        "logical_name": "ghostly_strike",
+        "talent_id": 303,
+        "tab_id": 183,
+        "tier": 2,
+        "column": 1,
+        "rank_spells": [
+          14278
+        ]
+      },
+      {
+        "logical_name": "overkill",
+        "talent_id": 281,
+        "tab_id": 182,
+        "tier": 6,
+        "column": 1,
+        "rank_spells": [
+          58426
+        ]
+      },
+      {
+        "logical_name": "seal_fate",
+        "talent_id": 283,
+        "tab_id": 182,
+        "tier": 5,
+        "column": 1,
+        "rank_spells": [
+          14186,
+          14190,
+          14193,
+          14194,
+          14195
+        ]
+      },
+      {
+        "logical_name": "master_poisoner",
+        "talent_id": 1715,
+        "tab_id": 182,
+        "tier": 8,
+        "column": 0,
+        "rank_spells": [
+          31226,
+          31227,
+          58410
+        ]
+      },
+      {
+        "logical_name": "combat_potency",
+        "talent_id": 1825,
+        "tab_id": 181,
+        "tier": 7,
+        "column": 2,
+        "rank_spells": [
+          35541,
+          35550,
+          35551,
+          35552,
+          35553
+        ]
+      },
+      {
+        "logical_name": "cheat_death",
+        "talent_id": 1722,
+        "tab_id": 183,
+        "tier": 6,
+        "column": 2,
+        "rank_spells": [
+          31228,
+          31229,
+          31230
+        ]
+      },
+      {
+        "logical_name": "honor_among_thieves",
+        "talent_id": 2078,
+        "tab_id": 183,
+        "tier": 8,
+        "column": 0,
+        "rank_spells": [
+          51698,
+          51700,
+          51701
+        ]
+      }
+    ]
+  },
+  "display_passives": [
+    {
+      "logical_name": "overkill",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 58426,
+      "spell_id": 86600,
+      "mechanic_spell": 86400,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 58426
+    },
+    {
+      "logical_name": "overkill",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 58426,
+      "spell_id": 86700,
+      "mechanic_spell": 86420,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 58426
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 14186,
+      "spell_id": 86601,
+      "mechanic_spell": 86401,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14186
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 14186,
+      "spell_id": 86701,
+      "mechanic_spell": 86421,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14186
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 2,
+      "base_spell": 14190,
+      "spell_id": 86602,
+      "mechanic_spell": 86402,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14190
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 2,
+      "base_spell": 14190,
+      "spell_id": 86702,
+      "mechanic_spell": 86422,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14190
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 3,
+      "base_spell": 14193,
+      "spell_id": 86603,
+      "mechanic_spell": 86403,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14193
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 3,
+      "base_spell": 14193,
+      "spell_id": 86703,
+      "mechanic_spell": 86423,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14193
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 4,
+      "base_spell": 14194,
+      "spell_id": 86604,
+      "mechanic_spell": 86404,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14194
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 4,
+      "base_spell": 14194,
+      "spell_id": 86704,
+      "mechanic_spell": 86424,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14194
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 5,
+      "base_spell": 14195,
+      "spell_id": 86605,
+      "mechanic_spell": 86405,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14195
+    },
+    {
+      "logical_name": "seal_fate",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 5,
+      "base_spell": 14195,
+      "spell_id": 86705,
+      "mechanic_spell": 86425,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 14195
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 31226,
+      "spell_id": 86606,
+      "mechanic_spell": 86406,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31226
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 31226,
+      "spell_id": 86706,
+      "mechanic_spell": 86426,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31226
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 2,
+      "base_spell": 31227,
+      "spell_id": 86607,
+      "mechanic_spell": 86407,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31227
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 2,
+      "base_spell": 31227,
+      "spell_id": 86707,
+      "mechanic_spell": 86427,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31227
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 3,
+      "base_spell": 58410,
+      "spell_id": 86608,
+      "mechanic_spell": 86408,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 58410
+    },
+    {
+      "logical_name": "master_poisoner",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 3,
+      "base_spell": 58410,
+      "spell_id": 86708,
+      "mechanic_spell": 86428,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 58410
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 35541,
+      "spell_id": 86609,
+      "mechanic_spell": 86409,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35541
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 35541,
+      "spell_id": 86709,
+      "mechanic_spell": 86429,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35541
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 2,
+      "base_spell": 35550,
+      "spell_id": 86610,
+      "mechanic_spell": 86410,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35550
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 2,
+      "base_spell": 35550,
+      "spell_id": 86710,
+      "mechanic_spell": 86430,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35550
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 3,
+      "base_spell": 35551,
+      "spell_id": 86611,
+      "mechanic_spell": 86411,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35551
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 3,
+      "base_spell": 35551,
+      "spell_id": 86711,
+      "mechanic_spell": 86431,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35551
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 4,
+      "base_spell": 35552,
+      "spell_id": 86612,
+      "mechanic_spell": 86412,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35552
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 4,
+      "base_spell": 35552,
+      "spell_id": 86712,
+      "mechanic_spell": 86432,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35552
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 5,
+      "base_spell": 35553,
+      "spell_id": 86613,
+      "mechanic_spell": 86413,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35553
+    },
+    {
+      "logical_name": "combat_potency",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 5,
+      "base_spell": 35553,
+      "spell_id": 86713,
+      "mechanic_spell": 86433,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 35553
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 31228,
+      "spell_id": 86614,
+      "mechanic_spell": 86414,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31228
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 31228,
+      "spell_id": 86714,
+      "mechanic_spell": 86434,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31228
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 2,
+      "base_spell": 31229,
+      "spell_id": 86615,
+      "mechanic_spell": 86415,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31229
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 2,
+      "base_spell": 31229,
+      "spell_id": 86715,
+      "mechanic_spell": 86435,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31229
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 3,
+      "base_spell": 31230,
+      "spell_id": 86616,
+      "mechanic_spell": 86416,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31230
+    },
+    {
+      "logical_name": "cheat_death",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 3,
+      "base_spell": 31230,
+      "spell_id": 86716,
+      "mechanic_spell": 86436,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 31230
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 51698,
+      "spell_id": 86617,
+      "mechanic_spell": 86417,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51698
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 51698,
+      "spell_id": 86717,
+      "mechanic_spell": 86437,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51698
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 2,
+      "base_spell": 51700,
+      "spell_id": 86618,
+      "mechanic_spell": 86418,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51700
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 2,
+      "base_spell": 51700,
+      "spell_id": 86718,
+      "mechanic_spell": 86438,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51700
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 3,
+      "base_spell": 51701,
+      "spell_id": 86619,
+      "mechanic_spell": 86419,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51701
+    },
+    {
+      "logical_name": "honor_among_thieves",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 3,
+      "base_spell": 51701,
+      "spell_id": 86719,
+      "mechanic_spell": 86439,
+      "talent_required": true,
+      "skill_line": 253,
+      "icon_source_spell": 51701
+    },
+    {
+      "logical_name": "preparation",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 14185,
+      "spell_id": 86621,
+      "mechanic_spell": 86107,
+      "copy_description_from_mechanic": true,
+      "talent_required": true,
+      "skill_line": 39,
+      "icon_source_spell": 14185,
+      "icon_id": 6162
+    },
+    {
+      "logical_name": "stealth_mastery",
+      "type": "display_only_passive",
+      "path": "celestial",
+      "rank": 1,
+      "base_spell": 1860,
+      "spell_id": 86620,
+      "mechanic_spell": 86542,
+      "talent_required": false,
+      "skill_line": 39,
+      "icon_source_spell": 8676,
+      "icon_id": 6192,
+      "names": {
+        "ruRU": "Мастерство незаметности",
+        "enUS": "Stealth Mastery"
+      },
+      "descriptions": {
+        "ruRU": "После 3 сек. непрерывного пребывания в состоянии незаметности штраф к скорости передвижения снимается, а уровень незаметности повышается на 1. Эффект действует до выхода из незаметности.",
+        "enUS": "After 3 seconds continuously in stealth, the movement speed penalty is removed and stealth level increases by 1. The effect ends when you leave stealth."
+      }
+    },
+    {
+      "logical_name": "stealth_mastery",
+      "type": "display_only_passive",
+      "path": "sha",
+      "rank": 1,
+      "base_spell": 1860,
+      "spell_id": 86720,
+      "mechanic_spell": 86543,
+      "talent_required": false,
+      "skill_line": 39,
+      "icon_source_spell": 8676,
+      "icon_id": 6193,
+      "names": {
+        "ruRU": "Мастерство незаметности",
+        "enUS": "Stealth Mastery"
+      },
+      "descriptions": {
+        "ruRU": "Первая специальная прямая атака из незаметности или в течение 3 сек. после выхода стоит на 20 ед. энергии меньше и наносит на 10% больше прямого урона.",
+        "enUS": "Your first special direct attack from stealth or within 3 seconds after leaving it costs 20 less energy and deals 10% more direct damage."
+      }
+    }
+  ],
+  "balance": {
+    "combat_potency": {
+      "celestial_hit_interval": 5,
+      "celestial_energy": 15,
+      "sha_proc_chance": 25,
+      "sha_energy": 10,
+      "sha_haste_percent": 5,
+      "sha_haste_duration_ms": 4000,
+      "sha_max_stacks": 3
+    },
+    "honor_among_thieves": {
+      "celestial_reserve": 2,
+      "sha_proc_chance": 50,
+      "sha_limit": 2,
+      "sha_window_ms": 1000
+    },
+    "master_poisoner": {
+      "sha_damage_percent": 20,
+      "sha_application_percentage_points": 20,
+      "sha_slow_percent": 70
+    }
+  },
+  "technical_presentation": {
+    "celestial_preparation_glyph_cooldown": {
+      "visibility": "hidden",
+      "reason": "conditional native cooldown modifier granted only while Glyph of Preparation is active",
+      "path": "celestial"
+    },
+    "celestial_damage_suppression_20": {
+      "visibility": "visible",
+      "path": "celestial",
+      "preserve_validated_presentation": true
+    },
+    "celestial_damage_suppression_15": {
+      "visibility": "visible",
+      "path": "celestial",
+      "preserve_validated_presentation": true
+    },
+    "celestial_cheap_shot_guard": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_cheap_shot_mark": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1833,
+      "icon_id": 6194,
+      "names": {
+        "ruRU": "Метка подлого трюка",
+        "enUS": "Cheap Shot Mark"
+      },
+      "descriptions": {
+        "ruRU": "На время действия цель получает на 10% больше урона из всех источников.",
+        "enUS": "While active, the target takes 10% more damage from all sources."
+      }
+    },
+    "sha_blind_strike": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_safe_fall_speed": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "celestial_safe_fall_knockback": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_safe_fall_dive": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_sap_guard": {
+      "visibility": "visible",
+      "path": "celestial",
+      "preserve_validated_presentation": true
+    },
+    "sha_sap_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_sap_strike": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_ghostly_strike_tracker": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14278,
+      "names": {
+        "ruRU": "Призрачный удар",
+        "enUS": "Ghostly Strike"
+      },
+      "descriptions": {
+        "ruRU": "Вероятность уклонения повышена на 30%. Первое успешное уклонение восстанавливает 20 ед. энергии.",
+        "enUS": "Dodge chance increased by 30%. The first successful dodge restores 20 energy."
+      }
+    },
+    "sha_ghostly_strike_fury": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14278,
+      "names": {
+        "ruRU": "Призрачный удар",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Скорость атаки увеличена на 20%.",
+        "enUS": "Attack speed increased by 20%."
+      }
+    },
+    "sha_ghostly_strike_armor": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14278,
+      "names": {
+        "ruRU": "Призрачный удар",
+        "enUS": "Ghostly Strike"
+      },
+      "descriptions": {
+        "ruRU": "Итоговая броня цели уменьшена на 20%.",
+        "enUS": "The target's final armor is reduced by 20%."
+      }
+    },
+    "celestial_shiv_protection": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 31226,
+      "names": {
+        "ruRU": "Фатальное снадобье",
+        "enUS": "Fatal Concoction"
+      },
+      "descriptions": {
+        "ruRU": "Отрицательные эффекты болезней невозможно рассеять.",
+        "enUS": "Harmful disease effects cannot be dispelled."
+      }
+    },
+    "celestial_shiv_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_shiv_vulnerability": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_shiv_regen_penalty": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 5938,
+      "names": {
+        "ruRU": "Отравляющий укол",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Восстановление энергии изменено на −20%.",
+        "enUS": "Energy regeneration changed by −20%."
+      }
+    },
+    "celestial_safe_fall_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_safe_fall_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_opener_armor": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_shiv_hit": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_shiv_hit": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_shiv_second": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_shadowstep_position": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_path_passive": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14195,
+      "names": {
+        "ruRU": "Безупречный расчёт",
+        "enUS": "Flawless Calculation"
+      },
+      "descriptions": {
+        "ruRU": "Завершающий приём с 5 приёмами серии восстанавливает 5 ед. энергии в секунду в течение 2 сек. и уменьшает получаемый урон на 5% на 6 сек.",
+        "enUS": "A 5-point finisher restores 5 energy per second for 2 seconds and reduces damage taken by 5% for 6 seconds."
+      }
+    },
+    "sha_path_passive": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14177,
+      "icon_id": 6195,
+      "names": {
+        "ruRU": "Кровавый азарт",
+        "enUS": "Blood Thrill"
+      },
+      "descriptions": {
+        "ruRU": "После выхода из незаметности или применения «Хладнокровия», «Выброса адреналина», «Череды убийств» или «Танца теней» на 6 сек. увеличивает прямой урон и получаемый урон на 8%, а восстановление энергии — на 20%. Внутреннее восстановление — 20 сек.",
+        "enUS": "After leaving stealth or using Cold Blood, Adrenaline Rush, Killing Spree or Shadow Dance: direct damage and damage taken increase by 8%, and energy regeneration by 20%, for 6 seconds. Internal cooldown: 20 seconds."
+      }
+    },
+    "celestial_finisher_regen": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14195,
+      "names": {
+        "ruRU": "Безупречный расчёт",
+        "enUS": "Flawless Calculation"
+      },
+      "descriptions": {
+        "ruRU": "Восстанавливает 5 ед. энергии в секунду.",
+        "enUS": "Restores 5 energy per second."
+      }
+    },
+    "celestial_finisher_guard": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14195,
+      "names": {
+        "ruRU": "Безупречный расчёт",
+        "enUS": "Flawless Calculation"
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон уменьшен на 5%.",
+        "enUS": "Damage taken reduced by 5%."
+      }
+    },
+    "sha_blood_thrill": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14177,
+      "icon_id": 6195,
+      "names": {
+        "ruRU": "Кровавый азарт",
+        "enUS": "Blood Thrill"
+      },
+      "descriptions": {
+        "ruRU": "Прямой урон и получаемый урон увеличены на 8%, восстановление энергии — на 20%.",
+        "enUS": "Direct damage and damage taken increased by 8%; energy regeneration increased by 20%."
+      }
+    },
+    "sha_blood_thrill_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_vanish_exposure": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1856,
+      "names": {
+        "ruRU": "Уязвимость после исчезновения",
+        "enUS": "Vanish Exposure"
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон увеличен на 10%.",
+        "enUS": "Damage taken increased by 10%."
+      }
+    },
+    "sha_sprint_exhaustion": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; Sprint no longer applies exhaustion",
+      "path": "sha"
+    },
+    "celestial_sprint_immunity": {
+      "visibility": "visible",
+      "path": "celestial",
+      "preserve_validated_presentation": true
+    },
+    "sha_evasion_haste": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; Evasion no longer grants attack speed",
+      "path": "sha"
+    },
+    "celestial_cloak_guard": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 31224,
+      "names": {
+        "ruRU": "Защита плаща Теней",
+        "enUS": "Cloak Protection"
+      },
+      "descriptions": {
+        "ruRU": "Получаемый магический урон уменьшен на 20%.",
+        "enUS": "Magic damage taken reduced by 20%."
+      }
+    },
+    "sha_feint_discount": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1966,
+      "names": {
+        "ruRU": "Ложный выпад",
+        "enUS": "Feint"
+      },
+      "descriptions": {
+        "ruRU": "Следующая специальная прямая атака расходует на 15 ед. энергии меньше.",
+        "enUS": "Your next direct special attack costs 15 less energy."
+      }
+    },
+    "sha_kick_mark": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1766,
+      "names": {
+        "ruRU": "Уязвимость после пинка",
+        "enUS": "Kick Vulnerability"
+      },
+      "descriptions": {
+        "ruRU": "Прямой урон применившего эффект разбойника увеличен на 10%.",
+        "enUS": "Direct damage from the applying rogue increased by 10%."
+      }
+    },
+    "celestial_kidney_guard": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_kidney_mark": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 408,
+      "icon_id": 6194,
+      "names": {
+        "ruRU": "Уязвимость после удара по почкам",
+        "enUS": "Kidney Shot Vulnerability"
+      },
+      "descriptions": {
+        "ruRU": "На время действия цель получает на 15% больше урона из всех источников.",
+        "enUS": "While active, the target takes 15% more damage from all sources."
+      }
+    },
+    "celestial_fan_guard": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "celestial_dismantle_guard": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_dismantle_mark": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 51722,
+      "icon_id": 6194,
+      "names": {
+        "ruRU": "Уязвимость после разоружения",
+        "enUS": "Dismantle Vulnerability"
+      },
+      "descriptions": {
+        "ruRU": "Прямой урон применившего эффект разбойника увеличен на 15%.",
+        "enUS": "Direct damage from the applying rogue increased by 15%."
+      }
+    },
+    "sha_hunger_penalty": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 51662,
+      "names": {
+        "ruRU": "Истощение жажды крови",
+        "enUS": "Hunger for Blood Exhaustion"
+      },
+      "descriptions": {
+        "ruRU": "Наносимый урон уменьшен на 5%.",
+        "enUS": "Damage dealt reduced by 5%."
+      }
+    },
+    "sha_overkill_bonus": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 58426,
+      "names": {
+        "ruRU": "Бойня",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Восстановление энергии изменено на +100%.",
+        "enUS": "Energy regeneration changed by +100%."
+      }
+    },
+    "sha_overkill_penalty": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; Sha Overkill no longer applies a regeneration penalty",
+      "path": "sha"
+    },
+    "sha_cold_blood_exposure": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14177,
+      "names": {
+        "ruRU": "Уязвимость после хладнокровия",
+        "enUS": "Cold Blood Exposure"
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон увеличен на 10%.",
+        "enUS": "Damage taken increased by 10%."
+      }
+    },
+    "sha_master_poisoner_window": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 58410,
+      "names": {
+        "ruRU": "Мастер ядов",
+        "enUS": "Master Poisoner"
+      },
+      "descriptions": {
+        "ruRU": "Наносящие урон яды применившего эффект разбойника усилены на 20%. Калечащий яд замедляет на 70%.",
+        "enUS": "Damaging poisons from the applying rogue are increased by 20%. Crippling Poison slows by 70%."
+      }
+    },
+    "sha_combat_potency_haste": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 35541,
+      "names": {
+        "ruRU": "Боевой потенциал",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Скорость атаки увеличена на 5%.",
+        "enUS": "Attack speed increased by 5%."
+      }
+    },
+    "celestial_adrenaline_max_energy": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 13750,
+      "names": {
+        "ruRU": "Выброс адреналина",
+        "enUS": "Adrenaline Rush"
+      },
+      "descriptions": {
+        "ruRU": "Максимальный запас энергии увеличен на 50.",
+        "enUS": "Maximum energy increased by 50."
+      }
+    },
+    "sha_adrenaline_penalty": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 13750,
+      "names": {
+        "ruRU": "Истощение после выброса адреналина",
+        "enUS": "Adrenaline Exhaustion"
+      },
+      "descriptions": {
+        "ruRU": "Восстановление энергии уменьшено на 50%.",
+        "enUS": "Energy regeneration reduced by 50%."
+      }
+    },
+    "celestial_killing_spree_guard": {
+      "visibility": "hidden",
+      "path": "celestial",
+      "icon_source_spell": 51690,
+      "names": {
+        "ruRU": "Череда убийств",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон изменён на −50%.",
+        "enUS": "Damage taken changed by −50%."
+      }
+    },
+    "sha_killing_spree_exposure": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 51690,
+      "names": {
+        "ruRU": "Череда убийств",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон изменён на +20%.",
+        "enUS": "Damage taken changed by +20%."
+      }
+    },
+    "sha_riposte_haste": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14251,
+      "names": {
+        "ruRU": "Ответный удар",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Скорость атаки увеличена на 25%.",
+        "enUS": "Attack speed increased by 25%."
+      }
+    },
+    "sha_expose_armor_mark": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; Sha Expose Armor now changes the shared native armor reduction to 35%",
+      "path": "sha"
+    },
+    "celestial_hemorrhage_charges": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 16511,
+      "names": {
+        "ruRU": "Кровоизлияние",
+        "enUS": "Hemorrhage"
+      },
+      "descriptions": {
+        "ruRU": "Персональные заряды стандартного дополнительного урона «Кровоизлияния».",
+        "enUS": "Personal charges of normal Hemorrhage bonus damage."
+      }
+    },
+    "sha_hemorrhage_charges": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 16511,
+      "names": {
+        "ruRU": "Кровоизлияние",
+        "enUS": "Hemorrhage"
+      },
+      "descriptions": {
+        "ruRU": "Персональные заряды утроенного дополнительного урона «Кровоизлияния».",
+        "enUS": "Personal charges of triple Hemorrhage bonus damage."
+      }
+    },
+    "celestial_ambush_guard": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_garrote_window": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 703,
+      "names": {
+        "ruRU": "Уязвимость после гарроты",
+        "enUS": "Garrote Vulnerability"
+      },
+      "descriptions": {
+        "ruRU": "Следующее успешное «Потрошение» применившего эффект разбойника игнорирует 30% брони.",
+        "enUS": "The applying rogue’s next successful Eviscerate ignores 30% armor."
+      }
+    },
+    "sha_shadowstep_damage": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 36554,
+      "names": {
+        "ruRU": "Шаг сквозь тень",
+        "enUS": "Shadowstep"
+      },
+      "descriptions": {
+        "ruRU": "Следующая специальная прямая атака наносит на 40% больше урона.",
+        "enUS": "Your next special direct attack deals 40% more damage."
+      }
+    },
+    "celestial_cheat_death_guard": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 31228,
+      "names": {
+        "ruRU": "Обман смерти",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон изменён на −90%.",
+        "enUS": "Damage taken changed by −90%."
+      }
+    },
+    "celestial_cheat_death_heal": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 31230,
+      "names": {
+        "ruRU": "Восстановление после обмана смерти",
+        "enUS": "Cheat Death Recovery"
+      },
+      "descriptions": {
+        "ruRU": "Восстанавливает 10% максимального здоровья за 4 сек.",
+        "enUS": "Restores 10% maximum health over 4 seconds."
+      }
+    },
+    "sha_cheat_death_damage": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 31230,
+      "names": {
+        "ruRU": "Обман смерти",
+        "enUS": "Cheat Death"
+      },
+      "descriptions": {
+        "ruRU": "Наносимый урон увеличен на 25%.",
+        "enUS": "Damage dealt increased by 25%."
+      }
+    },
+    "sha_honor_rate_limit": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_eviscerate_armor": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 2098,
+      "names": {
+        "ruRU": "Потрошение",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Игнорирование брони увеличено на 25%.",
+        "enUS": "Armor penetration increased by 25%."
+      }
+    },
+    "sha_garrote_eviscerate_armor": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 703,
+      "names": {
+        "ruRU": "Гаррота",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Игнорирование брони увеличено на 30%.",
+        "enUS": "Armor penetration increased by 30%."
+      }
+    },
+    "sha_expose_armor_ignore": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; no personal armor-ignore effect remains",
+      "path": "sha"
+    },
+    "celestial_stealth_mastery": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 8676,
+      "icon_id": 6192,
+      "names": {
+        "ruRU": "Мастерство незаметности",
+        "enUS": "Stealth Mastery"
+      },
+      "descriptions": {
+        "ruRU": "Штраф скорости незаметности снят; уровень незаметности повышен на 1.",
+        "enUS": "Removes the Stealth speed penalty and increases Stealth level by 1."
+      }
+    },
+    "sha_stealth_window": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_vanish_window": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1856,
+      "names": {
+        "ruRU": "Исчезновение",
+        "enUS": "Vanish"
+      },
+      "descriptions": {
+        "ruRU": "Первый специальный удар из незаметности получает +30% итогового критического урона. Некритический удар также расходует эффект.",
+        "enUS": "The first special attack from stealth gains 30% final critical damage. A non-critical attack also consumes this effect."
+      }
+    },
+    "celestial_gouge_protection": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_gouge_protection": {
+      "visibility": "hidden",
+      "reason": "retired compatibility record; poison and bleed protection is keyed directly to the active Gouge aura",
+      "path": "sha"
+    },
+    "celestial_deadly_throw_lockout": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_deadly_throw_blade": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_fan_extra_attack": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_blade_flurry_copy": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_sinister_extra_attack": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_premeditation_timer": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_premeditation_timer": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_cold_blood_window": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 14177,
+      "names": {
+        "ruRU": "Хладнокровие",
+        "enUS": "Cold Blood"
+      },
+      "descriptions": {
+        "ruRU": "Следующая специальная прямая атака гарантированно критическая и получает +40% итогового критического урона.",
+        "enUS": "Your next direct special attack is a guaranteed critical strike and gains 40% final critical damage."
+      }
+    },
+    "celestial_tricks_boost": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 57934,
+      "names": {
+        "ruRU": "Маленькие хитрости",
+        "enUS": "Tricks of the Trade"
+      },
+      "descriptions": {
+        "ruRU": "Наносимый урон увеличен на 10%.",
+        "enUS": "Damage dealt increased by 10%."
+      }
+    },
+    "sha_tricks_boost": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 57934,
+      "names": {
+        "ruRU": "Маленькие хитрости",
+        "enUS": "Tricks of the Trade"
+      },
+      "descriptions": {
+        "ruRU": "Наносимый урон увеличен на 25%.",
+        "enUS": "Damage dealt increased by 25%."
+      }
+    },
+    "sha_hunger_buff": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 51662,
+      "names": {
+        "ruRU": "Жажда крови",
+        "enUS": "Hunger for Blood"
+      },
+      "descriptions": {
+        "ruRU": "Прямой урон увеличен на 12%.",
+        "enUS": "Direct damage increased by 12%."
+      }
+    },
+    "celestial_overkill_bonus": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 58426,
+      "names": {
+        "ruRU": "Бойня",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Скорость восстановления энергии повышена на 30%.",
+        "enUS": "Energy regeneration rate increased by 30%."
+      }
+    },
+    "celestial_cold_blood_window": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14177,
+      "names": {
+        "ruRU": "Хладнокровие",
+        "enUS": "Cold Blood"
+      },
+      "descriptions": {
+        "ruRU": "Вероятность критического удара следующих двух атакующих способностей повышена на 100%.",
+        "enUS": "Critical strike chance of your next two offensive abilities increased by 100%."
+      }
+    },
+    "celestial_riposte_disarm": {
+      "visibility": "visible",
+      "path": "celestial",
+      "icon_source_spell": 14251,
+      "names": {
+        "ruRU": "Ответный удар",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Оружие недоступно.",
+        "enUS": "Disarmed."
+      }
+    },
+    "celestial_feint_guard": {
+      "visibility": "visible",
+      "path": "celestial",
+      "preserve_validated_presentation": true
+    },
+    "sha_feint_guard": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 1966,
+      "names": {
+        "ruRU": "Ложный выпад",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Получаемый урон от атак по области уменьшен на 30%.",
+        "enUS": "Area damage taken reduced by 30%."
+      }
+    },
+    "celestial_hunger_grace": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_evasion_energy_icd": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_ambush_cost_marker": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_shadow_dance_cost_marker": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "celestial_shadow_dance_cost_marker": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_dismantle_haste": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 51722,
+      "names": {
+        "ruRU": "Долой оружие",
+        "enUS": ""
+      },
+      "descriptions": {
+        "ruRU": "Скорость атаки увеличена на 20%.",
+        "enUS": "Attack speed increased by 20%."
+      }
+    },
+    "celestial_vanish_dot_protection": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "celestial_fan_offhand": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "celestial"
+    },
+    "sha_fan_offhand": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_blade_flurry_copy": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_envenom_detonation": {
+      "visibility": "hidden",
+      "reason": "internal proc/cast/timer tracker; not a second learned spell",
+      "path": "sha"
+    },
+    "sha_cloak_poison_penetration": {
+      "visibility": "visible",
+      "path": "sha",
+      "icon_source_spell": 31224,
+      "names": {
+        "ruRU": "Неотвратимые яды",
+        "enUS": "Unavoidable Poisons"
+      },
+      "descriptions": {
+        "ruRU": "Собственные яды не могут промахнуться или быть сопротивлены.",
+        "enUS": "Your poisons cannot miss or be resisted."
+      }
+    },
+    "sha_vanish_energy": {
+      "visibility": "hidden",
+      "reason": "internal periodic energy effect owned by Sha Vanish",
+      "path": "sha"
+    }
+  }
+}

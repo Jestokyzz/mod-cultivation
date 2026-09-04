@@ -1,0 +1,46 @@
+{
+  "candidate": "v2.0.0-candidate1",
+  "status": "candidate-installed-client-acceptance-pending",
+  "production_modified": false,
+  "core_revision": "7c8ed00e7f654617a47bdf728b49707f60aa1aae",
+  "module": "mod-cultivation",
+  "subsystems": ["rogue"],
+  "command": ".cultivation rogue <action>",
+  "schema_version": 6,
+  "static": {
+    "status": "passed",
+    "generated_data_tests": 39,
+    "architecture_tests": 5,
+    "tooltip_records": 600,
+    "icon_mappings": 343,
+    "display_records": 43,
+    "talent_nodes": 19
+  },
+  "build": {
+    "status": "passed",
+    "worldserver_sha256": "76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20",
+    "worldserver_bytes": 59084288
+  },
+  "database_migration": {
+    "status": "passed",
+    "scope": "cultivation_test_*_v1 only",
+    "source_rows": 63,
+    "source_path_sum": 83,
+    "suppressed_action_rows": 38,
+    "schema_mismatch_rows": 0,
+    "backup": "F:\\JestokyCraft Backups\\cultivation\\pre-test-schema6-20260904T111525"
+  },
+  "runtime": {
+    "status": "passed",
+    "test_server": "C:\\Solo WotLK\\test-server\\20260904-cultivation-v1",
+    "ordinary_player_command_cycle": "passed",
+    "persistence_actionbar_cooldown_relog": "passed",
+    "negative_class_and_level_checks": "passed",
+    "restart_check": "passed"
+  },
+  "pending": [
+    "GUI/gameplay acceptance by the user in the 1920x1080 borderless clone client",
+    "publication destination confirmation",
+    "merge to main, SemVer tag, and GitHub Release"
+  ]
+}

@@ -1,0 +1,459 @@
+--- a/src/server/game/Scripting/ScriptDefines/AllSpellScript.h
++++ b/src/server/game/Scripting/ScriptDefines/AllSpellScript.h
+@@ -19,6 +19,7 @@
+ #define SCRIPT_OBJECT_ALL_SPELL_SCRIPT_H_
+
+ #include "ScriptObject.h"
++#include "SharedDefines.h"
+ #include <vector>
+
+ enum AllSpellHook
+@@ -38,8 +39,14 @@
+     ALLSPELLHOOK_ON_CAST,
+     ALLSPELLHOOK_ON_PREPARE,
+     ALLSPELLHOOK_CAN_CAST_WHILE_MOVING,
++    ALLSPELLHOOK_MODIFY_POWER_COST,
++    ALLSPELLHOOK_MODIFY_CRIT_CHANCE,
++    ALLSPELLHOOK_ON_CRIT_RESULT,
++    ALLSPELLHOOK_MODIFY_DISPEL_CHARGES,
++    ALLSPELLHOOK_MODIFY_ITEM_COMBAT_SPELL_CHANCE,
++    ALLSPELLHOOK_MODIFY_SPELL_HIT_RESULT,
++    ALLSPELLHOOK_CAN_REMOVE_AURA_ON_DAMAGE,
+     ALLSPELLHOOK_MODIFY_DAMAGE,
+-    ALLSPELLHOOK_MODIFY_DAMAGE_FOR_CLIENT,
+     ALLSPELLHOOK_MODIFY_THREAT,
+     ALLSPELLHOOK_END
+ };
+@@ -110,14 +117,30 @@
+
+     [[nodiscard]] virtual bool CanCastWhileMoving(Spell* /*spell*/) { return false; }
+
++    // Called after the core and SpellMod system calculate the final resource
++    // cost, but before the cast checks and spends that resource.
++    virtual void ModifyPowerCost(Spell* /*spell*/, int32& /*powerCost*/) { }
++
++    // Called after caster/target critical-strike modifiers and before the roll.
++    virtual void ModifyCritChance(Spell* /*spell*/, Unit* /*target*/, float& /*critChance*/) { }
++
++    virtual void OnCritResult(Spell* /*spell*/, Unit* /*target*/, bool /*critical*/) { }
++
++    virtual void ModifyDispelCharges(Spell* /*spell*/, Aura const* /*aura*/, uint8& /*charges*/) { }
++
++    virtual void ModifyItemCombatSpellChance(Player* /*player*/, Unit* /*target*/, SpellInfo const* /*spellInfo*/, float& /*chance*/) { }
++
++    virtual void ModifySpellHitResult(Spell* /*spell*/, Unit* /*target*/, SpellMissInfo& /*missInfo*/) { }
++
++    [[nodiscard]] virtual bool CanRemoveAuraOnDamage(Unit* /*victim*/, Aura const* /*aura*/, Unit* /*attacker*/,
++        SpellInfo const* /*damageSpell*/, DamageEffectType /*damageType*/) { return true; }
++
+     virtual void ModifyDamage(Unit* /*attacker*/, Unit* /*victim*/, SpellInfo const* /*spellInfo*/, DamageEffectType /*damageType*/, uint32& /*damage*/) { }
++    virtual void ModifyThreat(Unit* /*source*/, Unit* /*threatened*/, SpellInfo const* /*spellInfo*/, float& /*threat*/) { }
+
+     // Called while serializing the already mitigated damage value. It must not
+     // alter server health; it keeps client combat text/logs aligned with a late
+     // gameplay modifier applied by ModifyDamage in Unit::DealDamage.
+-    virtual void ModifyDamageForClient(Unit* /*attacker*/, Unit* /*victim*/, SpellInfo const* /*spellInfo*/, DamageEffectType /*damageType*/, uint32& /*damage*/) { }
+-
+-    virtual void ModifyThreat(Unit* /*source*/, Unit* /*threatened*/, SpellInfo const* /*spellInfo*/, float& /*threat*/) { }
+ };
+
+ // Compatibility for old scripts
+--- a/src/server/game/Scripting/ScriptDefines/AllSpellScript.cpp
++++ b/src/server/game/Scripting/ScriptDefines/AllSpellScript.cpp
+@@ -94,19 +94,48 @@
+     CALL_ENABLED_BOOLEAN_HOOKS_WITH_DEFAULT_FALSE(AllSpellScript, ALLSPELLHOOK_CAN_CAST_WHILE_MOVING, script->CanCastWhileMoving(spell));
+ }
+
++void ScriptMgr::ModifyPowerCost(Spell* spell, int32& powerCost)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_POWER_COST, script->ModifyPowerCost(spell, powerCost));
++}
++
++void ScriptMgr::ModifyCritChance(Spell* spell, Unit* target, float& critChance)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_CRIT_CHANCE, script->ModifyCritChance(spell, target, critChance));
++}
++
++void ScriptMgr::OnCritResult(Spell* spell, Unit* target, bool critical)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_ON_CRIT_RESULT, script->OnCritResult(spell, target, critical));
++}
++
++void ScriptMgr::ModifyDispelCharges(Spell* spell, Aura const* aura, uint8& charges)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_DISPEL_CHARGES, script->ModifyDispelCharges(spell, aura, charges));
++}
++
++void ScriptMgr::ModifyItemCombatSpellChance(Player* player, Unit* target, SpellInfo const* spellInfo, float& chance)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_ITEM_COMBAT_SPELL_CHANCE,
++        script->ModifyItemCombatSpellChance(player, target, spellInfo, chance));
++}
++
++void ScriptMgr::ModifySpellHitResult(Spell* spell, Unit* target, SpellMissInfo& missInfo)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_SPELL_HIT_RESULT,
++        script->ModifySpellHitResult(spell, target, missInfo));
++}
++
++bool ScriptMgr::CanRemoveAuraOnDamage(Unit* victim, Aura const* aura, Unit* attacker, SpellInfo const* damageSpell,
++    DamageEffectType damageType)
++{
++    CALL_ENABLED_BOOLEAN_HOOKS(AllSpellScript, ALLSPELLHOOK_CAN_REMOVE_AURA_ON_DAMAGE,
++        !script->CanRemoveAuraOnDamage(victim, aura, attacker, damageSpell, damageType));
++}
++
+ void ScriptMgr::ModifyDamage(Unit* attacker, Unit* victim, SpellInfo const* spellInfo, DamageEffectType damageType, uint32& damage)
+ {
+     CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_DAMAGE, script->ModifyDamage(attacker, victim, spellInfo, damageType, damage));
+-}
+-
+-void ScriptMgr::ModifyDamageForClient(Unit* attacker, Unit* victim, SpellInfo const* spellInfo, DamageEffectType damageType, uint32& damage)
+-{
+-    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_DAMAGE_FOR_CLIENT, script->ModifyDamageForClient(attacker, victim, spellInfo, damageType, damage));
+-}
+-
+-void ScriptMgr::ModifyThreat(Unit* source, Unit* threatened, SpellInfo const* spellInfo, float& threat)
+-{
+-    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_THREAT, script->ModifyThreat(source, threatened, spellInfo, threat));
+ }
+
+ AllSpellScript::AllSpellScript(char const* name, std::vector<uint16> enabledHooks)
+@@ -120,4 +149,9 @@
+     ScriptRegistry<AllSpellScript>::AddScript(this, std::move(enabledHooks));
+ }
+
++void ScriptMgr::ModifyThreat(Unit* source, Unit* threatened, SpellInfo const* spellInfo, float& threat)
++{
++    CALL_ENABLED_HOOKS(AllSpellScript, ALLSPELLHOOK_MODIFY_THREAT, script->ModifyThreat(source, threatened, spellInfo, threat));
++}
++
+ template class AC_GAME_API ScriptRegistry<AllSpellScript>;
+--- a/src/server/game/Scripting/ScriptMgr.h
++++ b/src/server/game/Scripting/ScriptMgr.h
+@@ -331,6 +331,7 @@
+     void OnPlayerTalentsReset(Player* player, bool noCost);
+     bool OnPlayerCanLearnTalent(Player* player, TalentEntry const* talent, uint32 rank);
+     void OnPlayerAfterSpecSlotChanged(Player* player, uint8 newSlot);
++    bool OnPlayerBeforeLoadActionButton(Player* player, uint8 button, uint32& action, uint8& type);
+     void OnPlayerMoneyChanged(Player* player, int32& amount);
+     void OnPlayerBeforeLootMoney(Player* player, Loot* loot);
+     void OnPlayerBeforeSendLoot(Player* player, ObjectGuid lootGuid, Loot* loot);
+@@ -664,8 +665,14 @@
+     void OnSpellCast(Spell* spell, Unit* caster, SpellInfo const* spellInfo, bool skipCheck);
+     void OnSpellPrepare(Spell* spell, Unit* caster, SpellInfo const* spellInfo);
+     bool CanCastWhileMoving(Spell* spell);
++    void ModifyPowerCost(Spell* spell, int32& powerCost);
++    void ModifyCritChance(Spell* spell, Unit* target, float& critChance);
++    void OnCritResult(Spell* spell, Unit* target, bool critical);
++    void ModifyDispelCharges(Spell* spell, Aura const* aura, uint8& charges);
++    void ModifyItemCombatSpellChance(Player* player, Unit* target, SpellInfo const* spellInfo, float& chance);
++    void ModifySpellHitResult(Spell* spell, Unit* target, SpellMissInfo& missInfo);
++    bool CanRemoveAuraOnDamage(Unit* victim, Aura const* aura, Unit* attacker, SpellInfo const* damageSpell, DamageEffectType damageType);
+     void ModifyDamage(Unit* attacker, Unit* victim, SpellInfo const* spellInfo, DamageEffectType damageType, uint32& damage);
+-    void ModifyDamageForClient(Unit* attacker, Unit* victim, SpellInfo const* spellInfo, DamageEffectType damageType, uint32& damage);
+     void ModifyThreat(Unit* source, Unit* threatened, SpellInfo const* spellInfo, float& threat);
+
+ public: /* GameEventScript */
+--- a/src/server/game/Spells/Spell.cpp
++++ b/src/server/game/Spells/Spell.cpp
+@@ -2402,7 +2402,9 @@
+     // Calculate hit result
+     if (m_originalCaster)
+     {
+-        targetInfo.missCondition = m_originalCaster->SpellHitResult(target, this, m_canReflect);
++        SpellMissInfo missCondition = m_originalCaster->SpellHitResult(target, this, m_canReflect);
++        sScriptMgr->ModifySpellHitResult(this, target, missCondition);
++        targetInfo.missCondition = missCondition;
+         if (m_skipCheck && targetInfo.missCondition != SPELL_MISS_IMMUNE)
+         {
+             targetInfo.missCondition = SPELL_MISS_NONE;
+@@ -3519,6 +3521,8 @@
+     OnSpellLaunch();
+
+     m_powerCost = m_CastItem ? 0 : m_spellInfo->CalcPowerCost(m_caster, m_spellSchoolMask, this);
++    sScriptMgr->ModifyPowerCost(this, m_powerCost);
++    m_powerCost = std::max<int32>(0, m_powerCost);
+
+     // Set combo point requirement
+     if (HasTriggeredCastFlag(TRIGGERED_IGNORE_COMBO_POINTS) || m_CastItem)
+@@ -8433,7 +8437,9 @@
+
+     float critChance = caster->SpellDoneCritChance(unit, m_spellInfo, m_spellSchoolMask, m_attackType, false);
+     critChance = unit->SpellTakenCritChance(caster, m_spellInfo, m_spellSchoolMask, critChance, m_attackType, false);
++    sScriptMgr->ModifyCritChance(this, unit, critChance);
+     targetInfo.crit = roll_chance_f(std::max(0.0f, critChance));
++    sScriptMgr->OnCritResult(this, unit, targetInfo.crit);
+ }
+
+ SpellCastResult Spell::CanOpenLock(uint32 effIndex, uint32 lockId, SkillType& skillId, int32& reqSkillValue, int32& skillValue)
+--- a/src/server/scripts/Spells/spell_rogue.cpp
++++ b/src/server/scripts/Spells/spell_rogue.cpp
+@@ -323,6 +323,23 @@
+
+     void HandleEffectPeriodic(AuraEffect const* /*aurEff*/)
+     {
++        if (!_primaryTarget.IsEmpty())
++        {
++            if (Unit* target = ObjectAccessor::GetUnit(*GetTarget(), _primaryTarget))
++            {
++                if (GetTarget()->IsValidAttackTarget(target) && !target->HasStealthAura() && !target->HasInvisibilityAura())
++                {
++                    GetTarget()->CastSpell(target, SPELL_ROGUE_KILLING_SPREE_TELEPORT, true);
++                    WorldLocation const& dest = GetTarget()->ToPlayer()->GetTeleportDest();
++                    GetTarget()->ToPlayer()->UpdatePosition(dest, true);
++                    GetTarget()->CastSpell(target, SPELL_ROGUE_KILLING_SPREE_WEAPON_DMG,
++                        TriggerCastFlags(TRIGGERED_FULL_MASK & ~TRIGGERED_DONT_REPORT_CAST_ERROR));
++                    return;
++                }
++            }
++            _primaryTarget.Clear();
++        }
++
+         while (!_targets.empty())
+         {
+             ObjectGuid guid = Acore::Containers::SelectRandomContainerElement(_targets);
+@@ -357,6 +374,8 @@
+ public:
+     void AddTarget(Unit* target)
+     {
++        if (GetId() == 86077 && _primaryTarget.IsEmpty())
++            _primaryTarget = target->GetGUID();
+         _targets.push_back(target->GetGUID());
+     }
+
+@@ -369,6 +388,7 @@
+
+ private:
+     GuidList _targets;
++    ObjectGuid _primaryTarget;
+ };
+
+ #define KillingSpreeScriptName "spell_rog_killing_spree"
+@@ -404,7 +424,7 @@
+
+     void HandleDummy(SpellEffIndex /*effIndex*/)
+     {
+-        if (Aura* aura = GetCaster()->GetAura(SPELL_ROGUE_KILLING_SPREE))
++        if (Aura* aura = GetCaster()->GetAura(GetSpellInfo()->Id))
+         {
+             if (spell_rog_killing_spree_aura* script = dynamic_cast<spell_rog_killing_spree_aura_script*>(aura->GetScriptByName(KillingSpreeScriptName)))
+                 script->AddTarget(GetHitUnit());
+--- a/src/server/game/Spells/SpellEffects.cpp
++++ b/src/server/game/Spells/SpellEffects.cpp
+@@ -2677,6 +2677,7 @@
+     dataSuccess << uint32(success_list.size());            // count
+     for (DispelChargesList::iterator itr = success_list.begin(); itr != success_list.end(); ++itr)
+     {
++        sScriptMgr->ModifyDispelCharges(this, itr->first, itr->second);
+         // Send dispelled spell info
+         dataSuccess << uint32(itr->first->GetId());              // Spell Id
+         dataSuccess << uint8(0);                        // 0 - dispelled !=0 cleansed
+--- a/src/server/game/Entities/Unit/Unit.cpp
++++ b/src/server/game/Entities/Unit/Unit.cpp
+@@ -1017,6 +1017,7 @@
+ uint32 Unit::DealDamage(Unit* attacker, Unit* victim, uint32 damage, CleanDamage const* cleanDamage, DamageEffectType damagetype, SpellSchoolMask damageSchoolMask, SpellInfo const* spellProto, bool durabilityLoss, bool /*allowGM*/, Spell const* damageSpell /*= nullptr*/)
+ {
+     damage = sScriptMgr->DealDamage(attacker, victim, damage, damagetype);
++    sScriptMgr->ModifyDamage(attacker, victim, spellProto, damagetype, damage);
+     // Xinef: initialize damage done for rage calculations
+     // Xinef: its rare to modify damage in hooks, however training dummy's sets damage to 0
+     uint32 rage_damage = damage + ((cleanDamage != nullptr) ? cleanDamage->absorbed_damage : 0);
+@@ -1064,10 +1065,10 @@
+                 attacker->DealDamageShieldDamage(victim);
+
+             if (!spellProto->HasAttribute(SPELL_ATTR4_DAMAGE_DOESNT_BREAK_AURAS))
+-                victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TAKE_DAMAGE, spellProto->Id);
++                victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TAKE_DAMAGE, spellProto->Id, false, damagetype, attacker, spellProto);
+         }
+         else
+-            victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TAKE_DAMAGE, 0);
++            victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TAKE_DAMAGE, 0, false, damagetype, attacker, nullptr);
+
+         // interrupt spells with SPELL_INTERRUPT_FLAG_ABORT_ON_DMG on absorbed damage (no dots)
+         if (!damage && damagetype != DOT && cleanDamage && cleanDamage->absorbed_damage)
+@@ -1284,7 +1285,8 @@
+         victim->ModifyHealth(- (int32)damage);
+
+         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
+-            victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DIRECT_DAMAGE, spellProto ? spellProto->Id : 0);
++            victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DIRECT_DAMAGE, spellProto ? spellProto->Id : 0,
++                false, damagetype, attacker, spellProto);
+
+         if (!victim->IsPlayer())
+         {
+@@ -5444,7 +5446,8 @@
+     }
+ }
+
+-void Unit::RemoveAurasWithInterruptFlags(uint32 flag, uint32 except, bool isAutoshot /*= false*/)
++void Unit::RemoveAurasWithInterruptFlags(uint32 flag, uint32 except, bool isAutoshot /*= false*/,
++    DamageEffectType damageType /*= NODAMAGE*/, Unit* attacker /*= nullptr*/, SpellInfo const* damageSpell /*= nullptr*/)
+ {
+     if (!(m_interruptMask & flag))
+         return;
+@@ -5454,7 +5457,8 @@
+     {
+         Aura* aura = (*iter)->GetBase();
+         ++iter;
+-        if ((aura->GetSpellInfo()->AuraInterruptFlags & flag) && (!except || aura->GetId() != except))
++        if ((aura->GetSpellInfo()->AuraInterruptFlags & flag) && (!except || aura->GetId() != except) &&
++            sScriptMgr->CanRemoveAuraOnDamage(this, aura, attacker, damageSpell, damageType))
+         {
+             uint32 removedAuras = m_removedAurasCount;
+             RemoveAura(aura);
+--- a/src/server/game/Entities/Player/Player.cpp
++++ b/src/server/game/Entities/Player/Player.cpp
+@@ -7402,7 +7402,7 @@
+     }
+ }
+
+-void Player::CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx)
++void Player::CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, uint32 enchantDispelMask)
+ {
+     if (!target || !target->IsAlive() || target == this)
+         return;
+@@ -7419,6 +7419,10 @@
+             if (!item->IsBroken())
+                 if (ItemTemplate const* proto = item->GetTemplate())
+                 {
++                    // Optional weapon-enchantment-only mode for extra strikes.
++                    // Zero preserves the original all-item proc behaviour.
++                    if (enchantDispelMask && proto->Class != ITEM_CLASS_WEAPON)
++                        continue;
+                     // Additional check for weapons
+                     if (proto->Class == ITEM_CLASS_WEAPON)
+                     {
+@@ -7443,18 +7447,18 @@
+                             continue;
+                     }
+
+-                    CastItemCombatSpell(target, attType, procVictim, procEx, item, proto);
++                    CastItemCombatSpell(target, attType, procVictim, procEx, item, proto, enchantDispelMask);
+                 }
+     }
+ }
+
+-void Player::CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item* item, ItemTemplate const* proto)
++void Player::CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item* item, ItemTemplate const* proto, uint32 enchantDispelMask)
+ {
+     if (!sScriptMgr->OnPlayerCanCastItemCombatSpell(this, target, attType, procVictim, procEx, item, proto))
+         return;
+
+     // Can do effect if any damage done to target
+-    if (procVictim & PROC_FLAG_TAKEN_DAMAGE)
++    if (!enchantDispelMask && (procVictim & PROC_FLAG_TAKEN_DAMAGE))
+         //if (damageInfo->procVictim & PROC_FLAG_TAKEN_ANY_DAMAGE)
+     {
+         for (uint8 i = 0; i < MAX_ITEM_SPELLS; ++i)
+@@ -7533,6 +7537,9 @@
+                 continue;
+             }
+
++            if (enchantDispelMask && !(enchantDispelMask & (1u << spellInfo->Dispel)))
++                continue;
++
+             if (entry && (entry->attributeMask & ENCHANT_PROC_ATTR_EXCLUSIVE) != 0)
+             {
+                 Unit* checkTarget = spellInfo->IsPositive() ? this : target;
+@@ -7554,6 +7561,7 @@
+
+             // Apply spell mods
+             ApplySpellMod(pEnchant->spellid[s], SPELLMOD_CHANCE_OF_SUCCESS, chance);
++            sScriptMgr->ModifyItemCombatSpellChance(this, target, spellInfo, chance);
+
+             // Shiv has 100% chance to apply the poison
+             if (FindCurrentSpellBySpellId(5938) && e_slot == TEMP_ENCHANTMENT_SLOT)
+--- a/src/server/game/Entities/Unit/Unit.h
++++ b/src/server/game/Entities/Unit/Unit.h
+@@ -1408,7 +1408,8 @@
+     void RemoveAurasDueToItemSpell(uint32 spellId, ObjectGuid castItemGuid);
+     void RemoveAurasByType(AuraType auraType, ObjectGuid casterGUID = ObjectGuid::Empty, Aura* except = nullptr, bool negative = true, bool positive = true);
+     void RemoveNotOwnSingleTargetAuras();
+-    void RemoveAurasWithInterruptFlags(uint32 flag, uint32 except = 0, bool isAutoshot = false);
++    void RemoveAurasWithInterruptFlags(uint32 flag, uint32 except = 0, bool isAutoshot = false,
++        DamageEffectType damageType = NODAMAGE, Unit* attacker = nullptr, SpellInfo const* damageSpell = nullptr);
+     void RemoveAurasWithAttribute(uint32 flags);
+     void RemoveAurasWithFamily(SpellFamilyNames family, uint32 familyFlag1, uint32 familyFlag2, uint32 familyFlag3, ObjectGuid casterGUID);
+     void RemoveAurasWithMechanic(uint64 mechanic_mask, AuraRemoveMode removemode = AURA_REMOVE_BY_DEFAULT, uint32 except = 0);
+--- a/src/server/game/Entities/Player/Player.h
++++ b/src/server/game/Entities/Player/Player.h
+@@ -2286,9 +2286,9 @@
+     void ApplyItemEquipSpell(Item* item, bool apply, bool form_change = false);
+     void ApplyEquipSpell(SpellInfo const* spellInfo, Item* item, bool apply, bool form_change = false);
+     void UpdateEquipSpellsAtFormChange();
+-    void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx);
++    void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, uint32 enchantDispelMask = 0);
+     void CastItemUseSpell(Item* item, SpellCastTargets const& targets, uint8 cast_count, uint32 glyphIndex);
+-    void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item* item, ItemTemplate const* proto);
++    void CastItemCombatSpell(Unit* target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item* item, ItemTemplate const* proto, uint32 enchantDispelMask = 0);
+
+     void SendEquipmentSetList();
+     void SetEquipmentSet(uint32 index, EquipmentSet eqset);
+--- a/src/server/game/Entities/Player/PlayerStorage.cpp
++++ b/src/server/game/Entities/Player/PlayerStorage.cpp
+@@ -5801,8 +5801,16 @@
+             uint32 action = fields[1].Get<uint32>();
+             uint8 type = fields[2].Get<uint8>();
+
++            uint32 const originalAction = action;
++            uint8 const originalType = type;
++            if (!sScriptMgr->OnPlayerBeforeLoadActionButton(this, button, action, type))
++            {
++                m_actionButtons[button].uState = ACTIONBUTTON_DELETED;
++                continue;
++            }
++
+             if (ActionButton* ab = addActionButton(button, action, type))
+-                ab->uState = ACTIONBUTTON_UNCHANGED;
++                ab->uState = (action == originalAction && type == originalType) ? ACTIONBUTTON_UNCHANGED : ACTIONBUTTON_CHANGED;
+             else
+             {
+
+--- a/src/server/game/Scripting/ScriptDefines/PlayerScript.h
++++ b/src/server/game/Scripting/ScriptDefines/PlayerScript.h
+@@ -222,6 +222,7 @@
+     PLAYERHOOK_ON_GET_REPUTATION_PRICE_DISCOUNT,
+     PLAYERHOOK_ON_LEARN_TAXI_NODE,
+     PLAYERHOOK_ON_BEFORE_GET_LEVEL_FOR_XP_GAIN,
++    PLAYERHOOK_ON_BEFORE_LOAD_ACTION_BUTTON,
+     PLAYERHOOK_END
+ };
+
+@@ -869,6 +870,8 @@
+      * @param level The level that should be used for XP gain calculations
+      */
+     virtual void OnPlayerBeforeGetLevelForXPGain(Player const* /*player*/, uint8& /*level*/) {}
++    // Transform a persisted button before spell validation; false discards it.
++    virtual bool OnPlayerBeforeLoadActionButton(Player* /*player*/, uint8 /*button*/, uint32& /*action*/, uint8& /*type*/) { return true; }
+ };
+
+ #endif
+--- a/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp
++++ b/src/server/game/Scripting/ScriptDefines/PlayerScript.cpp
+@@ -985,3 +985,9 @@
+ }
+
+ template class AC_GAME_API ScriptRegistry<PlayerScript>;
++
++bool ScriptMgr::OnPlayerBeforeLoadActionButton(Player* player, uint8 button, uint32& action, uint8& type)
++{
++    CALL_ENABLED_BOOLEAN_HOOKS(PlayerScript, PLAYERHOOK_ON_BEFORE_LOAD_ACTION_BUTTON,
++        !script->OnPlayerBeforeLoadActionButton(player, button, action, type));
++}
+--- a/src/server/game/Spells/Auras/SpellAuras.cpp
++++ b/src/server/game/Spells/Auras/SpellAuras.cpp
+@@ -804,11 +804,12 @@
+     if (IsPassive() && !m_spellInfo->DurationEntry)
+         maxDuration = -1;
+
+-    sScriptMgr->OnCalcMaxDuration(this, maxDuration);
+-
+     // IsPermanent() checks max duration (which we are supposed to calculate here)
+     if (maxDuration != -1 && modOwner)
+         modOwner->ApplySpellMod(GetId(), SPELLMOD_DURATION, maxDuration);
++    // Final-duration policies must see talent/glyph duration modifiers. Target
++    // diminishing returns and immunities are still applied by the normal path.
++    sScriptMgr->OnCalcMaxDuration(this, maxDuration);
+     return maxDuration;
+ }

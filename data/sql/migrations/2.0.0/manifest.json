@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "schema_version": 6,
+  "status": "candidate-unaccepted",
+  "database_scope": "cultivation_test_*_v1 only",
+  "source_manifest_sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
+  "transition": {
+    "module": "mod-rogue-paths -> mod-cultivation",
+    "command": ".roguepath <action> -> .cultivation rogue <action>",
+    "characters_table": "character_rogue_path -> character_cultivation_rogue",
+    "state_preserved": true
+  },
+  "files": {
+    "auth.postflight.sql": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
+    "auth.preflight.sql": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
+    "auth.rollback.sql": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
+    "auth.up.sql": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
+    "characters.postflight.sql": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
+    "characters.preflight.sql": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
+    "characters.rollback.sql": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
+    "characters.up.sql": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
+    "world.postflight.sql": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
+    "world.preflight.sql": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
+    "world.rollback.sql": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
+    "world.up.sql": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca"
+  }
+}

@@ -1,0 +1,20 @@
+# Generated and packaged artifacts are verified separately and attached to accepted releases.
+/client_patch/build/
+/client_patch/staging/
+/client_patch/addon/
+/generated/
+/data/sql/legacy/
+/tools/test_talent_ui.py
+
+# Local caches and editor state.
+**/__pycache__/
+*.py[cod]
+.vs/
+.vscode/
+.idea/
+
+# Runtime output must never enter the module repository.
+*.log
+*.dmp
+*.sql.gz
+*.zip
