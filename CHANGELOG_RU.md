@@ -1,5 +1,17 @@
 # История изменений
 
+## 2.0.0-candidate2 — не принят
+
+### Исправлено
+
+- Fresh-install SQL теперь создаёт `creature_template` и model rows клона «Шага сквозь тень» (`900406`).
+- Внутренний DB-bound script переименован в `npc_cultivation_rogue_shadowstep_clone`; startup больше не должен выдавать `Script named ... is not assigned in the database`.
+- Postflight и архитектурный regression требуют точное совпадение C++ registration, fresh SQL и upgrade SQL.
+
+### Известные ограничения
+
+- Кандидат не становится релизом до явного GUI/gameplay acceptance пользователя.
+
 ## 2.0.0-candidate1 — не принят
 
 ### Изменено

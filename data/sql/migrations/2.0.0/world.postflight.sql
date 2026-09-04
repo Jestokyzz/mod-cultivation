@@ -8,3 +8,8 @@ FROM spell_script_names
 WHERE ScriptName='spell_rogue_path_active' OR ScriptName LIKE 'spell_rog_path_%';
 SELECT IF(COUNT(*)>0,1,0) AS cultivation_script_names_present
 FROM spell_script_names WHERE ScriptName LIKE 'spell_cultivation_rogue_%';
+SELECT IF(COUNT(*)=1,1,0) AS cultivation_shadowstep_clone_present
+FROM creature_template
+WHERE entry=900406 AND ScriptName='npc_cultivation_rogue_shadowstep_clone';
+SELECT IF(COUNT(*)>0,1,0) AS cultivation_shadowstep_clone_models_present
+FROM creature_template_model WHERE CreatureID=900406;

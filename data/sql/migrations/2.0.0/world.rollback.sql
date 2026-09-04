@@ -7,3 +7,5 @@ UPDATE `spell_script_names` SET `ScriptName`='spell_rogue_path_active'
 WHERE `ScriptName`='spell_cultivation_rogue_active';
 UPDATE `spell_script_names` SET `ScriptName`=REPLACE(`ScriptName`,'spell_cultivation_rogue_','spell_rog_path_')
 WHERE `ScriptName` LIKE 'spell_cultivation_rogue_%';
+UPDATE `creature_template` SET `ScriptName`='npc_rogue_path_shadowstep_clone'
+WHERE `entry`=900406 AND `ScriptName`='npc_cultivation_rogue_shadowstep_clone';

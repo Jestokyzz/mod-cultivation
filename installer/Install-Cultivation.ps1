@@ -46,7 +46,7 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
     throw "Package manifest is missing: $manifestPath"
 }
 $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
-if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.0.0-candidate1') {
+if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.0.0-candidate2') {
     throw 'Unexpected package identity.'
 }
 foreach ($entry in $manifest.files) {
@@ -84,7 +84,7 @@ if ($running.Count -gt 0) {
 }
 
 $stamp = Get-Date -Format 'yyyyMMddTHHmmss'
-$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.0.0-candidate1-$stamp"
+$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.0.0-candidate2-$stamp"
 if (Test-Path -LiteralPath $backup) { throw "Backup destination already exists: $backup" }
 New-Item -ItemType Directory -Path $backup | Out-Null
 
@@ -148,6 +148,9 @@ try {
         if ((Invoke-DbQuery $AuthDatabase "SELECT COUNT(*) FROM rbac_permissions WHERE id=1001 AND name<>'Command: cultivation';")[0] -ne '0') {
             throw 'RBAC permission 1001 is owned by another feature.'
         }
+        if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406;")[0] -ne '0') {
+            throw 'Creature template 900406 is already owned; use the versioned upgrade path instead of a fresh install.'
+        }
 
         $dbBackupDir = Join-Path $backup 'databases'
         New-Item -ItemType Directory -Path $dbBackupDir | Out-Null
@@ -170,7 +173,7 @@ try {
     $backupManifest = [ordered]@{
         status = 'verified-backup'
         package = 'mod-cultivation'
-        candidate = 'v2.0.0-candidate1'
+        candidate = 'v2.0.0-candidate2'
         created = (Get-Date).ToString('o')
         files = $fileBackupRows
         databases = $databaseBackups
@@ -185,6 +188,8 @@ try {
         Invoke-DbFile $WorldDatabase (Join-Path $packageRoot 'sql\fresh\world\cultivation_rogue_spells.sql')
         if ((Invoke-DbQuery $AuthDatabase "SELECT COUNT(*) FROM rbac_permissions WHERE id=1001 AND name='Command: cultivation';")[0] -ne '1') { throw 'Auth SQL postflight failed.' }
         if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM command WHERE name='cultivation';")[0] -ne '1') { throw 'World SQL postflight failed.' }
+        if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406 AND ScriptName='npc_cultivation_rogue_shadowstep_clone';")[0] -ne '1') { throw 'Shadowstep clone SQL postflight failed.' }
+        if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template_model WHERE CreatureID=900406;")[0] -eq '0') { throw 'Shadowstep clone model SQL postflight failed.' }
         if ((Invoke-DbQuery $CharactersDatabase "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name IN ('character_cultivation_rogue','character_cultivation_rogue_suppressed_action');")[0] -ne '2') { throw 'Characters SQL postflight failed.' }
     }
 

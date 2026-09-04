@@ -3,7 +3,7 @@
   "schema_version": 6,
   "status": "candidate-unaccepted",
   "database_scope": "cultivation_test_*_v1 only",
-  "source_manifest_sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
+  "source_manifest_sha256": "7a784821414ba3b34f372fe85e4af69043b2f92981e729fccb07b7938754bf50",
   "transition": {
     "module": "mod-rogue-paths -> mod-cultivation",
     "command": ".roguepath <action> -> .cultivation rogue <action>",
@@ -19,9 +19,9 @@
     "characters.preflight.sql": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
     "characters.rollback.sql": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
     "characters.up.sql": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-    "world.postflight.sql": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-    "world.preflight.sql": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-    "world.rollback.sql": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-    "world.up.sql": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca"
+    "world.postflight.sql": "867aa3e70a7a4be3a16e002e743978e4dc7a879675ed97cf709efe086c9b1e23",
+    "world.preflight.sql": "c8787910bd0311a3c6a8649485ae461a2f68f1ec023d1fae47eb99fd40dd7157",
+    "world.rollback.sql": "ac387c48105d3aeb08b14d30f853f9b92dae660af8c52e4efa15827a08163b80",
+    "world.up.sql": "518ebd4fa917581a24c21864e0bba71c39bbd36657013863923f9c8baf6439a2"
   }
 }

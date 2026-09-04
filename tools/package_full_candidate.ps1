@@ -13,7 +13,7 @@ $expected = [ordered]@{
     'client/Data/ruRU/patch-ruRU-A.MPQ' = '6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f'
     'client/Data/ruRU/patch-ruRU-Z.MPQ' = '496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c'
     'client/Data/ruRU/patch-ruRU-X.MPQ' = 'e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479'
-    'server/worldserver.exe' = '76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20'
+    'server/worldserver.exe' = '682e63427f6734c9b6ee7b059a5a0c778694c3faa41573ff3abfd3356a7bfdb6'
     'server/configs/modules/mod_cultivation.conf.dist' = '93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96'
     'server/data/dbc/Spell.dbc' = '1312bb13ea260e4049f2c2eeb17a8fd57c1ad692c8e43cd0816cb16662e8844a'
     'server/data/dbc/SkillLineAbility.dbc' = '9b28119050646f25e5803ae94ed0057a7a8cd0c32974ba51dbd061ecdffeaa1b'
@@ -46,7 +46,7 @@ foreach ($relative in $sources.Keys) {
 $distRoot = Join-Path $moduleRoot 'dist'
 New-Item -ItemType Directory -Path $distRoot -Force | Out-Null
 $stamp = Get-Date -Format 'yyyyMMddTHHmmss'
-$staging = Join-Path $distRoot "staging-v2.0.0-candidate1-$stamp"
+$staging = Join-Path $distRoot "staging-v2.0.0-candidate2-$stamp"
 if (Test-Path -LiteralPath $staging) { throw "Immutable staging already exists: $staging" }
 New-Item -ItemType Directory -Path $staging | Out-Null
 
@@ -61,7 +61,7 @@ foreach ($relative in $sources.Keys) {
 
 foreach ($pair in @(
     @{Source='installer';Target='installer'},
-    @{Source='validation\v2.0.0-candidate1';Target='validation'},
+    @{Source='validation\v2.0.0-candidate2';Target='validation'},
     @{Source='data\sql\auth\base';Target='sql\fresh\auth'},
     @{Source='data\sql\world\base';Target='sql\fresh\world'},
     @{Source='data\sql\characters\base';Target='sql\fresh\characters'},
@@ -97,7 +97,7 @@ foreach ($file in Get-ChildItem -LiteralPath $staging -Recurse -File | Sort-Obje
 $manifest = [ordered]@{
     package = 'mod-cultivation'
     subsystem = 'rogue'
-    candidate = 'v2.0.0-candidate1'
+    candidate = 'v2.0.0-candidate2'
     status = 'candidate-installed-runtime-passed-client-acceptance-pending'
     created = (Get-Date).ToString('o')
     source_commit = (git -c $gitSafe -C $moduleRoot rev-parse HEAD)
@@ -117,7 +117,7 @@ $manifest = [ordered]@{
 $manifestPath = Join-Path $staging 'package-manifest.json'
 $manifest | ConvertTo-Json -Depth 7 | Set-Content -LiteralPath $manifestPath -Encoding utf8
 
-$archive = Join-Path $distRoot "mod-cultivation-v2.0.0-candidate1-windows-x64-$stamp.zip"
+$archive = Join-Path $distRoot "mod-cultivation-v2.0.0-candidate2-windows-x64-$stamp.zip"
 Compress-Archive -Path (Join-Path $staging '*') -DestinationPath $archive -CompressionLevel Optimal
 if (-not (Test-Path -LiteralPath $archive -PathType Leaf) -or (Get-Item $archive).Length -eq 0) {
     throw 'Package archive was not created.'

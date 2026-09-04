@@ -40,7 +40,7 @@ def main() -> None:
     }
     manifest = {
         "module": "mod-cultivation",
-        "candidate": "v2.0.0-candidate1",
+        "candidate": "v2.0.0-candidate2",
         "status": "candidate-unaccepted",
         "core_revision": "7c8ed00e7f654617a47bdf728b49707f60aa1aae",
         "subsystems": ["rogue"],

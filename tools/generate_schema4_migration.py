@@ -67,7 +67,7 @@ UPDATE rogue_path_clone_template SET entry=900406, name='Celestial Shadowstep Cl
  type_flags=0, lootid=0, pickpocketloot=0, skinloot=0, mingold=0, maxgold=0,
  AIName='', MovementType=0, HealthModifier=0.0001, ManaModifier=0, ArmorModifier=0,
  ExperienceModifier=0, RegenHealth=0, flags_extra=17170528,
- ScriptName='npc_rogue_path_shadowstep_clone', VerifiedBuild=12340;
+ ScriptName='npc_cultivation_rogue_shadowstep_clone', VerifiedBuild=12340;
 INSERT INTO creature_template SELECT * FROM rogue_path_clone_template;
 DROP TEMPORARY TABLE rogue_path_clone_template;
 INSERT INTO creature_template_model (CreatureID,Idx,CreatureDisplayID,DisplayScale,Probability,VerifiedBuild)
@@ -76,9 +76,9 @@ INSERT INTO creature_template_model (CreatureID,Idx,CreatureDisplayID,DisplaySca
 COMMIT;
 """
     generated = (ROOT / 'data/sql/world/base/cultivation_rogue_spells.sql').read_text(encoding='utf-8')
-    write('world.preflight.sql', GATE_WORLD + "SELECT IF(COUNT(*)=0,1,0) AS id_owned FROM creature_template WHERE entry=900406 AND ScriptName<>'npc_rogue_path_shadowstep_clone';\n")
+    write('world.preflight.sql', GATE_WORLD + "SELECT IF(COUNT(*)=0,1,0) AS id_owned FROM creature_template WHERE entry=900406 AND ScriptName<>'npc_cultivation_rogue_shadowstep_clone';\n")
     write('world.up.sql', GATE_WORLD + generated + clone)
-    write('world.postflight.sql', GATE_WORLD + "SELECT IF(COUNT(*)=1,1,0) AS clone_ok FROM creature_template WHERE entry=900406 AND ScriptName='npc_rogue_path_shadowstep_clone';\n")
+    write('world.postflight.sql', GATE_WORLD + "SELECT IF(COUNT(*)=1,1,0) AS clone_ok FROM creature_template WHERE entry=900406 AND ScriptName='npc_cultivation_rogue_shadowstep_clone';\n")
     rollback = (PREVIOUS / 'world.up.sql').read_text(encoding='utf-8')
     write('world.rollback.sql', GATE_WORLD + "DELETE FROM creature_template_model WHERE CreatureID=900406;\nDELETE FROM creature_template WHERE entry=900406;\n" + rollback)
     files = {p.name: digest(p) for p in sorted(OUT.glob('*.sql'))}

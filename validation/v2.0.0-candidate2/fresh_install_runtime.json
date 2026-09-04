@@ -1,0 +1,24 @@
+{
+  "candidate": "v2.0.0-candidate2",
+  "tested_at_utc": "2026-09-04T08:13:29Z",
+  "server_root": "C:\\Solo WotLK\\test-server\\20260904-cultivation-v1",
+  "databases": {
+    "auth": "cultivation_test_auth_v1",
+    "world": "cultivation_test_world_v1",
+    "characters": "cultivation_test_characters_v1",
+    "playerbots": "cultivation_test_playerbots_v1"
+  },
+  "ports": {
+    "auth": 3732,
+    "world": 8099
+  },
+  "shadowstep_clone": {
+    "entry": 900406,
+    "script_name": "npc_cultivation_rogue_shadowstep_clone",
+    "template_rows": 1,
+    "model_rows": 2
+  },
+  "startup_validation_disabled_groups": 0,
+  "cultivation_script_registration_errors": 0,
+  "status": "passed"
+}

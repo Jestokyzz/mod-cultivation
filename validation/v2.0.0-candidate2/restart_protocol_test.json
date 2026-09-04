@@ -1,0 +1,11 @@
+{
+  "scope": "real world protocol; NOT GUI/authserver/combat acceptance",
+  "checks": [
+    "existing isolated fixture after externally verified worldserver restart: DB path, spellbook, five downrank buttons and remaining cooldown"
+  ],
+  "status": "passed",
+  "account_id": 425,
+  "character_guid": 2795,
+  "character_name": "Rprmxcnupr",
+  "timestamp_utc": "2026-09-04T08:12:47Z"
+}

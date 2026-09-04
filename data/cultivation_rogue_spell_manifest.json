@@ -2,7 +2,7 @@
   "schema_version": 6,
   "sha_presentation_revision": {
     "date": "2026-09-04",
-    "candidate": "v2.0.0-candidate1",
+    "candidate": "v2.0.0-candidate2",
     "status": "candidate-unaccepted",
     "source": "Native Spell.Description is the single source for Sha talent previews and display-only spellbook records; display rows resolve audited constant stock references only.",
     "format": "Russian stock base remains yellow; modified values replace the original inline in Sha purple. Only finisher additions start on a new line. AuraDescription is independent of cast Description in both locales.",

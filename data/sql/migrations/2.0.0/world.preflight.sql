@@ -12,6 +12,12 @@ BEGIN
  ) THEN
   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Command cultivation is owned by another feature';
  END IF;
+ IF EXISTS (
+  SELECT 1 FROM creature_template
+  WHERE entry=900406 AND ScriptName NOT IN ('npc_rogue_path_shadowstep_clone','npc_cultivation_rogue_shadowstep_clone')
+ ) THEN
+  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='Creature template 900406 is owned by another feature';
+ END IF;
 END$$
 DELIMITER ;
 CALL cultivation_schema6_world_gate();

@@ -21,3 +21,5 @@ UPDATE `spell_script_names` SET `ScriptName`='spell_cultivation_rogue_shiv'
 WHERE `ScriptName`='spell_rog_path_shiv';
 UPDATE `spell_script_names` SET `ScriptName`='spell_cultivation_rogue_shiv_component'
 WHERE `ScriptName`='spell_rog_path_shiv_component';
+UPDATE `creature_template` SET `ScriptName`='npc_cultivation_rogue_shadowstep_clone'
+WHERE `entry`=900406 AND `ScriptName`='npc_rogue_path_shadowstep_clone';

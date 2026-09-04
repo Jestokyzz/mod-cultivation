@@ -1,0 +1,60 @@
+{
+  "scope": "real world protocol; NOT GUI/authserver/combat acceptance",
+  "checks": [
+    "ordinary-player login and five baseline action slots",
+    "celestial: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "sha: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "небожитель: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "sha: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "celestial: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "reset: DB persistence, buttons/downranks, talent exclusion, cooldown preserved",
+    "Celestial/Sha/Celestial/Sha/Celestial/reset: ordinary actions stay in place; passive Preparation slot is durably suppressed and restored",
+    "sync/status, logout DB save, relog path/actionbar/cooldown",
+    "all 12 Backstab and 4 Sap ranks persisted as Sha only; Safe Fall visible passive replaces stock; Blind cooldown and 12 buttons retained",
+    "ordinary-player rejection: class=1, level=80",
+    "ordinary-player rejection: class=4, level=1"
+  ],
+  "status": "passed",
+  "account_id": 425,
+  "character_name": "Rprmxcnupr",
+  "character_guid": 2795,
+  "commands": [
+    {
+      "command": "celestial",
+      "messages": [
+        "Вы выбрали путь Небожителя. Стандартные навыки разбойника заменены версиями пути Небожителя."
+      ]
+    },
+    {
+      "command": "sha",
+      "messages": [
+        "Вы выбрали путь Ша. Стандартные навыки разбойника заменены версиями пути Ша."
+      ]
+    },
+    {
+      "command": "небожитель",
+      "messages": [
+        "Вы выбрали путь Небожителя. Стандартные навыки разбойника заменены версиями пути Небожителя."
+      ]
+    },
+    {
+      "command": "sha",
+      "messages": [
+        "Вы выбрали путь Ша. Стандартные навыки разбойника заменены версиями пути Ша."
+      ]
+    },
+    {
+      "command": "celestial",
+      "messages": [
+        "Вы выбрали путь Небожителя. Стандартные навыки разбойника заменены версиями пути Небожителя."
+      ]
+    },
+    {
+      "command": "reset",
+      "messages": [
+        "Путь сброшен. Стандартные навыки разбойника восстановлены."
+      ]
+    }
+  ],
+  "timestamp_utc": "2026-09-04T08:09:22Z"
+}

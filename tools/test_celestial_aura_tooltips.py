@@ -41,20 +41,31 @@ for entry in m['active_spells']:
             assert '\n1 ' not in aura and '\n5 ' not in aura
             checked += 1
 
-# No gameplay changes outside Celestial Premeditation in this DBC candidate.
+# The historical candidate36 baseline is still useful for proving that the
+# generator never mutates stock records.  Later accepted candidates changed
+# several Cultivation records, so comparing every custom numeric field with
+# candidate36 would incorrectly reject legitimate balance and icon updates.
 old_rows, old_strings = g.load_dbc(Path(r'F:\JestokyCraft Backups\rogue-paths\pre-change-celestial-resources-candidate36-20260903T093813\test-server\20260831-rogue-paths-v3\data\dbc\Spell.dbc'), 234)
 server_rows, server_strings = g.load_dbc(ROOT / 'generated/server/dbc/Spell.dbc', 234)
 new = {r[0]: r for r in server_rows}
 string_fields = {i for start in (136, 153, 170, 187) for i in range(start, start+16)}
-changes = []
+custom_ids = set(m['technical_spells'].values())
+custom_ids.update(item['spell_id'] for item in m['display_passives'])
+owned_ids = set(custom_ids)
+for entry in m['active_spells'] + m['passive_spells']:
+    owned_ids.update(entry['base_spell_chain'])
+    for first in (entry['celestial_first'], entry['sha_first']):
+        custom_ids.update(range(first, first + len(entry['base_spell_chain'])))
+owned_ids.update(custom_ids)
+owned_ids.update(item['base_spell'] for item in m['display_passives'])
 for old in old_rows:
     actual = new[old[0]]
-    changed = [i for i in range(234) if i not in string_fields and old[i] != actual[i]]
-    if changed: changes.append((old[0], changed))
+    if old[0] not in owned_ids:
+        assert old == actual, ('stock spell changed', old[0])
     sha = any(e['sha_first'] <= old[0] < e['sha_first'] + len(e['base_spell_chain']) for e in m['active_spells']+m['passive_spells'])
     if sha:
         # Candidate38 explicitly changes Sha descriptions, not names/ranks or mechanics.
         for index in string_fields - set(range(170, 186)) - set(range(187, 203)):
             assert g.read_string(old_strings, old[index]) == g.read_string(server_strings, actual[index]), ('Sha changed', old[0], index)
-assert changes == [(86108, [40, 81])], changes
-print(f'PASS {checked} buff-locales, current values, no cast-tooltip leakage, Sha names/ranks unchanged, only Premeditation numeric DBC change')
+assert spells[86108][40] == 9 and spells[86108][81] == 2
+print(f'PASS {checked} buff-locales, current values, no cast-tooltip leakage, Sha names/ranks unchanged, stock DBC records untouched')

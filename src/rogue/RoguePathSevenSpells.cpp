@@ -537,14 +537,14 @@ public:
 
 };
 
-class npc_rogue_path_shadowstep_clone : public CreatureScript
+class npc_cultivation_rogue_shadowstep_clone : public CreatureScript
 {
 public:
-    npc_rogue_path_shadowstep_clone() : CreatureScript("npc_rogue_path_shadowstep_clone") { }
+    npc_cultivation_rogue_shadowstep_clone() : CreatureScript("npc_cultivation_rogue_shadowstep_clone") { }
 
-    struct npc_rogue_path_shadowstep_cloneAI : public ScriptedAI
+    struct npc_cultivation_rogue_shadowstep_cloneAI : public ScriptedAI
     {
-        npc_rogue_path_shadowstep_cloneAI(Creature* creature) : ScriptedAI(creature) { }
+        npc_cultivation_rogue_shadowstep_cloneAI(Creature* creature) : ScriptedAI(creature) { }
         bool attacked = false;
         void UpdateAI(uint32) override
         {
@@ -559,7 +559,7 @@ public:
         }
     };
 
-    CreatureAI* GetAI(Creature* creature) const override { return new npc_rogue_path_shadowstep_cloneAI(creature); }
+    CreatureAI* GetAI(Creature* creature) const override { return new npc_cultivation_rogue_shadowstep_cloneAI(creature); }
 };
 
 class spell_cultivation_rogue_blind : public AuraScript
@@ -674,7 +674,7 @@ void AddRoguePathSevenScripts()
 {
     new RoguePathSevenAllSpellScript();
     new RoguePathSevenUnitScript();
-    new npc_rogue_path_shadowstep_clone();
+    new npc_cultivation_rogue_shadowstep_clone();
     RegisterSpellScript(spell_cultivation_rogue_blind);
     RegisterSpellScript(spell_cultivation_rogue_ghostly_dodge);
     RegisterSpellScript(spell_cultivation_rogue_shiv);

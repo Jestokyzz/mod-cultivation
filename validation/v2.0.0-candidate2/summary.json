@@ -1,0 +1,22 @@
+{
+  "candidate": "v2.0.0-candidate2",
+  "status": "candidate-runtime-passed-client-acceptance-pending",
+  "root_cause": "The fresh-install world SQL omitted creature_template entry 900406 and its model rows while the legacy upgrade path created them, so migrated test databases concealed the missing fresh-install dependency.",
+  "fix": "Fresh SQL now creates the Shadowstep clone from stock entry 38, upgrade SQL renames the script owner, and C++ registers the Cultivation-owned script name.",
+  "checks": {
+    "build_worldserver": "passed",
+    "static_test_files": 8,
+    "static_tests": "passed",
+    "fresh_database_install": "passed",
+    "isolated_server_start": "passed",
+    "world_protocol_path_cycles_and_relog": "passed",
+    "world_protocol_restart_persistence": "passed",
+    "gui_client_acceptance": "pending"
+  },
+  "worldserver_sha256": "682e63427f6734c9b6ee7b059a5a0c778694c3faa41573ff3abfd3356a7bfdb6",
+  "client_mpq_sha256": {
+    "patch-ruRU-A.MPQ": "6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f",
+    "patch-ruRU-Z.MPQ": "496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c",
+    "patch-ruRU-X.MPQ": "e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479"
+  }
+}

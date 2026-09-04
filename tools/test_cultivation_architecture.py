@@ -45,6 +45,20 @@ class CultivationArchitectureTests(unittest.TestCase):
         command_sql = (ROOT / "data/sql/world/base/cultivation_command.sql").read_text(encoding="utf-8")
         self.assertIn("('cultivation'", command_sql)
 
+    def test_shadowstep_clone_has_fresh_and_upgrade_sql(self):
+        source = (ROOT / "src/rogue/RoguePathSevenSpells.cpp").read_text(encoding="utf-8")
+        fresh = (ROOT / "data/sql/world/base/cultivation_rogue_spells.sql").read_text(encoding="utf-8")
+        migration = (ROOT / "data/sql/migrations/2.0.0/world.up.sql").read_text(encoding="utf-8")
+        postflight = (ROOT / "data/sql/migrations/2.0.0/world.postflight.sql").read_text(encoding="utf-8")
+        script_name = "npc_cultivation_rogue_shadowstep_clone"
+        self.assertIn('CreatureScript("' + script_name + '")', source)
+        self.assertIn("`entry`=900406", fresh)
+        self.assertIn("`CreatureID`=900406", fresh)
+        self.assertIn("`ScriptName`='" + script_name + "'", fresh)
+        self.assertIn("`ScriptName`='" + script_name + "'", migration)
+        self.assertIn("ScriptName='" + script_name + "'", postflight)
+        self.assertNotIn('CreatureScript("npc_rogue_path_shadowstep_clone")', source)
+
     def test_schema6_manifest(self):
         data = json.loads((ROOT / "data/cultivation_rogue_spell_manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(data["schema_version"], 6)
@@ -59,6 +73,13 @@ class CultivationArchitectureTests(unittest.TestCase):
         self.assertIn("cultivation_test_world_v1", preflights)
         self.assertIn("cultivation_test_characters_v1", preflights)
         self.assertNotIn("rogue_paths_test_", preflights)
+
+    def test_active_test_server_launcher_is_cultivation_isolated(self):
+        launcher = (ROOT / "tools/start_test_server.ps1").read_text(encoding="utf-8")
+        self.assertIn("20260904-cultivation-v1", launcher)
+        self.assertIn("cultivation_test_", launcher)
+        self.assertNotIn("20260831-rogue-paths-v1", launcher)
+        self.assertNotIn("^rogue_paths_test_", launcher)
 
 
 if __name__ == "__main__":
