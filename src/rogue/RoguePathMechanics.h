@@ -65,10 +65,7 @@ struct CastSnapshot
 
 struct TargetRuntimeState
 {
-    uint8 hemorrhageCharges = 0;
     uint8 honorReserve = 0;
-    int32 hemorrhageBonusDamage = 0;
-    uint32 hemorrhageExpiresAt = 0;
     bool shaDeadlyPoisonPresent = false;
     uint32 sapCooldownUntil = 0;
     uint32 blindStartedAt = 0;
@@ -95,13 +92,10 @@ struct PlayerRuntimeState
     uint32 sealFateSecond = 0;
     uint32 shaSealFateEmpoweredAt = 0;
     uint32 stealthStartedAt = 0;
-    uint32 premeditationExpiresAt = 0;
     uint32 cheatHealNextTick = 0;
     uint32 cheatEnergyNextTick = 0;
     uint8 cheatHealTicks = 0;
     uint8 cheatEnergyTicks = 0;
-    uint8 premeditationPoints = 0;
-    uint64 premeditationTarget = 0;
     uint64 honorTarget = 0;
     uint64 hungerTarget = 0;
     bool wasStealthed = false;
@@ -153,6 +147,7 @@ bool IsTechnicalAuraRemoval(Unit const* target, Player const* caster);
 void RemoveRetiredCelestialAuras(Player* player);
 void SyncCelestialPreparationGlyph(Player* player);
 bool RunCelestialRegression(Player* player, ChatHandler* chat);
+bool RunShadowstepRegression(Player* player, ChatHandler* chat);
 bool RunCelestialResourceRegression(Player* player, ChatHandler* chat);
 bool RunShaSinisterRegression(Player* player, ChatHandler* chat);
 bool RunShaCandidate41Regression(Player* player, ChatHandler* chat);

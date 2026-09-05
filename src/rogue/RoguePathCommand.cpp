@@ -106,6 +106,8 @@ bool HandleCultivationCommand(ChatHandler* handler, std::string_view arguments)
             return false;
 
         std::string command = Trimmed(arguments);
+        if (command == "testshadowstep")
+            return Mechanics::RunShadowstepRegression(player, handler);
         if (command == "testcelestial")
             return Mechanics::RunCelestialRegression(player, handler);
         if (command == "testresources")

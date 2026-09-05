@@ -1,0 +1,113 @@
+{
+  "candidate": "v2.0.0-audit-candidate5",
+  "status": "user-accepted-production-installed-startup-passed",
+  "production_modified": true,
+  "production_install_manifest": "C:\\Solo WotLK\\work\\cultivation-audit-20260905\\production-install.json",
+  "sha_direct_bonus_cap_percent": 60,
+  "backup_manifest": "F:\\JestokyCraft Backups\\cultivation\\pre-change-audit-fixes-20260905\\manifest.json",
+  "known_failed_candidates": [
+    "v2.0.0-audit-candidate4: startup AuraScript proc registration for non-aura spells; test rollback verified",
+    "v2.0.0-shadowstep-candidate3"
+  ],
+  "required_gates": [
+    "static",
+    "client-server-semantic",
+    "native-mechanics",
+    "protocol",
+    "lua51",
+    "fresh-client-gui"
+  ],
+  "artifacts": {
+    "client_patch/staging/DBFilesClient/Spell.dbc": {
+      "sha256": "a1d5cead419f2697b40671a5f2225048b57b775107c035f6bf4a59d9ea47d3ea",
+      "bytes": 52422023
+    },
+    "generated/server/dbc/Spell.dbc": {
+      "sha256": "b6bee947fc38273050a54c31fc8085dfaf837dded6b58882594c4bd24e533be0",
+      "bytes": 52972884
+    },
+    "client_patch/framexml/CultivationRogueHeader.lua": {
+      "sha256": "d4aefc9c96713856012419bf2f5db88b05335f573315b56c20321d35d4d5cffb",
+      "bytes": 17124
+    },
+    "generated/generation_report.json": {
+      "sha256": "09be8560f3a8af8d0c003963b7fa12853ca2842ba047fe24397a48594ddb5042",
+      "bytes": 58611
+    },
+    "generated/audit-static-tests.json": {
+      "sha256": "3fe84fdcb997a16822ca5f2ed0c9a27ec52baa6f4246626757292a35f1b47661",
+      "bytes": 500
+    }
+  },
+  "test_report": "generated/audit-static-tests.json",
+  "native_acceptance": "covered-cases-passed; remaining matrix and Ghostly first-run failure unresolved",
+  "gui_acceptance": "user accepted 2026-09-05: Крч всё окей. Ставь на основной сервер и клиент. Computer Use observed logged-in test Wow-NWQ and opened talents; detailed tooltip acceptance reported by user, not independently replayed by agent",
+  "installable_package": false,
+  "build_authorized": true,
+  "native_reports": {
+    "shadowstep_native_test.json": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\generated\\v2.0.0\\shadowstep_native_test.json",
+      "sha256": "903654c09fc4d85a8a1e1123d7ac18fdbb800a7a9c0929c49f5f418e372e77fb",
+      "bytes": 5348,
+      "status": "passed",
+      "scope": "native Shadowstep fresh/learn/reset, both paths, real casts; NOT GUI acceptance"
+    },
+    "sha_candidate41_native_test.json": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\generated\\v2.0.0\\sha_candidate41_native_test.json",
+      "sha256": "35c2f29297da72827e5ca31f2b76c2c55a011613478a228a7dfa4e4fa291f600",
+      "bytes": 4012,
+      "status": "passed",
+      "scope": "native Sha candidate41 DBC/config/incoming-damage/control-break contract; NOT GUI acceptance"
+    },
+    "celestial_resources_native_test.json": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\generated\\v2.0.0\\celestial_resources_native_test.json",
+      "sha256": "33e20da8dd465d9df5217f45371bc97ddd742d0be7a7f51cd9b64abbe05fe0e0",
+      "bytes": 3078,
+      "status": "passed",
+      "scope": "native resource mechanics on disposable RPTEST fixture; NOT GUI acceptance"
+    },
+    "world_protocol_test.json": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\generated\\v2.0.0\\world_protocol_test.json",
+      "sha256": "08bb2bcce0dace07592e0e68e29c0d3b57dddb7f3e790ede4eaa2eb55fc8bb33",
+      "bytes": 2760,
+      "status": "passed",
+      "scope": "real world protocol; NOT GUI/authserver/combat acceptance"
+    },
+    "celestial_native_test.json": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\generated\\v2.0.0\\celestial_native_test.json",
+      "sha256": "16e2c67cbd51296d9cb5ead87402a7602c645c79b34ffdbe7fb2d19490a4e5cd",
+      "bytes": 13138,
+      "status": "passed",
+      "scope": "native worldserver integration harness, controlled combat inputs; NOT GUI acceptance"
+    }
+  },
+  "runtime_artifacts": {
+    "build_worldserver": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\build-solitary-v4-ninja\\bin\\worldserver.exe",
+      "sha256": "4ad47e4fa57f38ece9017e9f63c85712b12c0f41bf528bb360b66c9ddf21823b",
+      "bytes": 59103232
+    },
+    "test_worldserver": {
+      "path": "C:\\Solo WotLK\\test-server\\20260904-cultivation-v1\\worldserver.exe",
+      "sha256": "4ad47e4fa57f38ece9017e9f63c85712b12c0f41bf528bb360b66c9ddf21823b",
+      "bytes": 59103232
+    },
+    "test_server_spell": {
+      "path": "C:\\Solo WotLK\\test-server\\20260904-cultivation-v1\\data\\dbc\\Spell.dbc",
+      "sha256": "b6bee947fc38273050a54c31fc8085dfaf837dded6b58882594c4bd24e533be0",
+      "bytes": 52972884
+    },
+    "package_manifest": {
+      "path": "C:\\Solo WotLK\\WoWBotServer\\azerothcore-wotlk\\modules\\mod-cultivation\\client_patch\\build\\v2.0.0-audit-candidate5\\manifest.json",
+      "sha256": "cbc2b400feb8ed8655df52ee3203582ba55e1b84105dc0fef13d5012f866a2b6",
+      "bytes": 3309
+    }
+  },
+  "open_checks": [
+    "PvP DR sequence",
+    "Hemorrhage failed-hit charge preservation and damage magnitude",
+    "Dance Garrote periodic damage",
+    "Premeditation target change/finisher",
+    "unresolved first full-harness Ghostly failure; fourteen fresh reruns passed"
+  ]
+}

@@ -23,12 +23,135 @@
 
 namespace Cultivation::Rogue::Mechanics
 {
+bool RunShadowstepRegression(Player* player, ChatHandler* chat)
+{
+    std::string account;
+    if (!player || !sConfigMgr->GetOption<bool>("Cultivation.Rogue.Celestial.TestHarness", false) ||
+        sConfigMgr->GetOption<uint32>("WorldServerPort", 0) != 8099 ||
+        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";cultivation_test_characters_v1") ||
+        !AccountMgr::GetName(player->GetSession()->GetAccountId(), account) || !account.starts_with("RPTEST_") ||
+        !player->GetName().starts_with("Rp") || player->GetLevel() != 80)
+        return false;
+
+    uint32 passed = 0, failed = 0;
+    auto check = [&](char const* name, bool ok, int64 actual = 0, int64 expected = 0)
+    {
+        if (ok) ++passed; else ++failed;
+        chat->PSendSysMessage("RPSTEP|{}|{}|{}|{}", name, ok ? "PASS" : "FAIL", actual, expected);
+    };
+    uint32 phase = player->GetPhaseMask();
+    player->CombatStop(true);
+    player->SetPhaseMask(0x40000000, true);
+    player->resetTalents(true);
+    sCultivationRogueSpellService.SetPath(player, RoguePath::Celestial);
+    player->LearnTalent(1714, 0, true);
+    auto effective = [&](uint32 id)
+    {
+        SpellInfo const* info = sSpellMgr->GetSpellInfo(id);
+        int32 recovery = info->RecoveryTime;
+        int32 category = info->CategoryRecoveryTime;
+        player->ApplySpellMod(id, SPELLMOD_COOLDOWN, recovery);
+        player->ApplySpellMod(id, SPELLMOD_COOLDOWN, category);
+        return std::max(recovery, category);
+    };
+    auto exercise = [&](uint32 id, uint32 expected, bool celestialPath)
+    {
+        check("owned-variant", player->HasSpell(id), id);
+        check("native-before-cast", effective(id) == int32(expected), effective(id), expected);
+        for (uint32 targetKind : {0u, 1u, 2u}) // self, ally, enemy
+        {
+            TempSummon* fixture = nullptr;
+            Unit* target = player;
+            if (targetKind)
+            {
+                fixture = player->SummonCreature(38, player->GetPositionX() + 10.0f,
+                    player->GetPositionY(), player->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 10000);
+                if (!fixture) { check("target-fixture", false); continue; }
+                fixture->SetReactState(REACT_PASSIVE);
+                fixture->SetFaction(targetKind == 1 ? player->GetFaction() : 14);
+                fixture->SetPhaseMask(player->GetPhaseMask(), false);
+                target = fixture;
+            }
+            // This isolated in-process harness acknowledges each near teleport;
+            // it does not assert GUI layout or replace client acceptance.
+            player->SetSemaphoreTeleportNear(0);
+            player->RemoveSpellCooldown(id, true);
+            player->GetGlobalCooldownMgr().CancelGlobalCooldown(sSpellMgr->GetSpellInfo(id));
+            player->SetPower(POWER_ENERGY, 100);
+            uint32 stealth = celestialPath ? 86000 : 86200;
+            player->AddAura(stealth, player);
+            if (fixture && celestialPath)
+            {
+                fixture->AddAura(339, player);
+                fixture->AddAura(1715, player);
+            }
+            float x = player->GetPositionX(), y = player->GetPositionY();
+            SpellCastResult result = player->CastSpell(target, id, false);
+            bool allowed = targetKind == 2 || (targetKind == 1 && celestialPath);
+            uint32 remaining = player->GetSpellCooldownDelay(id);
+            if (allowed)
+            {
+                check("real-cast-allowed", result == SPELL_CAST_OK, result, SPELL_CAST_OK);
+                check("real-cast-cooldown", remaining <= expected && remaining + 1000 >= expected, remaining, expected);
+                check("real-cast-relocated", player->GetDistance2d(target) < 8.0f);
+                if (celestialPath)
+                {
+                    check("stealth-preserved", player->HasAura(stealth));
+                    check("roots-snares-cleansed", !player->HasAura(339) && !player->HasAura(1715));
+                }
+                AuraEffect* speed = player->GetAuraEffect(id, EFFECT_2);
+                AuraEffect* threat = player->GetAuraEffect(44373, EFFECT_0);
+                check("movement-boost-preserved", speed && speed->GetAuraType() == SPELL_AURA_MOD_INCREASE_SPEED &&
+                    speed->GetAmount() == 70 && player->GetSpeedRate(MOVE_RUN) > 1.0f);
+                check("threat-modifier-preserved", threat && threat->GetAuraType() == SPELL_AURA_ADD_PCT_MODIFIER &&
+                    threat->GetMiscValue() == SPELLMOD_THREAT && threat->GetAmount() == -50);
+                check("old-damage-boost-absent", !player->HasAura(36563));
+                check("sha-custom-damage-boost", celestialPath || player->HasAura(Generated::ShaShadowstepDamage));
+            }
+            else
+            {
+                check("self-or-sha-ally-rejected", result == SPELL_FAILED_BAD_TARGETS, result, SPELL_FAILED_BAD_TARGETS);
+                check("rejected-no-cooldown-energy-movement", remaining == 0 && player->GetPower(POWER_ENERGY) == 100 &&
+                    player->GetPositionX() == x && player->GetPositionY() == y);
+            }
+            player->RemoveAurasDueToSpell(stealth);
+            player->RemoveAurasDueToSpell(36563);
+            player->RemoveAurasDueToSpell(44373);
+            player->RemoveAurasDueToSpell(id);
+            player->RemoveAurasDueToSpell(Generated::ShaShadowstepDamage);
+            if (fixture) fixture->DespawnOrUnsummon();
+        }
+    };
+    check("fresh-no-preparation", !player->HasSpell(86107) && !player->HasAura(86107));
+    exercise(86105, 30000, true);
+    uint32 beforeLearn = player->GetSpellCooldownDelay(86105);
+    player->LearnTalent(284, 0, true);
+    check("learn-preparation-owns-native-mod", player->HasTalent(14185, player->GetActiveSpec()) && player->HasAura(86107));
+    check("learn-preserves-running-cooldown", player->GetSpellCooldownDelay(86105) <= beforeLearn &&
+        player->GetSpellCooldownDelay(86105) + 1000 >= beforeLearn);
+    exercise(86105, 21000, true);
+    sCultivationRogueSpellService.SetPath(player, RoguePath::Sha);
+    check("sha-no-celestial-preparation-aura", !player->HasAura(86107));
+    exercise(86305, 30000, false);
+    sCultivationRogueSpellService.SetPath(player, RoguePath::Celestial);
+    player->resetTalents(true);
+    player->LearnTalent(1714, 0, true);
+    sCultivationRogueSpellService.SyncPlayerSpells(player);
+    check("reset-no-preparation", !player->HasSpell(86107) && !player->HasAura(86107));
+    exercise(86105, 30000, true);
+    player->SetSemaphoreTeleportNear(0);
+    player->CombatStop(true);
+    player->SetPhaseMask(phase, true);
+    chat->PSendSysMessage("RPSTEP|SUMMARY|{}|{}", passed, failed);
+    return true;
+}
+
 bool RunShaSinisterRegression(Player* player, ChatHandler* chat)
 {
     std::string account;
     if (!player || !sConfigMgr->GetOption<bool>("Cultivation.Rogue.Celestial.TestHarness", false) ||
         sConfigMgr->GetOption<uint32>("WorldServerPort", 0) != 8099 ||
-        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";rogue_paths_test_characters_v3") ||
+        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";cultivation_test_characters_v1") ||
         !AccountMgr::GetName(player->GetSession()->GetAccountId(), account) || !account.starts_with("RPTEST_") ||
         !player->GetName().starts_with("Rp") || player->GetLevel() != 80)
         return false;
@@ -143,7 +266,7 @@ bool RunShaCandidate41Regression(Player* player, ChatHandler* chat)
     std::string account;
     if (!player || !sConfigMgr->GetOption<bool>("Cultivation.Rogue.Celestial.TestHarness", false) ||
         sConfigMgr->GetOption<uint32>("WorldServerPort", 0) != 8099 ||
-        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";rogue_paths_test_characters_v3") ||
+        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";cultivation_test_characters_v1") ||
         !AccountMgr::GetName(player->GetSession()->GetAccountId(), account) || !account.starts_with("RPTEST_") ||
         !player->GetName().starts_with("Rp") || player->GetLevel() != 80)
         return false;
@@ -236,6 +359,98 @@ bool RunShaCandidate41Regression(Player* player, ChatHandler* chat)
         ally->SetPhaseMask(player->GetPhaseMask(), false);
         target->SetFaction(14);
         ally->SetFaction(player->GetFaction());
+        target->SetReactState(REACT_PASSIVE);
+        target->SetMaxHealth(1000000);
+        target->SetFullHealth();
+        ally->SetReactState(REACT_PASSIVE);
+        player->learnSpell(674, false, false);
+        player->EquipNewItem((INVENTORY_SLOT_BAG_0 << 8) | EQUIPMENT_SLOT_MAINHAND, 2092, true);
+        player->m_modMeleeHitChance = player->m_modSpellHitChance = 100.0f;
+        player->SetFloatValue(PLAYER_EXPERTISE, 100.0f);
+        auto cast = [&](Unit* recipient, uint32 id)
+        {
+            player->AttackStop();
+            player->RemoveSpellCooldown(id);
+            player->GetGlobalCooldownMgr().CancelGlobalCooldown(spell(id));
+            player->SetPower(POWER_ENERGY, 100);
+            player->SetFacingToObject(recipient);
+            return player->CastSpell(recipient, id, false);
+        };
+        // One actual aura owns the charge count; calculation and foreign hits
+        // must not consume it. Use the same native swing/proc path as potency.
+        for (RoguePath path : {RoguePath::Sha, RoguePath::Celestial})
+        {
+            sCultivationRogueSpellService.SetPath(player, path);
+            uint32 hemoId = sCultivationRogueSpellService.GetVariantSpell(48660, path);
+            uint8 charges = path == RoguePath::Sha ? 5 : 20;
+            target->AddUnitState(UNIT_STATE_STUNNED);
+            SpellCastResult hemoCast = cast(target, hemoId);
+            player->AttackStop();
+            Aura* hemo = target->GetAura(hemoId, player->GetGUID());
+            check("hemo-real-cast-visible-charges", hemoCast == SPELL_CAST_OK && hemo && hemo->GetCharges() == charges,
+                hemo ? hemo->GetCharges() : -1, charges);
+            if (hemo)
+            {
+                check("hemo-real-duration-60", hemo->GetDuration() == 60000, hemo->GetDuration(), 60000);
+                CalcDamageInfo hit;
+                player->CalculateMeleeDamage(target, &hit, BASE_ATTACK);
+                check("hemo-calculation-does-not-spend", hemo->GetCharges() == charges);
+                DamageInfo foreign(ally, target, 100, nullptr, SPELL_SCHOOL_MASK_NORMAL, DIRECT_DAMAGE, BASE_ATTACK);
+                Unit::ProcSkillsAndAuras(ally, target, PROC_FLAG_DONE_MELEE_AUTO_ATTACK, PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK,
+                    PROC_HIT_NORMAL, 100, BASE_ATTACK, nullptr, nullptr, -1, nullptr, &foreign);
+                check("hemo-foreign-hit-does-not-spend", hemo->GetCharges() == charges);
+                for (uint32 attempt = 0; attempt < 100; ++attempt)
+                {
+                    player->CalculateMeleeDamage(target, &hit, BASE_ATTACK);
+                    if (hit.hitOutCome != MELEE_HIT_NORMAL) continue;
+                    player->DealMeleeDamage(&hit, false);
+                    DamageInfo damage(hit);
+                    Unit::ProcSkillsAndAuras(player, target, hit.procAttacker, hit.procVictim,
+                        damage.GetHitMask(), damage.GetDamage(), BASE_ATTACK, nullptr, nullptr, -1, nullptr, &damage);
+                    break;
+                }
+                check("hemo-successful-own-hit-spends-one", hemo->GetCharges() == charges - 1,
+                    hemo->GetCharges(), charges - 1);
+                if (path == RoguePath::Celestial)
+                {
+                    player->ClearComboPoints();
+                    player->AddComboPoints(target, 5);
+                    check("hemo-celestial-finisher-cast", cast(target, 86033) == SPELL_CAST_OK);
+                    check("hemo-celestial-finisher-preserves-charge", hemo->GetCharges() == charges - 1,
+                        hemo->GetCharges(), charges - 1);
+                }
+                hemo->Remove();
+            }
+            uint32 dance = sCultivationRogueSpellService.GetVariantSpell(51713, path);
+            uint32 attack = sCultivationRogueSpellService.GetVariantSpell(path == RoguePath::Sha ? 53 : 703, path);
+            int32 beforeCost = spell(attack)->CalcPowerCost(player, spell(attack)->GetSchoolMask());
+            player->CombatStop(true);
+            check("dance-real-cast", cast(player, dance) == SPELL_CAST_OK);
+            int32 duringCost = spell(attack)->CalcPowerCost(player, spell(attack)->GetSchoolMask());
+            int32 discount = path == RoguePath::Sha ? 20 : 15;
+            check("dance-native-cost-before-first-attack", beforeCost - duringCost == discount, beforeCost - duringCost, discount);
+            player->RemoveAurasDueToSpell(dance);
+            check("dance-removal-restores-native-cost", spell(attack)->CalcPowerCost(player, spell(attack)->GetSchoolMask()) == beforeCost);
+        }
+        sCultivationRogueSpellService.SetPath(player, RoguePath::Sha);
+        for (uint8 combo = 1; combo <= 5; ++combo)
+        {
+            TempSummon* kidneyTarget = player->SummonCreature(38, player->GetPositionX() + 2.0f,
+                player->GetPositionY(), player->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 10000);
+            check("sha-kidney-fixture", kidneyTarget != nullptr);
+            if (!kidneyTarget) continue;
+            kidneyTarget->SetPhaseMask(player->GetPhaseMask(), false);
+            kidneyTarget->SetFaction(14);
+            kidneyTarget->SetReactState(REACT_PASSIVE);
+            kidneyTarget->AddUnitState(UNIT_STATE_STUNNED);
+            player->ClearComboPoints();
+            player->AddComboPoints(kidneyTarget, combo);
+            SpellCastResult status = cast(kidneyTarget, 86221);
+            Aura* kidney = kidneyTarget->GetAura(86221, player->GetGUID());
+            check("sha-kidney-real-duration-before-dr", status == SPELL_CAST_OK && kidney && kidney->GetDuration() == combo * 1000,
+                kidney ? kidney->GetDuration() : -1, combo * 1000);
+            kidneyTarget->DespawnOrUnsummon();
+        }
         if (Aura* mark = player->AddAura(Generated::ShaCheapShotMark, target))
         {
             uint32 melee = 1000;
@@ -290,7 +505,7 @@ bool RunCelestialResourceRegression(Player* player, ChatHandler* chat)
     std::string account;
     if (!player || !sConfigMgr->GetOption<bool>("Cultivation.Rogue.Celestial.TestHarness", false) ||
         sConfigMgr->GetOption<uint32>("WorldServerPort", 0) != 8099 ||
-        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";rogue_paths_test_characters_v3") ||
+        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";cultivation_test_characters_v1") ||
         !AccountMgr::GetName(player->GetSession()->GetAccountId(), account) || !account.starts_with("RPTEST_") ||
         !player->GetName().starts_with("Rp") || player->GetLevel() != 80)
         return false;
@@ -410,7 +625,9 @@ bool RunCelestialResourceRegression(Player* player, ChatHandler* chat)
         Aura* retain = current->GetAura(86108);
         check("premed-native-duration-30", retain && retain->GetDuration() == 30000);
         check("premed-grants-three", current->GetComboPoints(target) == 3, current->GetComboPoints(target), 3);
-        check("premed-no-module-second-timer", !GetRuntimeState(current).premeditationExpiresAt);
+        check("premed-native-retains-granted-three", retain && retain->GetEffect(EFFECT_1) &&
+            retain->GetEffect(EFFECT_1)->GetAuraType() == SPELL_AURA_RETAIN_COMBO_POINTS &&
+            retain->GetEffect(EFFECT_1)->GetAmount() == 3);
         current->m_Events.AddEventAtOffset([owner, victim, check]()
         {
             Player* p = ObjectAccessor::FindPlayer(owner);
@@ -421,10 +638,61 @@ bool RunCelestialResourceRegression(Player* player, ChatHandler* chat)
             Player* p = ObjectAccessor::FindPlayer(owner);
             if (!p) return;
             check("premed-expires-at-30-seconds", p->GetComboPoints() == 0 && !p->HasAura(86108), p->GetComboPoints(), 0);
-            if (Creature* target = ObjectAccessor::GetCreature(*p, victim)) target->DespawnOrUnsummon();
+            Creature* target = ObjectAccessor::GetCreature(*p, victim);
+            if (!target) { check("sha-premed-target-alive", false); return; }
+            p->resetTalents(true);
+            sCultivationRogueSpellService.SetPath(p, RoguePath::Sha);
+            p->LearnTalent(381, 0, true);
+            auto premed = [&]()
+            {
+                p->CombatStop(true);
+                p->AddAura(86200, p);
+                p->SetPower(POWER_ENERGY, 0);
+                p->RemoveSpellCooldown(86308);
+                p->GetGlobalCooldownMgr().CancelGlobalCooldown(sSpellMgr->GetSpellInfo(86308));
+                SpellCastResult status = p->CastSpell(target, 86308, false);
+                check("sha-premed-real-cast", status == SPELL_CAST_OK, status, SPELL_CAST_OK);
+                check("sha-premed-energy-once-not-per-target", p->GetPower(POWER_ENERGY) == 40, p->GetPower(POWER_ENERGY), 40);
+            };
+            for (uint8 previous : {0u, 4u, 5u})
+            {
+                p->RemoveAurasDueToSpell(86308);
+                p->ClearComboPoints();
+                if (previous) p->AddComboPoints(target, previous);
+                premed();
+                uint8 granted = std::min<uint8>(2, 5 - previous);
+                Aura* retain = p->GetAura(86308);
+                check("sha-premed-actual-grant-at-cap", p->GetComboPoints(target) == previous + granted,
+                    p->GetComboPoints(target), previous + granted);
+                check("sha-premed-retains-only-new-points", granted ?
+                    (retain && retain->GetEffect(EFFECT_1) && retain->GetEffect(EFFECT_1)->GetAmount() == granted) : !retain);
+                if (retain)
+                {
+                    check("sha-premed-native-duration-six", retain->GetDuration() == 6000, retain->GetDuration(), 6000);
+                    retain->SetDuration(0);
+                    retain->Remove(AURA_REMOVE_BY_EXPIRE);
+                }
+                check("sha-premed-expiry-preserves-existing-points", p->GetComboPoints(target) == previous,
+                    p->GetComboPoints(target), previous);
+            }
+            p->ClearComboPoints();
+            premed();
+            p->AddComboPoints(target, 1);
+            check("sha-premed-continuation-removes-retention", !p->HasAura(86308) && p->GetComboPoints(target) == 3);
+            p->ClearComboPoints();
+            premed();
+            p->m_Events.AddEventAtOffset([owner, victim, phase, check, result]()
+            {
+                Player* rogue = ObjectAccessor::FindPlayer(owner);
+                if (!rogue) return;
+                check("sha-premed-real-six-second-expiry", !rogue->HasAura(86308) && rogue->GetComboPoints() == 0,
+                    rogue->GetComboPoints(), 0);
+                if (Creature* target = ObjectAccessor::GetCreature(*rogue, victim)) target->DespawnOrUnsummon();
+                rogue->CombatStop(true);
+                rogue->SetPhaseMask(phase, true);
+                ChatHandler(rogue->GetSession()).PSendSysMessage("RPCT|SUMMARY|{}|{}", result->passed, result->failed);
+            }, Milliseconds(7000));
             p->CombatStop(true);
-            p->SetPhaseMask(phase, true);
-            ChatHandler(p->GetSession()).PSendSysMessage("RPCT|SUMMARY|{}|{}", result->passed, result->failed);
         }, Milliseconds(31000));
     }, Milliseconds(250));
     return true;
@@ -435,7 +703,7 @@ bool RunCelestialRegression(Player* player, ChatHandler* chat)
     std::string account;
     if (!player || !sConfigMgr->GetOption<bool>("Cultivation.Rogue.Celestial.TestHarness", false) ||
         sConfigMgr->GetOption<uint32>("WorldServerPort", 0) != 8099 ||
-        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";rogue_paths_test_characters_v3") ||
+        !sConfigMgr->GetOption<std::string>("CharacterDatabaseInfo", "").ends_with(";cultivation_test_characters_v1") ||
         !AccountMgr::GetName(player->GetSession()->GetAccountId(), account) || !account.starts_with("RPTEST_") ||
         !player->GetName().starts_with("Rp") || player->GetLevel() != 80)
         return false;

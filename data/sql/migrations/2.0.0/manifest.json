@@ -3,7 +3,7 @@
   "schema_version": 6,
   "status": "candidate-unaccepted",
   "database_scope": "cultivation_test_*_v1 only",
-  "source_manifest_sha256": "7a784821414ba3b34f372fe85e4af69043b2f92981e729fccb07b7938754bf50",
+  "source_manifest_sha256": "05073e4ab334ca1940f0e87d17662699c04d61f919e56d000704d5f79d7418ab",
   "transition": {
     "module": "mod-rogue-paths -> mod-cultivation",
     "command": ".roguepath <action> -> .cultivation rogue <action>",

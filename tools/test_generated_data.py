@@ -189,7 +189,7 @@ class GeneratedDataTests(unittest.TestCase):
 
     def test_range_and_radius_are_not_level_or_dice(self):
         self.assertEqual(self.client[86045][46], 5)
-        self.assertEqual((self.client[86305][29], self.client[86305][42], self.client[86305][46]), (15000, 20, 35))
+        self.assertEqual((self.client[86305][29], self.client[86305][42], self.client[86305][46]), (30000, 20, 35))
         for spell_id, base in ((86048, 51723), (86570, 52874)):
             self.assertEqual(self.client[spell_id][92], self.manifest['celestial_revision']['radius_id'])
             self.assertEqual(self.client[spell_id][74], self.client[base][74])
@@ -354,12 +354,13 @@ class GeneratedDataTests(unittest.TestCase):
     def test_shadowstep_and_preparation_native_records(self):
         shadowstep = self.client[86105]
         self.assertEqual(shadowstep[42], 0)
-        self.assertEqual(shadowstep[29:31], [20000, 20000])
+        self.assertEqual(shadowstep[29:31], [30000, 30000])
         self.assertEqual(shadowstep[86], 25, 'Celestial Shadowstep accepts enemy or ally')
         seven = (ROOT / 'src/rogue/RoguePathSevenSpells.cpp').read_text(encoding='utf-8')
         common = (ROOT / 'src/rogue/RoguePathCommonSpells.cpp').read_text(encoding='utf-8')
         self.assertNotIn('SummonCreature(900406', seven)
-        self.assertIn('player->RemoveAurasDueToSpell(44373);', common)
+        self.assertTrue('player->RemoveAurasDueToSpell(36563);' in common)
+        self.assertFalse('player->RemoveAurasDueToSpell(44373);' in common)
         self.assertIn('player->RemoveAurasWithMechanic((1ULL << MECHANIC_ROOT) | (1ULL << MECHANIC_SNARE));', common)
         preparation = self.client[86107]
         self.assertTrue(preparation[4] & 0x40)

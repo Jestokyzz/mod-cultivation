@@ -157,15 +157,6 @@ public:
             itr = state.delayedDamage.erase(itr);
         }
 
-        if (state.premeditationExpiresAt && now >= state.premeditationExpiresAt)
-        {
-            if (Unit* target = ObjectAccessor::GetUnit(*player, ObjectGuid(state.premeditationTarget)))
-                player->AddComboPoints(target, -int8(std::min<uint8>(state.premeditationPoints, player->GetComboPoints(target))));
-            state.premeditationExpiresAt = 0;
-            state.premeditationPoints = 0;
-            state.premeditationTarget = 0;
-        }
-
         if (state.cheatHealTicks && now >= state.cheatHealNextTick)
         {
             uint32 amount = state.cheatHealRemaining / state.cheatHealTicks;

@@ -306,6 +306,21 @@ bool HasAuraFrom(Unit const* unit, uint32 spellId, ObjectGuid caster)
     return unit && unit->GetAura(spellId, caster);
 }
 
+Aura* OwnHemorrhage(Player* rogue, Unit* target)
+{
+    if (!rogue || !target || IsModuleTriggered())
+        return nullptr;
+    for (auto const& pair : target->GetAppliedAuras())
+    {
+        Aura* aura = pair.second->GetBase();
+        auto variant = FindVariant(aura->GetId());
+        if (variant && variant->logicalName == "hemorrhage" && aura->GetCasterGUID() == rogue->GetGUID() &&
+            aura->GetCharges() && aura->GetDuration() > 0)
+            return aura;
+    }
+    return nullptr;
+}
+
 uint32 BaseChainSpell(uint32 spellId)
 {
     uint32 base = sCultivationRogueSpellService.GetBaseSpell(spellId);
@@ -394,10 +409,11 @@ public:
         }
 
         auto variant = FindVariant(spell->GetSpellInfo()->Id);
-        if (variant && variant->logicalName == "shadowstep" && variant->path == RoguePath::Sha)
+        if (variant && variant->logicalName == "shadowstep")
         {
             Unit* target = spell->m_targets.GetUnitTarget();
-            if (!target || player->IsFriendlyTo(target))
+            if (!target || target == player ||
+                (variant->path == RoguePath::Sha && player->IsFriendlyTo(target)))
                 result = SPELL_FAILED_BAD_TARGETS;
             return;
         }
@@ -432,15 +448,8 @@ public:
         auto variant = GetCastVariant(spell);
 
         uint32 baseSpell = BaseChainSpell(spell->GetSpellInfo()->Id);
-        bool danceAbility = baseSpell == 8676 || baseSpell == 703 || baseSpell == 53 || baseSpell == 1833;
-        uint32 dance = sCultivationRogueSpellService.GetVariantSpell(51713, selectedPath);
-        if (danceAbility && player->HasAura(dance))
-        {
-            if (selectedPath == RoguePath::Celestial && (baseSpell == 703 || baseSpell == 1833))
-                cost -= 15;
-            else if (selectedPath == RoguePath::Sha && (baseSpell == 8676 || baseSpell == 53))
-                cost -= 20;
-        }
+        // Shadow Dance uses native SPELLMOD_COST before this hook, so both
+        // the pre-cast client cost and actual energy deduction use one value.
 
         if (!variant)
         {
@@ -688,19 +697,11 @@ public:
         // Direct path bonuses are combined once with the cast context before mitigation.
         if (!direct && HasAuraFrom(victim, Generated::ShaDismantleMark, rogue->GetGUID()))
             damage = uint32(uint64(damage) * 115 / 100);
-        if (direct && spellInfo->GetSchoolMask() & SPELL_SCHOOL_MASK_NORMAL && !spellInfo->NeedsComboPoints())
+        if (direct && spellInfo->GetSchoolMask() & SPELL_SCHOOL_MASK_NORMAL)
         {
-            TargetRuntimeState& state = GetRuntimeState(rogue).targets[victim->GetGUID().GetRawValue()];
-            if (state.hemorrhageExpiresAt && int32(getMSTime() - state.hemorrhageExpiresAt) >= 0)
-            {
-                state.hemorrhageCharges = 0;
-                state.hemorrhageExpiresAt = 0;
-            }
-            if (state.hemorrhageCharges && state.hemorrhageBonusDamage > 0)
-            {
-                damage += state.hemorrhageBonusDamage;
-                --state.hemorrhageCharges;
-            }
+            if (Aura* aura = OwnHemorrhage(rogue, victim))
+                if (AuraEffect* bonus = aura->GetEffect(EFFECT_2))
+                    damage += std::max<int32>(0, bonus->GetAmount());
         }
     }
 
@@ -854,16 +855,6 @@ private:
                 state.honorReserve = 0;
             }
         }
-        if (GetSpellInfo()->NeedsComboPoints())
-        {
-            PlayerRuntimeState& state = GetRuntimeState(player);
-            if (state.premeditationTarget == snapshot->comboTargetGuid.GetRawValue())
-            {
-                state.premeditationExpiresAt = 0;
-                state.premeditationPoints = 0;
-                state.premeditationTarget = 0;
-            }
-        }
         if (variant->logicalName == "eviscerate" && variant->path == RoguePath::Celestial && _comboPoints == 5)
             player->ModifyPower(POWER_ENERGY, 10);
         if (variant->logicalName == "mutilate" && variant->path == RoguePath::Sha && snapshot->deadlyPoisonStacks < 5)
@@ -972,13 +963,8 @@ private:
         }
         if (variant->logicalName == "hemorrhage")
         {
-            TargetRuntimeState& state = GetRuntimeState(player).targets[target->GetGUID().GetRawValue()];
-            state.hemorrhageCharges = variant->path == RoguePath::Celestial ? 20 : 5;
-            state.hemorrhageExpiresAt = getMSTime() + 60000;
-            SpellInfo const* baseInfo = sSpellMgr->GetSpellInfo(variant->baseSpell);
-            state.hemorrhageBonusDamage = baseInfo ? baseInfo->Effects[EFFECT_2].CalcValue(player) : 0;
-            if (variant->path == RoguePath::Sha)
-                state.hemorrhageBonusDamage *= 3;
+            if (Aura* aura = target->GetAura(GetSpellInfo()->Id, player->GetGUID()))
+                aura->SetCharges(variant->path == RoguePath::Celestial ? 20 : 5);
         }
         if (variant->logicalName == "garrote")
         {
@@ -992,14 +978,6 @@ private:
             }
             if (variant->path == RoguePath::Sha)
                 player->CastSpell(target, Generated::ShaGarroteWindow, true);
-        }
-        if (variant->logicalName == "premeditation" && variant->path == RoguePath::Sha)
-        {
-            PlayerRuntimeState& state = GetRuntimeState(player);
-            state.premeditationTarget = target->GetGUID().GetRawValue();
-            state.premeditationPoints = 2;
-            state.premeditationExpiresAt = getMSTime() + 6000;
-            player->ModifyPower(POWER_ENERGY, 40);
         }
         if (variant->logicalName == "envenom" && variant->path == RoguePath::Sha)
         {
@@ -1029,7 +1007,32 @@ private:
         auto variant = GetCastVariant(GetSpell());
         if (variant)
         {
-            if (variant->logicalName == "vanish")
+            if (variant->logicalName == "premeditation")
+            {
+                // Enemy CP and self retention are separate hit targets. Finalize
+                // once per cast, after both, never once for each AfterHit callback.
+                Unit* target = GetExplTargetUnit();
+                CastSnapshot const* snapshot = FindCastSnapshot(GetSpell());
+                if (target && snapshot)
+                {
+                    int32 previous = snapshot->comboTargetGuid == target->GetGUID() ? snapshot->comboPoints : 0;
+                    int32 granted = std::max<int32>(0, int32(player->GetComboPoints(target)) - previous);
+                    Aura* retention = player->GetAura(GetSpellInfo()->Id);
+                    // AddAura executes aura effects only, not ADD_COMBO_POINTS.
+                    if (granted && !retention)
+                        retention = player->AddAura(GetSpellInfo()->Id, player);
+                    if (retention)
+                    {
+                        if (!granted)
+                            retention->Remove();
+                        else if (AuraEffect* effect = retention->GetEffect(EFFECT_1))
+                            effect->ChangeAmount(granted, false);
+                    }
+                    if (variant->path == RoguePath::Sha)
+                        player->ModifyPower(POWER_ENERGY, 40);
+                }
+            }
+            else if (variant->logicalName == "vanish")
             {
                 player->RemoveAurasDueToSpell(1784);
                 player->CastSpell(player, sCultivationRogueSpellService.GetVariantSpell(1784, variant->path), true);
@@ -1072,21 +1075,19 @@ private:
             {
                 if (variant->path == RoguePath::Sha)
                 {
-                    // The teleport has already resolved; discard the stock movement
-                    // boost and stock +20% attack bonus for the Sha version.
+                    // Teleport already resolved. 36563 owns +20% damage, not
+                    // movement; keep parent speed and 44373 threat reduction.
                     player->RemoveAurasDueToSpell(36563);
-                    player->RemoveAurasDueToSpell(44373);
-                    player->RemoveAurasDueToSpell(GetSpellInfo()->Id);
                     player->CastSpell(player, Generated::ShaShadowstepDamage, true);
                 }
                 else
                 {
                     player->RemoveAurasWithMechanic((1ULL << MECHANIC_ROOT) | (1ULL << MECHANIC_SNARE));
-                    player->RemoveAurasByType(SPELL_AURA_MOD_ROOT);
-                    player->RemoveAurasByType(SPELL_AURA_MOD_DECREASE_SPEED);
+                    // Stealth contains MOD_DECREASE_SPEED too. Only hostile
+                    // root/snare mechanics are movement impairments to cleanse.
                     // Keep the stock 70% movement window, but remove the
                     // stock next-attack +20% damage component.
-                    player->RemoveAurasDueToSpell(44373);
+                    player->RemoveAurasDueToSpell(36563);
                 }
             }
             else if (variant->logicalName == "cold_blood")
@@ -1207,6 +1208,13 @@ public:
     void OnComboPointsGain(Unit* unit, Unit* target, uint8, uint8 overflow) override
     {
         Player* rogue = unit->ToPlayer();
+        if (rogue)
+        {
+            // Continuing a series (including a new target) cancels the old
+            // native retention. Premeditation AfterCast restores only its actual grant.
+            rogue->RemoveAurasDueToSpell(86108);
+            rogue->RemoveAurasDueToSpell(86308);
+        }
         if (!rogue || !target->IsAlive() || sCultivationRogueSpellService.GetPath(rogue) != RoguePath::Celestial ||
             !(HasPathPassiveRank(rogue, 51698) || HasPathPassiveRank(rogue, 51700) || HasPathPassiveRank(rogue, 51701)))
             return;
@@ -1232,17 +1240,9 @@ public:
         }
         if (Player* rogue = attacker ? attacker->ToPlayer() : nullptr)
         {
-            TargetRuntimeState& state = GetRuntimeState(rogue).targets[target->GetGUID().GetRawValue()];
-            if (state.hemorrhageExpiresAt && int32(getMSTime() - state.hemorrhageExpiresAt) >= 0)
-            {
-                state.hemorrhageCharges = 0;
-                state.hemorrhageExpiresAt = 0;
-            }
-            if (state.hemorrhageCharges && state.hemorrhageBonusDamage > 0)
-            {
-                damage += state.hemorrhageBonusDamage;
-                --state.hemorrhageCharges;
-            }
+            if (Aura* aura = OwnHemorrhage(rogue, target))
+                if (AuraEffect* bonus = aura->GetEffect(EFFECT_2))
+                    damage += std::max<int32>(0, bonus->GetAmount());
         }
         ModifyIncoming(target, attacker, damage, nullptr);
         RoguePathAllSpellScript::ApplyPathDamage(attacker, target, nullptr, DIRECT_DAMAGE, damage);
@@ -1288,6 +1288,9 @@ public:
         if (!target || !aura)
             return;
         auto variant = FindVariant(aura->GetId());
+        if (variant && variant->logicalName == "shadow_dance")
+            target->CastSpell(target, variant->path == RoguePath::Sha ?
+                Generated::ShaShadowDanceCostMarker : Generated::CelestialShadowDanceCostMarker, true);
         if (variant && variant->logicalName == "cloak_of_shadows" && variant->path == RoguePath::Sha)
             target->CastSpell(target, Generated::ShaCloakPoisonPenetration, true);
         if (variant && variant->logicalName == "stealth" && target->IsPlayer())
@@ -1308,12 +1311,6 @@ public:
                     if (AuraEffect* effect = stealthAura->GetEffect(index))
                         if (effect->GetAuraType() == SPELL_AURA_MOD_DECREASE_SPEED)
                             effect->ChangeAmount(0, false);
-        }
-        if (variant && variant->logicalName == "kidney_shot" && variant->path == RoguePath::Sha)
-        {
-            int32 duration = std::max<int32>(1000, aura->GetDuration() - 1000);
-            aura->SetMaxDuration(duration);
-            aura->SetDuration(duration);
         }
         if (aura->GetId() == 57933)
         {
@@ -1350,6 +1347,10 @@ public:
         Aura* aura = application->GetBase();
         Player* owner = aura->GetCaster() ? aura->GetCaster()->ToPlayer() : nullptr;
         auto removedVariant = FindVariant(aura->GetId());
+        // Cleanup also runs during path synchronization/technical removals.
+        if (removedVariant && removedVariant->logicalName == "shadow_dance")
+            target->RemoveAurasDueToSpell(removedVariant->path == RoguePath::Sha ?
+                Generated::ShaShadowDanceCostMarker : Generated::CelestialShadowDanceCostMarker);
         if (removedVariant && removedVariant->path == RoguePath::Celestial &&
             (IsTechnicalAuraRemoval(target, owner) || mode == AURA_REMOVE_BY_DEATH))
             return;
@@ -1470,6 +1471,44 @@ private:
     }
 };
 
+class spell_cultivation_rogue_active_aura : public AuraScript
+{
+    PrepareAuraScript(spell_cultivation_rogue_active_aura);
+
+    bool Load() override
+    {
+        auto variant = FindVariant(GetId());
+        return variant && variant->logicalName == "hemorrhage";
+    }
+
+    bool CheckProc(ProcEventInfo& event)
+    {
+        DamageInfo const* damage = event.GetDamageInfo();
+        SpellInfo const* info = event.GetSpellInfo();
+        if (IsModuleTriggered() || !damage || damage->GetDamageType() == DOT ||
+            !(damage->GetSchoolMask() & SPELL_SCHOOL_MASK_NORMAL) || !event.GetActor() ||
+            event.GetActor()->GetGUID() != GetCasterGUID() || event.GetActionTarget() != GetTarget() ||
+            !(event.GetHitMask() & (PROC_HIT_NORMAL | PROC_HIT_CRITICAL | PROC_HIT_ABSORB)))
+            return false;
+        auto variant = FindVariant(GetId());
+        // Bonus still applies, but a Celestial finisher does not spend a charge.
+        return !(variant && variant->path == RoguePath::Celestial && info && info->NeedsComboPoints());
+    }
+
+    void Proc(ProcEventInfo&) { PreventDefaultAction(); }
+
+    void Register() override
+    {
+        // Startup validation runs before Load(), without a live Aura. The shared
+        // SQL loader also handles non-aura spells, which must have no proc hooks.
+        auto variant = FindVariant(m_scriptSpellId);
+        if (!variant || variant->logicalName != "hemorrhage")
+            return;
+        DoCheckProc += AuraCheckProcFn(spell_cultivation_rogue_active_aura::CheckProc);
+        OnProc += AuraProcFn(spell_cultivation_rogue_active_aura::Proc);
+    }
+};
+
 class spell_cultivation_rogue_celestial_fan : public SpellScript
 {
     PrepareSpellScript(spell_cultivation_rogue_celestial_fan);
@@ -1515,7 +1554,7 @@ void AddRoguePathCommonSpellScripts()
 {
     new RoguePathAllSpellScript();
     new RoguePathUnitScript();
-    RegisterSpellScript(spell_cultivation_rogue_active);
+    RegisterSpellAndAuraScriptPair(spell_cultivation_rogue_active, spell_cultivation_rogue_active_aura);
     RegisterSpellScript(spell_cultivation_rogue_celestial_fan);
     RegisterSpellScript(spell_cultivation_rogue_evasion);
 }

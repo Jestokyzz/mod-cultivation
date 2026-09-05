@@ -14,4 +14,4 @@ The first subsystem is `rogue`, which contains the Celestial and Sha rogue varia
 
 The former `.roguepath` command is removed. Existing character choices are preserved by the versioned `2.0.0` migration, which renames the persistent tables instead of recreating them.
 
-This repository state is an unaccepted development candidate. It may be published to a candidate branch, but must not be tagged, released, or merged to `main` until isolated runtime tests and explicit user acceptance pass. See [README_RU.md](README_RU.md) for build, migration, validation, and rollback details.
+Version **v2.0.0** was accepted by the user and installed on the production JestokyCraft server/client on 2026-09-05. Download the complete compatible Windows package from GitHub Releases, not the source-code ZIP. See [installation](docs/install-v2.0.0.md), [release notes](CHANGELOG_RU.md), and [acceptance scope](docs/audit-fixes-20260905.md). The prebuilt binary is for the documented JestokyCraft integration, not arbitrary AzerothCore installations. Unverified edge cases remain explicitly listed.

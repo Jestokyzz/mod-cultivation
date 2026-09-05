@@ -38,6 +38,17 @@
     },
     "hemorrhage": {
       "ruRU": {
+        "celestial": {
+          "native_only": true,
+          "replace": [
+            {"old": "$s2%", "new": "{path}${$m2*0.9}%{/path}"},
+            {"old": "${$m2*1.45}%", "new": "{path}${$m2*1.45*0.9}%{/path}"},
+            {"old": "усиливает физический урон, причиненный цели", "new": "усиливает физический урон, причиненный цели {path}только этим разбойником{/path}"},
+            {"old": "$n", "new": "{path}20{/path}"},
+            {"old": "$d", "new": "{path}60 сек.{/path}"}
+          ],
+          "addition": "Завершающие приёмы получают бонус, но не расходуют заряды."
+        },
         "sha": {
           "native_only": true,
           "replace": [
@@ -45,8 +56,34 @@
             {"old": "${$m2*1.45}%", "new": "{path}${$m2*1.45*1.2}%{/path}"},
             {"old": "усиливает физический урон, причиненный цели", "new": "усиливает физический урон, причиненный цели {path}только этим разбойником{/path}"},
             {"old": "$<bonus>", "new": "{path}${$<bonus>*3}{/path}"},
-            {"old": "$n", "new": "{path}5{/path}"}
+            {"old": "$n", "new": "{path}5{/path}"},
+            {"old": "$d", "new": "{path}60 сек.{/path}"}
           ],
+          "addition": ""
+        }
+      },
+      "enUS": {
+        "celestial": {
+          "replace": [
+            {"old": "$s2%", "new": "{path}${$m2*0.9}%{/path}"},
+            {"old": "${$m2*1.45}%", "new": "{path}${$m2*1.45*0.9}%{/path}"},
+            {"old": "any Physical damage dealt to the target", "new": "Physical damage dealt to the target {path}by this rogue only{/path}"},
+            {"old": "$n", "new": "{path}20{/path}"},
+            {"old": "$d", "new": "{path}60 sec{/path}"}
+          ],
+          "native_only": true,
+          "addition": "Your finishers receive the bonus without consuming charges."
+        },
+        "sha": {
+          "replace": [
+            {"old": "$s2%", "new": "{path}${$m2*1.2}%{/path}"},
+            {"old": "${$m2*1.45}%", "new": "{path}${$m2*1.45*1.2}%{/path}"},
+            {"old": "any Physical damage dealt to the target", "new": "Physical damage dealt to the target {path}by this rogue only{/path}"},
+            {"old": "$<bonus>", "new": "{path}${$<bonus>*3}{/path}"},
+            {"old": "$n", "new": "{path}5{/path}"},
+            {"old": "$d", "new": "{path}60 sec{/path}"}
+          ],
+          "native_only": true,
           "addition": ""
         }
       }
@@ -76,8 +113,27 @@
     "kidney_shot": {
       "ruRU": {
         "sha": {
-          "replace": [],
+          "replace": [
+            {"old": "1 прием: 2 секунды", "new": "1 прием: {path}1 секунда{/path}", "optional": true},
+            {"old": "2 приема: 3 секунды", "new": "2 приема: {path}2 секунды{/path}", "optional": true},
+            {"old": "3 приема: 4 секунды", "new": "3 приема: {path}3 секунды{/path}", "optional": true},
+            {"old": "4 приема: 5 секунд", "new": "4 приема: {path}4 секунды{/path}", "optional": true},
+            {"old": "5 приемов: 6 секунд", "new": "5 приемов: {path}5 секунд{/path}", "optional": true}
+          ],
           "addition": "Во время оглушения цель получает на 15% больше урона из всех источников.",
+          "addition_separator": "\n"
+        }
+      },
+      "enUS": {
+        "sha": {
+          "replace": [
+            {"old": "1 point  : 2 seconds", "new": "1 point  : {path}1 second{/path}", "optional": true},
+            {"old": "2 points: 3 seconds", "new": "2 points: {path}2 seconds{/path}", "optional": true},
+            {"old": "3 points: 4 seconds", "new": "3 points: {path}3 seconds{/path}", "optional": true},
+            {"old": "4 points: 5 seconds", "new": "4 points: {path}4 seconds{/path}", "optional": true},
+            {"old": "5 points: 6 seconds", "new": "5 points: {path}5 seconds{/path}", "optional": true}
+          ],
+          "addition": "While stunned, the target takes 15% more damage from all sources.",
           "addition_separator": "\n"
         }
       }
@@ -2145,12 +2201,12 @@
       },
       "descriptions": {
         "ruRU": {
-          "celestial": "Не требует энергии и может быть применён к противнику или союзнику. Время восстановления уменьшено на 10 сек. Снимает эффекты замедления и сковывания. Больше не увеличивает урон следующей атаки на 20%.",
-          "sha": "Только противник, дальность 35 м, перезарядка 15 сек., стоимость 20 энергии. Следующая специальная атака наносит на 40% больше прямого урона."
+          "celestial": "Не требует энергии и может быть применён к противнику или союзнику, кроме себя. Сохраняет незаметность. Снимает эффекты замедления и сковывания. Больше не увеличивает урон следующей атаки на 20%.",
+          "sha": "Только противник, дальность 35 м, перезарядка 30 сек., стоимость 20 энергии. Следующая специальная атака наносит на 40% больше прямого урона."
         },
         "enUS": {
-          "celestial": "Costs no energy and can target an enemy or ally. Cooldown reduced by 10 sec. Removes snares and roots. No longer increases the damage of the next attack by 20%.",
-          "sha": "Enemy targets only. Range 35 yards, cooldown 15 sec, cost 20 energy. No movement boost; the next eligible direct special attack deals 40% more damage."
+          "celestial": "Costs no energy and can target an enemy or ally other than yourself. Preserves stealth. Removes snares and roots. No longer increases the damage of the next attack by 20%.",
+          "sha": "Enemy targets only. Range 35 yards, cooldown 30 sec, cost 20 energy. Retains normal movement and threat modifiers; the next eligible direct special attack deals 40% more damage."
         }
       },
       "full_descriptions": {
@@ -4007,8 +4063,8 @@
         "enUS": "Blood Thrill"
       },
       "descriptions": {
-        "ruRU": "После выхода из незаметности или применения «Хладнокровия», «Выброса адреналина», «Череды убийств» или «Танца теней» на 6 сек. увеличивает прямой урон и получаемый урон на 8%, а восстановление энергии — на 20%. Внутреннее восстановление — 20 сек.",
-        "enUS": "After leaving stealth or using Cold Blood, Adrenaline Rush, Killing Spree or Shadow Dance: direct damage and damage taken increase by 8%, and energy regeneration by 20%, for 6 seconds. Internal cooldown: 20 seconds."
+        "ruRU": "После выхода из незаметности или применения «Хладнокровия», «Выброса адреналина», «Череды убийств» или «Танца теней» на 6 сек. увеличивает прямой урон и получаемый урон на 8%, а восстановление энергии — на 20%. Внутреннее восстановление — 20 сек. Суммарный бонус прямого урона от системы Ша ограничен 60%.",
+        "enUS": "After leaving stealth or using Cold Blood, Adrenaline Rush, Killing Spree or Shadow Dance: direct damage and damage taken increase by 8%, and energy regeneration by 20%, for 6 seconds. Internal cooldown: 20 seconds. The combined direct damage bonus from the Sha system is capped at 60%."
       }
     },
     "celestial_finisher_regen": {

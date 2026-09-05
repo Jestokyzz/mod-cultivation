@@ -1,4 +1,4 @@
-param([switch]$TalentsOnly,[switch]$RestartOnly,[switch]$V2,[switch]$V3,[switch]$CelestialOnly,[switch]$ResourcesOnly,[switch]$ShaSinisterOnly,[switch]$Sha41Only,[switch]$Schema3,[switch]$Schema5,[switch]$Schema6)
+param([switch]$TalentsOnly,[switch]$RestartOnly,[switch]$V2,[switch]$V3,[switch]$CelestialOnly,[switch]$ResourcesOnly,[switch]$ShaSinisterOnly,[switch]$Sha41Only,[switch]$Schema3,[switch]$Schema5,[switch]$Schema6,[switch]$ShadowstepOnly)
 $ErrorActionPreference='Stop'
 $secrets=@{}
 foreach($line in Get-Content -LiteralPath 'C:\Solo WotLK\WoWBotServer\.local-secrets') {
@@ -15,6 +15,7 @@ try {
     if($Schema3){$testArguments+='--schema3'}
     if($Schema5){$testArguments+='--schema5'}
     if($Schema6){$testArguments+='--schema6'}
+    if($ShadowstepOnly){$testArguments+='--shadowstep-only'}
     if($CelestialOnly){$testArguments+='--celestial-only'}
     if($ResourcesOnly){$testArguments+='--resources-only'}
     if($ShaSinisterOnly){$testArguments+='--sha-sinister-only'}

@@ -31,6 +31,7 @@ bool HandleTestCelestial(ChatHandler* handler) { return RunRogue(handler, "testc
 bool HandleTestResources(ChatHandler* handler) { return RunRogue(handler, "testresources"); }
 bool HandleTestShaSinister(ChatHandler* handler) { return RunRogue(handler, "testshasinister"); }
 bool HandleTestSha41(ChatHandler* handler) { return RunRogue(handler, "testsha41"); }
+bool HandleTestShadowstep(ChatHandler* handler) { return RunRogue(handler, "testshadowstep"); }
 
 bool HandleUsage(ChatHandler* handler)
 {
@@ -59,6 +60,7 @@ public:
             { "testresources",  HandleTestResources,  RBAC_PERMISSION_CULTIVATION, Console::No },
             { "testshasinister",HandleTestShaSinister,RBAC_PERMISSION_CULTIVATION, Console::No },
             { "testsha41",      HandleTestSha41,      RBAC_PERMISSION_CULTIVATION, Console::No },
+            { "testshadowstep", HandleTestShadowstep, RBAC_PERMISSION_CULTIVATION, Console::No },
             { "",               HandleUsage,          RBAC_PERMISSION_CULTIVATION, Console::No }
         };
 

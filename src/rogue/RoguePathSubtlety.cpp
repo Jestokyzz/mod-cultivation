@@ -123,7 +123,7 @@ public:
         if (rogue->HasAura(SPELL_ROGUE_CHEATING_DEATH) && path == RoguePath::Celestial)
             damage = uint32(uint64(damage) * 80 / 100);
 
-        if (damageType == DOT || !Mechanics::IsDirectAttack(spellInfo))
+        if (!spellInfo)
             return;
 
         uint32 baseSpell = sCultivationRogueSpellService.GetBaseSpell(spellInfo->Id);
@@ -132,7 +132,8 @@ public:
         uint32 dance = sCultivationRogueSpellService.GetVariantSpell(51713, path);
         if (!rogue->HasAura(dance))
             return;
-        if (path == RoguePath::Celestial && (baseSpell == 8676 || baseSpell == 703))
+        if (path == RoguePath::Celestial &&
+            ((baseSpell == 8676 && damageType != DOT) || baseSpell == 703))
             damage = uint32(uint64(damage) * 80 / 100);
     }
 };

@@ -13,6 +13,7 @@ import sha_aura_tooltips
 import visibility_schema3 as visibility
 import tooltip_stock
 import sys
+from shadowstep_clone_sql import SQL as SHADOWSTEP_CLONE_SQL
 from pathlib import Path
 from typing import Any
 
@@ -363,21 +364,31 @@ def patch_active_fields(row: list[int], logical_name: str, path: str) -> None:
         else:
             clear_effect(row, 1)
     elif logical_name == "hemorrhage":
-        clear_effect(row, 2)
+        # Visible caster-owned charges; the script supplies the physical bonus
+        # without native MOD_DAMAGE_TAKEN stacking across different rogues.
+        row[95 + 2] = 4  # DUMMY, retain the base-rank amount in effect 2.
+        row[4] |= 0x04000000  # Explicit negative aura; DUMMY alone is not negative.
+        if not celestial:
+            row[82] = (row[82] + 1) * 3 - 1
+        row[40] = 3  # 60 seconds.
+        row[34] = 0x8 | 0x20 | 0x80 | 0x200  # taken melee/ranged auto/spell hits
+        row[35] = 100
+        row[36] = 20 if celestial else 5
+    elif logical_name == "kidney_shot" and not celestial:
+        row[40] = 187  # Native 0..5 seconds interpolated by CP, before DR.
     elif logical_name == "ambush" and not celestial:
         row[42] += 15
     elif logical_name == "garrote" and not celestial:
         row[98] = 1500
     elif logical_name == "shadowstep":
         row[42] = 0 if celestial else 20
+        row[29] = 30000
+        row[30] = 30000
         if celestial:
-            row[29] = 20000
-            row[30] = 20000
             # TARGET_UNIT_TARGET_ANY keeps the native unit-target teleport and
             # safety/LoS checks while permitting both friendly and hostile units.
             row[86] = 25
         else:
-            row[29] = 15000
             row[46] = 35
     elif logical_name == "preparation" and not celestial:
         row[29] = 390000
@@ -401,6 +412,8 @@ def patch_active_fields(row: list[int], logical_name: str, path: str) -> None:
         row[80] = 2
         row[81] = 2  # RETAIN_COMBO_POINTS removes the same three points on expiry.
         row[40] = 9  # Native 30-second duration, shared by client and server.
+    elif logical_name == "premeditation":
+        row[40] = 32  # One native six-second retention, never a second timer.
 
 
 TECH_DURATIONS = {
@@ -479,6 +492,8 @@ TECH_DURATIONS = {
 
 
 TECH_EFFECTS = {
+    "sha_shadow_dance_cost_marker": (107, -20, 0),
+    "celestial_shadow_dance_cost_marker": (107, -15, 0),
     "celestial_preparation_glyph_cooldown": (108, -30, 0),
     "celestial_finisher_regen": (24, 5, 1000),
     "celestial_finisher_guard": (87, -5, 0),
@@ -577,8 +592,8 @@ PATH_DESCRIPTIONS_RU = {
     "hemorrhage": ("Прямой урон ниже на 10%; создаёт 20 персональных зарядов стандартного дополнительного урона на 60 сек.", "Прямой урон выше на 20%; создаёт 5 персональных зарядов с утроенным дополнительным уроном."),
     "ambush": ("Дальность применения увеличена на 8 м, а успешное попадание создаёт 1 дополнительный приём серии.", "Стоимость 75 ед. энергии. Наносит на 35% больше прямого урона; итоговый критический урон дополнительно усилен на 20%."),
     "garrote": ("Молчание длится на 1 сек. дольше, кровотечение — на 6 сек. дольше с дополнительными полными тиками.", "Молчание длится 1 сек.; полный урон кровотечения наносится за 9 сек. Следующий Eviscerate за 6 сек. игнорирует 30% брони."),
-    "shadowstep": ("Можно применять к противнику или союзнику без затрат энергии. После успешного перемещения в исходной точке на 2 сек. появляется визуальный двойник и наносит выбранной враждебной цели ровно 1 ед. физического урона обычной атакой.", "Только противник, дальность 35 м, перезарядка 15 сек., стоимость 20 энергии. Следующая специальная атака наносит на 40% больше прямого урона."),
-    "shadow_dance": ("Длится 10 сек. Stealth-способности наносят на 20% меньше прямого урона; Cheap Shot и Garrote стоят на 15 энергии меньше.", "Длится 5 сек.; Cheap Shot недоступен. Ambush и Backstab стоят на 20 энергии меньше и наносят на 30% больше урона."),
+    "shadowstep": ("Можно применять к противнику или союзнику, кроме себя, без затрат энергии. Сохраняет незаметность и снимает эффекты замедления и сковывания.", "Только противник, дальность 35 м, перезарядка 30 сек., стоимость 20 энергии. Следующая специальная атака наносит на 40% больше прямого урона."),
+    "shadow_dance": ("Длится 10 сек. Stealth-способности наносят на 20% меньше урона; Cheap Shot и Garrote стоят на 15 энергии меньше.", "Длится 5 сек.; Cheap Shot недоступен. Ambush и Backstab стоят на 20 энергии меньше и наносят на 30% больше урона."),
     "preparation": ("Пассивно уменьшает на 30% итоговое время восстановления " + "Хладнокровия, Шага сквозь тень, Исчезновения, Ускользания и Спринта. Символ подготовки также добавляет Разоружение, Пинок и Шквал клинков.", "Сбрасывает кастомные Shadow Dance, Shadowstep, Kick и Dismantle и восстанавливает 40 энергии."),
     "premeditation": ("Создаёт 3 приёма серии, сохраняющиеся 30 сек.", "Создаёт 2 приёма серии и восстанавливает 40 энергии; созданные приёмы исчезают через 6 сек., если не использованы."),
     "overkill": ("Стандартный бонус восстановления энергии после незаметности длится 30 сек.", "После незаметности даёт +100% восстановления энергии на 8 сек."),
@@ -672,6 +687,11 @@ def create_technical_spell(template: list[int], spell_id: int, logical_name: str
     set_string(row, strings, SPELL_DESCRIPTION + locale_index, path_prefix("celestial" if logical_name.startswith("celestial") else "sha", russian))
     set_string(row, strings, SPELL_TOOLTIP + locale_index, name)
     seven.patch_technical(sys.modules[__name__], row, logical_name)
+    if logical_name in ('sha_shadow_dance_cost_marker', 'celestial_shadow_dance_cost_marker'):
+        sha = logical_name.startswith('sha_')
+        set_effect(row, 0, 107, -20 if sha else -15)  # Flat native SPELLMOD_COST.
+        row[110] = 14
+        row[122:125] = [0x204 if sha else 0x500, 0, 0]  # Backstab/Ambush or Garrote/Cheap Shot.
     return row
 
 
@@ -1064,7 +1084,7 @@ def write_sql(path: Path, manifest: dict[str, Any], entries: list[dict[str, Any]
         "(-86207, 0, 0, 0, 0, 0, 680, 0, 0, 16, 0, 0, 0, 100, 0, 0);",
         "INSERT INTO `spell_proc` (`SpellId`,`ProcFlags`,`SpellTypeMask`,`SpellPhaseMask`,`HitMask`,`Chance`) VALUES (-86437,272,1,2,2,100);",
     ])
-    text = "\n".join(lines) + "\n"
+    text = "\n".join(lines) + "\n" + SHADOWSTEP_CLONE_SQL
     if check_only:
         def canonical_sql(value):
             # Legacy generator iterated a set for the three weapon bindings.
@@ -1130,6 +1150,11 @@ def main() -> None:
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     client_rows, client_strings = load_dbc(args.client_spell_baseline, SPELL_FIELDS)
     server_rows, server_strings = load_dbc(args.server_spell_baseline, SPELL_FIELDS)
+    import dbc_string_integrity
+    recovered_strings = {
+        'client': dbc_string_integrity.repair(sys.modules[__name__], client_rows, client_strings),
+        'server': dbc_string_integrity.repair(sys.modules[__name__], server_rows, server_strings),
+    }
     skill_rows, skill_strings = load_dbc(args.skill_line_baseline, SKILL_LINE_ABILITY_FIELDS)
     stock_restore_client = visibility.restore_stock(sys.modules[__name__], client_rows, client_strings, manifest)
     stock_restore_server = visibility.restore_stock(sys.modules[__name__], server_rows, server_strings, manifest)
@@ -1154,6 +1179,8 @@ def main() -> None:
         raise ValueError("Client/server generated spell semantics differ before write")
 
     generated_skill = patch_skill_line(skill_rows, entries, manifest)
+    dbc_string_integrity.validate(client_rows, client_strings)
+    dbc_string_integrity.validate(server_rows, server_strings)
     write_dbc(args.client_spell_output, client_rows, client_strings)
     write_dbc(args.server_spell_output, server_rows, server_strings)
     write_dbc(args.client_skill_line_output, skill_rows, skill_strings)
@@ -1163,6 +1190,9 @@ def main() -> None:
         (args.client_spell_output.parent, args.server_spell_output.parent))
     visibility.generate_variables(sys.modules[__name__], manifest, (args.client_spell_output.parent, args.server_spell_output.parent))
     visibility.write_ui_data(sys.modules[__name__], manifest, client_rows, client_strings)
+    import native_talent_metadata
+    native_talent_metadata.write(args.manifest.parent.parent / 'client_patch/framexml/CultivationRogueHeader.lua',
+                                 manifest, client_rows)
 
     client_semantics = semantic_non_string_rows(args.client_spell_output)
     server_semantics = semantic_non_string_rows(args.server_spell_output)
@@ -1179,6 +1209,7 @@ def main() -> None:
         "schema_version": manifest["schema_version"],
         "display_passives": len(manifest['display_passives']),
         "stock_restoration": {'client': stock_restore_client, 'server': stock_restore_server},
+        "recovered_foreign_strings": recovered_strings,
         "auxiliary_dbc": auxiliary,
         "active_rank_variants": sum(1 for row in generated_client if row["section"] == "active_spells"),
         "passive_rank_variants": sum(1 for row in generated_client if row["section"] == "passive_spells"),

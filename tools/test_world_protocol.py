@@ -32,6 +32,7 @@ CELESTIAL_ONLY = '--celestial-only' in sys.argv
 RESOURCES_ONLY = '--resources-only' in sys.argv
 SHA_SINISTER_ONLY = '--sha-sinister-only' in sys.argv
 SHA41_ONLY = '--sha41-only' in sys.argv
+SHADOWSTEP_ONLY = '--shadowstep-only' in sys.argv
 CELESTIAL_ONLY = CELESTIAL_ONLY or RESOURCES_ONLY
 DB_VERSION = 'v1' if SCHEMA6 else 'v3' if V3 else 'v2' if V2 else 'v1'
 DB_PREFIX = 'cultivation_test_' if SCHEMA6 else 'rogue_paths_test_'
@@ -62,6 +63,9 @@ if SHA_SINISTER_ONLY:
 if SHA41_ONLY:
     assert V3, 'Sha candidate41 harness is restricted to v3'
     REPORT = REPORT_ROOT / 'sha_candidate41_native_test.json'
+if SHADOWSTEP_ONLY:
+    assert SCHEMA6, 'Shadowstep fixture is isolated to Cultivation v1'
+    REPORT = REPORT_ROOT / 'shadowstep_native_test.json'
 TALENTS_ONLY = '--talents-only' in sys.argv
 RESTART_ONLY = '--restart-only' in sys.argv
 if TALENTS_ONLY:
@@ -124,6 +128,7 @@ class WorldClient:
         self.packet_sequence = 0
         self.cooldown_packet_events = []
         self.modify_cooldown_events = []
+        self.pct_spell_mod_events = []
         self.spell_go_events = []
         opcode, challenge = self.receive()
         assert opcode == 0x1EC, hex(opcode)
@@ -211,6 +216,8 @@ class WorldClient:
             spell = struct.unpack_from("<I", body, 0)[0]
             adjustment = struct.unpack_from("<i", body, 12)[0]
             self.modify_cooldown_events.append((self.packet_sequence, spell, adjustment))
+        elif opcode == 0x267:  # native SMSG_SET_PCT_SPELL_MODIFIER: family bit, op, value
+            self.pct_spell_mod_events.append(struct.unpack_from('<BBi', body))
         elif opcode == 0x1DE:  # SMSG_CLEAR_COOLDOWN
             self.cooldowns.pop(struct.unpack_from("<I", body)[0], None)
         elif opcode == 0x096 and body and body[0] == 0:  # CHAT_MSG_SYSTEM
@@ -361,7 +368,8 @@ def run():
     try:
         # A spawned process is not a ready world. Never create an account until
         # the exact isolated listener and its startup validation are ready.
-        server_log = (Path(r'C:\Solo WotLK\test-server\20260904-cultivation-v1\logs\world-stdout.log')
+        server_log = (max(Path(r'C:\Solo WotLK\test-server\20260904-cultivation-v1\logs').glob('world-stdout*.log'),
+                          key=lambda path: path.stat().st_mtime)
                       if SCHEMA6 else
                       Path(r'C:\Solo WotLK\test-server') / ('20260831-rogue-paths-' + DB_VERSION) / 'logs/world-stdout.log')
         deadline = time.monotonic() + 60
@@ -458,7 +466,7 @@ def run():
             # dodge tests do not include an artificial -400 skill deficit.
             sql('characters', f'INSERT INTO character_skills(guid,skill,value,max) VALUES({guid},95,400,400) ON DUPLICATE KEY UPDATE value=400,max=400;')
             sql('characters', f'INSERT INTO character_talent(guid,spell,specMask) VALUES({guid},14278,1);')
-        elif LATEST_SCHEMA:
+        elif LATEST_SCHEMA and not SHADOWSTEP_ONLY:
             sql('characters', f'INSERT INTO character_talent(guid,spell,specMask) VALUES({guid},14185,1);')
         if TALENTS_ONLY:
             test_talent_fixture(client, account, guid, report)
@@ -468,6 +476,27 @@ def run():
             sql('characters', f'INSERT INTO character_spell(guid,spell,specMask) VALUES({guid},1860,1);' +
                 f'INSERT INTO character_spell_cooldown(guid,spell,category,item,time,needSend) VALUES({guid},2094,0,0,UNIX_TIMESTAMP()+900,1);')
         client.login(guid)
+        if SHADOWSTEP_ONLY:
+            report['scope'] = 'native Shadowstep fresh/learn/reset, both paths, real casts; NOT GUI acceptance'
+            client.command('.cultivation rogue testshadowstep')
+            client.drain(2)
+            report['checks'] = [m for m in client.messages if m.startswith('RPSTEP|')]
+            summary = [m for m in report['checks'] if m.startswith('RPSTEP|SUMMARY|')]
+            assert summary, ('Shadowstep harness did not finish', report['checks'])
+            assert summary[-1].split('|')[-1] == '0', summary[-1]
+            # Native SPELLMOD_COOLDOWN is sent before casting, not as a forced
+            # cooldown packet. Player::AddSpellAndCategoryCooldowns deliberately
+            # omits SMSG_SPELL_COOLDOWN when only an ordinary spellmod changed it.
+            mods = [event for event in client.pct_spell_mod_events if event[1] == 11]
+            expected_bits = {5, 6, 11, 38, 41}
+            for bit in expected_bits:
+                values = [value for field, op, value in mods if field == bit]
+                assert -30 in values and values[-1] == 0, ('Native modifier learn/reset delivery', bit, values)
+            report['native_cooldown_modifiers'] = mods
+            assert not [event for event in client.modify_cooldown_events if event[1] in (86105, 86305)]
+            client.logout()
+            report['status'] = 'passed'
+            return
         if SHA41_ONLY:
             report['scope'] = 'native Sha candidate41 DBC/config/incoming-damage/control-break contract; NOT GUI acceptance'
             client.command('.cultivation rogue sha')
@@ -505,7 +534,7 @@ def run():
             report['scope'] = 'native resource mechanics on disposable RPTEST fixture; NOT GUI acceptance'
             client.command('.cultivation rogue celestial')
             client.command('.cultivation rogue testresources')
-            client.drain(33)
+            client.drain(41)
             report['checks'] = [m for m in client.messages if m.startswith('RPCT|')]
             summary = [m for m in report['checks'] if m.startswith('RPCT|SUMMARY|')]
             assert summary, ('Resource harness did not finish', report['checks'])
@@ -621,6 +650,22 @@ def run():
         raise
     finally:
         if client:
+            if CELESTIAL_ONLY:
+                ghost_hits = []
+                for sequence, body in client.spell_go_events:
+                    offset = 0
+                    for _ in range(2):
+                        offset += 1 + body[offset].bit_count()
+                    spell_id = struct.unpack_from('<I', body, offset + 1)[0]
+                    if spell_id != 86127:
+                        continue
+                    offset += 13
+                    hits = body[offset]
+                    offset += 1 + 8 * hits
+                    misses = body[offset]
+                    ghost_hits.append({'sequence': sequence, 'hits': hits, 'misses': misses,
+                                       'first_miss_reason': body[offset + 9] if misses else None})
+                report['ghostly_spell_go_outcomes'] = ghost_hits
             client.close()
         report["timestamp_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

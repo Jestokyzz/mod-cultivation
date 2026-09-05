@@ -124,10 +124,29 @@ class ShaPresentation(unittest.TestCase):
                 # ActiveIconID is deliberately normalized to the stock base icon
                 # so path-framed spellbook art never leaks onto a buff/debuff.
                 ignored = STRINGS | {134} | ({133} if spell_id == 86620 else set())
+                if spell_id == 86105:
+                    # 2026-09-05 explicitly replaces the obsolete 20-second base.
+                    self.assertEqual(actual[29:31], [30000, 30000])
+                    ignored |= {29, 30}
+                hemorrhage = self.abilities['hemorrhage']
+                is_hemorrhage = spell_id in range(hemorrhage['celestial_first'],
+                    hemorrhage['celestial_first'] + len(hemorrhage['base_spell_chain']))
+                if is_hemorrhage:
+                    # Audit candidate4: native, visible own charges replace runtime counters.
+                    self.assertEqual(actual[34:37], [680, 100, 20])
+                    self.assertEqual(actual[40], 3)
+                    self.assertEqual(actual[97], 4)
+                    self.assertEqual(actual[4], row[4] | 0x04000000)
+                    effect_fields = set(range(73, 122, 3)) | {128, 129, 130}
+                    stock = by_id[hemorrhage['base_spell_chain'][spell_id - hemorrhage['celestial_first']]]
+                    for field in effect_fields - {97}:
+                        self.assertEqual(actual[field], stock[field], (spell_id, field))
+                    ignored |= {4, 34, 35, 36, 40} | effect_fields
                 self.assertEqual([v for i, v in enumerate(row) if i not in ignored],
                                  [v for i, v in enumerate(actual) if i not in ignored], spell_id)
-                self.assertEqual([g.read_string(ss, row[i]) for i in sorted(STRINGS)],
-                                 [g.read_string(ns, actual[i]) for i in sorted(STRINGS)], spell_id)
+                text_fields = STRINGS - (set(range(170, 186)) if spell_id == 86105 or is_hemorrhage else set())
+                self.assertEqual([g.read_string(ss, row[i]) for i in sorted(text_fields)],
+                                 [g.read_string(ns, actual[i]) for i in sorted(text_fields)], spell_id)
 
     def test_sinister_has_one_twenty_percent_roll(self):
         text = (ROOT / 'src/rogue/RoguePathCommonSpells.cpp').read_text(encoding='utf-8')
@@ -143,7 +162,7 @@ class ShaPresentation(unittest.TestCase):
     def test_native_harness_is_isolated_and_counts_real_damage(self):
         source = (ROOT / 'src/rogue/RoguePathCelestialRegression.cpp').read_text(encoding='utf-8')
         harness = source.split('bool RunShaSinisterRegression(', 1)[1].split('bool RunCelestialResourceRegression(', 1)[0]
-        for gate in ('!= 8099', ';rogue_paths_test_characters_v3', 'RPTEST_', 'Cultivation.Rogue.Celestial.TestHarness'):
+        for gate in ('!= 8099', ';cultivation_test_characters_v1', 'RPTEST_', 'Cultivation.Rogue.Celestial.TestHarness'):
             self.assertIn(gate, harness)
         self.assertIn('p->CastSpell(enemy, 86274, false)', harness)
         self.assertIn('enemy->GetHealth() == enemy->GetMaxHealth()', harness)

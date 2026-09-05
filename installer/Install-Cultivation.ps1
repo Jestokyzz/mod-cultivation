@@ -2,6 +2,7 @@
 param(
     [Parameter(Mandatory)][string]$ServerRoot,
     [Parameter(Mandatory)][string]$ClientRoot,
+    [string]$ServerDataRoot,
     [string]$BackupRoot = 'F:\JestokyCraft Backups',
     [string]$MySqlExe,
     [string]$DbHost = '127.0.0.1',
@@ -46,7 +47,7 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
     throw "Package manifest is missing: $manifestPath"
 }
 $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
-if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.0.0-candidate2') {
+if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.0.0') {
     throw 'Unexpected package identity.'
 }
 foreach ($entry in $manifest.files) {
@@ -61,12 +62,36 @@ $ClientRoot = Resolve-ExistingDirectory $ClientRoot 'Client root'
 if (-not (Test-Path -LiteralPath (Join-Path $ServerRoot 'worldserver.exe') -PathType Leaf)) {
     throw 'The target server does not contain worldserver.exe.'
 }
-if (-not (Test-Path -LiteralPath (Join-Path $ClientRoot 'Wow.exe') -PathType Leaf)) {
-    throw 'The target client does not contain Wow.exe.'
+if (-not (Test-Path -LiteralPath (Join-Path $ClientRoot 'Wow-NWQ.exe') -PathType Leaf)) {
+    throw 'The compatible target client must contain Wow-NWQ.exe.'
 }
-$clientHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $ClientRoot 'Wow.exe')).Hash.ToLowerInvariant()
+$clientHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $ClientRoot 'Wow-NWQ.exe')).Hash.ToLowerInvariant()
 if ($clientHash -ne $manifest.compatibility.client_exe_sha256) {
     throw "Unsupported client executable. Expected build 12340 hash $($manifest.compatibility.client_exe_sha256), got $clientHash"
+}
+if (-not $ServerDataRoot) {
+    $worldConfig = Join-Path $ServerRoot 'configs\worldserver.conf'
+    $dataLine = @(Select-String -LiteralPath $worldConfig -Pattern '^\s*DataDir\s*=\s*"([^"]+)"')
+    if ($dataLine.Count -ne 1) { throw 'Specify -ServerDataRoot: DataDir is ambiguous.' }
+    $ServerDataRoot = $dataLine[0].Matches[0].Groups[1].Value
+    if (-not [IO.Path]::IsPathRooted($ServerDataRoot)) { $ServerDataRoot = Join-Path $ServerRoot $ServerDataRoot }
+}
+$ServerDataRoot = Resolve-ExistingDirectory $ServerDataRoot 'Server DataDir'
+foreach ($dll in $manifest.compatibility.runtime_dlls.PSObject.Properties) {
+    $targetDll = Join-Path $ServerRoot $dll.Name
+    if (-not (Test-Path -LiteralPath $targetDll) -or (Get-FileHash -LiteralPath $targetDll).Hash -ne $dll.Value) { throw "Incompatible runtime DLL: $($dll.Name)" }
+}
+$archives = @(Get-ChildItem -LiteralPath (Join-Path $ClientRoot 'Data') -Recurse -File -Filter '*.MPQ' | Where-Object Name -match '^patch(?:-ruru)?-[a-z]\.mpq$')
+foreach ($archive in $archives) {
+    $relative = $archive.FullName.Substring($ClientRoot.Length + 1).Replace('\','/')
+    $baseline = $manifest.compatibility.client_inventory.PSObject.Properties[$relative]
+    $replacement = @($manifest.files | Where-Object path -eq ('client/'+$relative))
+    $actual = (Get-FileHash -LiteralPath $archive.FullName).Hash.ToLowerInvariant()
+    if (-not $baseline -or ($actual -ne $baseline.Value -and ($replacement.Count -ne 1 -or $actual -ne $replacement[0].sha256))) { throw "Unsupported client patch chain: $relative" }
+}
+if ($archives.Count -ne @($manifest.compatibility.client_inventory.PSObject.Properties).Count) { throw 'Missing required client patch owner' }
+foreach ($virtual in @('DBFilesClient\Spell.dbc','Interface\FrameXML\FrameXML.toc','Interface\FrameXML\CustomItemTooltips.lua')) {
+    if (Test-Path -LiteralPath (Join-Path $ClientRoot $virtual)) { throw "Loose override: $virtual" }
 }
 
 if (-not (Test-Path -LiteralPath $BackupRoot -PathType Container)) { throw "Backup root is unavailable: $BackupRoot" }
@@ -84,7 +109,7 @@ if ($running.Count -gt 0) {
 }
 
 $stamp = Get-Date -Format 'yyyyMMddTHHmmss'
-$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.0.0-candidate2-$stamp"
+$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.0.0-$stamp"
 if (Test-Path -LiteralPath $backup) { throw "Backup destination already exists: $backup" }
 New-Item -ItemType Directory -Path $backup | Out-Null
 
@@ -92,11 +117,13 @@ $transfers = @(
     @{ Source='client\Data\ruRU\patch-ruRU-A.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-A.MPQ') },
     @{ Source='client\Data\ruRU\patch-ruRU-Z.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-Z.MPQ') },
     @{ Source='client\Data\ruRU\patch-ruRU-X.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-X.MPQ') },
-    @{ Source='server\worldserver.exe'; Target=(Join-Path $ServerRoot 'worldserver.exe') },
-    @{ Source='server\configs\modules\mod_cultivation.conf.dist'; Target=(Join-Path $ServerRoot 'configs\modules\mod_cultivation.conf') }
+    @{ Source='server\worldserver.exe'; Target=(Join-Path $ServerRoot 'worldserver.exe') }
 )
+if (-not (Test-Path -LiteralPath (Join-Path $ServerRoot 'configs\modules\mod_cultivation.conf'))) {
+    $transfers += @{ Source='server\configs\modules\mod_cultivation.conf.dist'; Target=(Join-Path $ServerRoot 'configs\modules\mod_cultivation.conf') }
+}
 foreach ($name in @('Spell.dbc','SkillLineAbility.dbc','SpellDescriptionVariables.dbc','SpellIcon.dbc','SpellRadius.dbc','SpellRange.dbc')) {
-    $transfers += @{ Source="server\data\dbc\$name"; Target=(Join-Path $ServerRoot "data\dbc\$name") }
+    $transfers += @{ Source="server\data\dbc\$name"; Target=(Join-Path $ServerDataRoot "dbc\$name") }
 }
 
 $fileBackupRows = @()
@@ -156,7 +183,7 @@ try {
         New-Item -ItemType Directory -Path $dbBackupDir | Out-Null
         foreach ($database in @($AuthDatabase,$WorldDatabase,$CharactersDatabase)) {
             $dumpPath = Join-Path $dbBackupDir ($database + '.sql')
-            & $dumpExe "--host=$DbHost" "--port=$DbPort" "--user=$DbUser" '--single-transaction' `
+            & $dumpExe "--host=$DbHost" "--port=$DbPort" "--user=$DbUser" '--single-transaction' '--no-tablespaces' `
                 '--routines' '--triggers' '--databases' $database "--result-file=$dumpPath"
             if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $dumpPath) -or (Get-Item $dumpPath).Length -eq 0) {
                 throw "Database backup failed: $database"
@@ -173,7 +200,7 @@ try {
     $backupManifest = [ordered]@{
         status = 'verified-backup'
         package = 'mod-cultivation'
-        candidate = 'v2.0.0-candidate2'
+        candidate = 'v2.0.0'
         created = (Get-Date).ToString('o')
         files = $fileBackupRows
         databases = $databaseBackups
@@ -202,9 +229,9 @@ try {
         if ($sourceHash -ne $targetHash) { throw "Installation readback mismatch: $($transfer.Target)" }
     }
 
-    $backupManifest.status = 'installed-candidate-client-acceptance-pending'
+    $backupManifest.status = 'installed-release-target-smoke-pending'
     $backupManifest | ConvertTo-Json -Depth 7 | Set-Content -LiteralPath $backupManifestPath -Encoding utf8
-    Write-Host "Cultivation candidate installed. Backup: $backup"
+    Write-Host "Cultivation v2.0.0 installed. Launch Wow-NWQ.exe. Backup: $backup"
     Write-Host 'Verify .cultivation rogue status and perform GUI/gameplay acceptance.'
 } finally {
     $env:MYSQL_PWD = $previousPassword

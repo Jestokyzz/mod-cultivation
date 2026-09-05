@@ -18,6 +18,7 @@ $arguments=@(
     '--server-skill-line-output',(Join-Path $moduleRoot 'generated\server\dbc\SkillLineAbility.dbc'),
     '--cpp-output',(Join-Path $moduleRoot 'src\rogue\generated\RoguePathGeneratedSpells.h'),
     '--sql-output',(Join-Path $moduleRoot 'data\sql\world\base\cultivation_rogue_spells.sql'),
+    '--sql-check-only',
     '--spell-map-output',(Join-Path $moduleRoot 'docs\spell_id_map.md'),
     '--report',(Join-Path $moduleRoot 'generated\generation_report.json')
 )
@@ -29,6 +30,12 @@ if($LASTEXITCODE -ne 0){throw 'Schema 6 migration manifest generation failed'}
 if($LASTEXITCODE -ne 0){throw 'Approved icon generation failed'}
 & $Python (Join-Path $PSScriptRoot 'test_generated_data.py')
 if($LASTEXITCODE -ne 0){throw 'Offline regression failed'}
+& $Python (Join-Path $PSScriptRoot 'test_shadowstep_contract.py')
+if($LASTEXITCODE -ne 0){throw 'Shadowstep fresh-state contract failed'}
+& $Python (Join-Path $PSScriptRoot 'test_audit_fixes.py')
+if($LASTEXITCODE -ne 0){throw 'Audit source/data contract failed'}
+& $Python (Join-Path $PSScriptRoot 'test_native_header.py')
+if($LASTEXITCODE -ne 0){throw 'Native FrameXML Lua 5.1 contract failed'}
 & $Python (Join-Path $PSScriptRoot 'test_cultivation_architecture.py')
 if($LASTEXITCODE -ne 0){throw 'Cultivation architecture regression failed'}
 & $Python (Join-Path $PSScriptRoot 'test_visibility_schema3.py')

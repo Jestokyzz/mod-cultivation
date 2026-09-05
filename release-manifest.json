@@ -1,23 +1,29 @@
 {
   "module": "mod-cultivation",
-  "candidate": "v2.0.0-candidate2",
-  "status": "candidate-unaccepted",
+  "candidate": "v2.0.0",
+  "status": "user-accepted-production-installed",
   "core_revision": "7c8ed00e7f654617a47bdf728b49707f60aa1aae",
   "subsystems": [
     "rogue"
   ],
   "public_command": ".cultivation rogue <action>",
   "schema_version": 6,
-  "production_modified": false,
-  "publish_policy": "candidate branch only until explicit user acceptance",
+  "production_modified": true,
+  "audit_status": "audit-fixes-manifest.json",
+  "installable_package": true,
+  "publish_policy": "accepted release; private repository; compatible JestokyCraft only",
   "files": {
     ".gitignore": {
       "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
       "bytes": 387
     },
+    "audit-fixes-manifest.json": {
+      "sha256": "27aafda5a6ab687119f2204e4cfff29a7025a0d31bf94009e80f2f63eb1b9428",
+      "bytes": 5552
+    },
     "CHANGELOG_RU.md": {
-      "sha256": "d5e9a3cb99cf67b22023e2a0ef818c5c953805398678fd60a175290bd55e322e",
-      "bytes": 1952
+      "sha256": "7676e8eff6f549ea66a298098dce11579aa393cdc15553c236ef1a15f38b38ec",
+      "bytes": 5957
     },
     "client_patch/build_patch.ps1": {
       "sha256": "c7dc6006528374ebfea61cb73d2e65d22ce15cd15dea78883158770ad4ac9b7f",
@@ -32,8 +38,8 @@
       "bytes": 12415
     },
     "client_patch/framexml/CultivationRogueHeader.lua": {
-      "sha256": "e9c2f7b8232c2e79ff815d8d84318095d89ea8fe351fd16890ba824ccb94242b",
-      "bytes": 4653
+      "sha256": "d4aefc9c96713856012419bf2f5db88b05335f573315b56c20321d35d4d5cffb",
+      "bytes": 17124
     },
     "conf/mod_cultivation.conf.dist": {
       "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
@@ -44,8 +50,8 @@
       "bytes": 22995
     },
     "data/cultivation_rogue_spell_manifest.json": {
-      "sha256": "7a784821414ba3b34f372fe85e4af69043b2f92981e729fccb07b7938754bf50",
-      "bytes": 186341
+      "sha256": "c25d3cf14f848608f597243559adfa59121e01027bad5b51ea7a8100442a6162",
+      "bytes": 189929
     },
     "data/sql/auth/base/cultivation_rbac.sql": {
       "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
@@ -88,7 +94,7 @@
       "bytes": 1254
     },
     "data/sql/migrations/2.0.0/manifest.json": {
-      "sha256": "f05e8c9e4a27904a4d0b2f325f5229e7bd720ba120fe1068554aa1532e06fdcb",
+      "sha256": "e8cf1b0166bee029e40e94648704807937a321469bf61da9b413b718044ee280",
       "bytes": 1660
     },
     "data/sql/migrations/2.0.0/world.postflight.sql": {
@@ -115,2361 +121,13 @@
       "sha256": "5728b3676d20c6b6acf5920c7a5b112cc3f0e192c7c637b715597d71c4f9b970",
       "bytes": 25837
     },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-A.MPQ": {
-      "sha256": "6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f",
-      "bytes": 259248
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-X.MPQ": {
-      "sha256": "e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479",
-      "bytes": 27175910
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-Z.MPQ": {
-      "sha256": "496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c",
-      "bytes": 40513996
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/COMPATIBILITY.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/package-manifest.json": {
-      "sha256": "7420616e19853c007f4c72de1ca3c2ae9d7cfc2d4714054b22c30316775b1b53",
-      "bytes": 28978
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/PROJECT_README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/configs/modules/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/SkillLineAbility.dbc": {
-      "sha256": "9b28119050646f25e5803ae94ed0057a7a8cd0c32974ba51dbd061ecdffeaa1b",
-      "bytes": 591605
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/Spell.dbc": {
-      "sha256": "1312bb13ea260e4049f2c2eeb17a8fd57c1ad692c8e43cd0816cb16662e8844a",
-      "bytes": 52970618
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellDescriptionVariables.dbc": {
-      "sha256": "db797fc63a1cf567c8abc5cef6ef21e143b7fd1111173dd33a37498d27cfddfe",
-      "bytes": 9794
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellIcon.dbc": {
-      "sha256": "c4b09e7163a0cb325c4dfb08b8c04af539218a463219928f6fc2718f500b7e29",
-      "bytes": 157045
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellRadius.dbc": {
-      "sha256": "8015708e990bdf990ed34b9ce52c15ebbb26abd1ab4f92c138bddf35449a1c8e",
-      "bytes": 965
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellRange.dbc": {
-      "sha256": "335aafe78a1cd8f60eb24c1dbd81f12788346d82ef7299a541ef9815587a4288",
-      "bytes": 11640
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/server/worldserver.exe": {
-      "sha256": "76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20",
-      "bytes": 59084288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/.gitignore": {
-      "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
-      "bytes": 387
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/CHANGELOG_RU.md": {
-      "sha256": "3a5bb9f42a6a3116c9ad5ead7f6ebd7b7b57e7de19adaa940053977d4e37f820",
-      "bytes": 1202
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/build_patch.ps1": {
-      "sha256": "c7dc6006528374ebfea61cb73d2e65d22ce15cd15dea78883158770ad4ac9b7f",
-      "bytes": 908
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/deploy_cultivation.ps1": {
-      "sha256": "88c41b6c52669fc3c48933528da1c381c4191eef10407f6f8510c8891cf38934",
-      "bytes": 9042
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/deploy_visibility.ps1": {
-      "sha256": "d9dd16830c3cf6ae4b5612f6abeb458a6e6556919fefcd6cacb15dfa404e25ef",
-      "bytes": 12415
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/framexml/CultivationRogueHeader.lua": {
-      "sha256": "e9c2f7b8232c2e79ff815d8d84318095d89ea8fe351fd16890ba824ccb94242b",
-      "bytes": 4653
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/conf/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/core-patches/cultivation.patch": {
-      "sha256": "96489ed309f97e1039b44367cf7e9b2b33e820367657c3e4562667f7f3147479",
-      "bytes": 22995
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/cultivation_rogue_spell_manifest.json": {
-      "sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
-      "bytes": 186341
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/auth/base/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/characters/base/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/world/base/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/world/base/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/compatibility_matrix.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/icon_audit_report.md": {
-      "sha256": "7c8c80041da374a3d6302de3aa8bde627181cdf4bf076d986324b424915ca9c9",
-      "bytes": 1538
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/implementation_notes.md": {
-      "sha256": "02fa434424dab98e2185dd12bb48658dace3b571782c2e991924417d8da9ed9c",
-      "bytes": 11407
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/passive_talent_audit_report.md": {
-      "sha256": "e8130971d6b9d9084bdc947b43a4c0e26314ce6a4e3e001436b7c08ff93bf9bd",
-      "bytes": 1084
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/seven_styled_icons.md": {
-      "sha256": "2e535465fdea20ed77627f00ae48363a328bb4c56c6a0832399b36600b1fa6fd",
-      "bytes": 5405
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/spell_id_map.md": {
-      "sha256": "abcb493e29052146b7bba4a1de5cf4f83fc8c85959aa99f176e7a51f4713cf94",
-      "bytes": 31917
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/test_plan.md": {
-      "sha256": "f43beb1f8ebe8cc2cfd1081ab228272d90215b1d90c66af66f80ddbb363607e6",
-      "bytes": 16341
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/tooltip_audit.md": {
-      "sha256": "ae7eadba845cd84b4279d272f5e24b86b04421815b3ab47b8aec25e0b3a8f2e8",
-      "bytes": 1004
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/tooltip_presentation_candidate5.md": {
-      "sha256": "250a8718e53f484e28a30a3fcd8a6b832db09afc5094e512b1a2532364d6acb6",
-      "bytes": 5760
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/README.md": {
-      "sha256": "0183adc08d39c65ce4c17f071afe79df1d5fc69adeaa8473858b8afec9b7f627",
-      "bytes": 897
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/release-manifest.json": {
-      "sha256": "797624174a544dd32a1e9b6a4be9583a21057c42d24175deaffba06f4496bda3",
-      "bytes": 17605
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/Cultivation.h": {
-      "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
-      "bytes": 146
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/CultivationCommand.cpp": {
-      "sha256": "1766d954ae7374d4a5922589fa08bfdca87c1d1c52a6ed2f6d033e39963b6dbd",
-      "bytes": 3590
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/mod_cultivation_loader.cpp": {
-      "sha256": "6e0701391dbcc5441e5b9c3d7570537da63a6e20d97ad404cb0d779d027f7dea",
-      "bytes": 146
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/CultivationRogue.h": {
-      "sha256": "d67a94fa1b88ff3f72980bcb26cde9b6cba7c57fa4da18622d341f6a7506a9a8",
-      "bytes": 2856
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RogueCommand.h": {
-      "sha256": "7e1ac651a3a084892d0e8a59b09df71c3ceac18f255c10d24e5abb6229d10037",
-      "bytes": 247
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathAssassination.cpp": {
-      "sha256": "4eefcb53c6c46d0d3e2e2ab2f235f82c561959910a18d8d839204cf14ba4cafe",
-      "bytes": 6724
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathBalanceMath.h": {
-      "sha256": "d05aec48cdc2c73cac23160ce408f4dff88b956b72c72456fe3a39c66ae1de48",
-      "bytes": 1091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCelestialRegression.cpp": {
-      "sha256": "8140c9331d934be40cf073525bcb627e65c8b7880c07a42f4189cd288da7fe9e",
-      "bytes": 59495
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCombat.cpp": {
-      "sha256": "1301cc4978cb955f6420bafd29d5ccbe09237518eccdd67d8ddd882082d8492d",
-      "bytes": 5395
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCommand.cpp": {
-      "sha256": "d5964c4d07bd861db9b7fb055a819c272ea8f59e7227811f515d211695434a08",
-      "bytes": 8320
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCommonSpells.cpp": {
-      "sha256": "9cc696a82dcfcbc106d44f1bbfd32370a55fbbcbdb92f69dfe4955c9b6b0cd7c",
-      "bytes": 70717
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathConfig.cpp": {
-      "sha256": "89cc01af714c8555b6e37c178a3ee12c4d0ab4bafae88b12d070dd2e9b599e16",
-      "bytes": 3607
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathMechanics.h": {
-      "sha256": "88aed8438ac302c4678b547f9de1634ea1c62c90a2dd02db2cc1e8a181d82198",
-      "bytes": 5190
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathPlayerScript.cpp": {
-      "sha256": "d6b73bea713a7f42a905cd9ca6d6911e126f4d10ae794e8dce6265c7bd921a2e",
-      "bytes": 10781
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSevenBalance.h": {
-      "sha256": "265b747abd405bb59fa5fac9305ef6541091a1348f863d0fd76d8011e52918bd",
-      "bytes": 3738
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSevenSpells.cpp": {
-      "sha256": "5cc379b42144809364491602832eaefa1192665e5c2b68b8399a2be06a0825f9",
-      "bytes": 29068
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSpellService.cpp": {
-      "sha256": "8c3b2c88d5fc58b88ab8ff6998f31d10e5632ad1e8742849cd6b3344ca6af8d2",
-      "bytes": 33523
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSubtlety.cpp": {
-      "sha256": "fbb7ff284661ca92790d3a8d21d95fe65ae50369b1afe4f0c26e680b51840ed5",
-      "bytes": 5545
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RogueSubsystem.cpp": {
-      "sha256": "9aa405c68a1511b33a92f393598c96e0f1a0f3a1252d2dff3ffb76ed890e9c86",
-      "bytes": 747
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tests/balance_math.cpp": {
-      "sha256": "e64f2a6b3367922a2829f4703fc70668d3e10b3f03b700fe5b10121dad431192",
-      "bytes": 1059
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/audit_rogue_visibility.py": {
-      "sha256": "2b742b071ea411b492bab48d71bc64f471901d18adc3db25ea475e8a270da97f",
-      "bytes": 6819
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_data.ps1": {
-      "sha256": "8a2a31e9b5e7667e1092828e7b55a9f095b3e1dc07b5e0bfe043d1f34c626aea",
-      "bytes": 3291
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_path_icons.py": {
-      "sha256": "455d6244f0c48b5683e08dafbd8112413f36967f18af717ed6f865b00c0a0abe",
-      "bytes": 6161
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_server.cmd": {
-      "sha256": "71c4063a660b41b6aff21fce1e1cbdc82f248437bde7b3f266ffa38ad79a539f",
-      "bytes": 531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/celestial_aura_tooltips.py": {
-      "sha256": "f6f90ccd2204d0bece4c615c865c3a09d4a7a717b56e6a9de28802f099b9235d",
-      "bytes": 7232
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/celestial_spell_data.py": {
-      "sha256": "9b783df5c9e64b85f2308d47f058de4dd0cec2659d9d0ad027cc6fb291cb8ab5",
-      "bytes": 10239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/collect_evidence.py": {
-      "sha256": "5a19eaf95ee36d248b755875d811d72a2fd25192ea331792e0b0fe4207a5d405",
-      "bytes": 4574
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_release_manifest.py": {
-      "sha256": "2b2ba97b2c6d3bfbfa806c78ee02de71214bf7bad291ddd52ebad6d66e0c6b3b",
-      "bytes": 1911
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_rogue_paths.py": {
-      "sha256": "53612cae94858ac60b8422f852beac0b39824c84238d3c41833873bc2e6a728d",
-      "bytes": 75401
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_schema4_migration.py": {
-      "sha256": "0b95d023879edb91e49d324ca3118c7d794f606b3e15ec897b7330f2c9881b44",
-      "bytes": 4906
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_schema6_migration.py": {
-      "sha256": "3aabce005be28d6b3ee387e67f0688a0ec0f89438fd360974e74c270a0c6a291",
-      "bytes": 1678
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_visibility_migration.py": {
-      "sha256": "ff1d87d0e78362fc88a1a7f977d5298a3ef2c3f10f634bda69ff5da52ab4835b",
-      "bytes": 4411
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/icon_pipeline/build_stealth_mastery_icons.py": {
-      "sha256": "966099a0e8cd4eb721de398232e86aa917212cec3a482e362e720aeace7af9a0",
-      "bytes": 4795
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/inspect_stock_tooltips.py": {
-      "sha256": "cdf947073f82b834719aae376c42ff2e8f0fa6cf665072ad2508c52a4bb2460b",
-      "bytes": 1502
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/migrate_technical_presentation.py": {
-      "sha256": "8ea221ade01bb333774ee8ec7387c79bfc4efe99219b60945ce90ff8a928158e",
-      "bytes": 9651
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/migrate_visibility_manifest.py": {
-      "sha256": "7daa6ea343d45d66fd8cee80c4775c8c2a4835993b3beb94b39bf2b18b6680f4",
-      "bytes": 11614
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_celestial_candidate.py": {
-      "sha256": "abf850274667dc5ca592a698fc069b65854b221913f6437d6020d6fc4ef302fa",
-      "bytes": 4615
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_celestial_metadata.py": {
-      "sha256": "f85b6d90860bbd35b850e75a040fac89755ad3740ed8b4e6ecb06047edf98529",
-      "bytes": 3486
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_full_candidate.ps1": {
-      "sha256": "0b3e634f0233f16c144d383ca4b50a45782e2dbb4fa49275af457d10633286df",
-      "bytes": 7065
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_metadata.py": {
-      "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",
-      "bytes": 7792
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_seven_candidate.py": {
-      "sha256": "7a8423f472b0280b8cc25f6af2a5214016edd43c5592efcde7272dc741036bcd",
-      "bytes": 3471
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_visibility_candidate.py": {
-      "sha256": "7879c7dfe136305e0120126c95738fcd2c1ea56a5fa29b7eb9e0e8afbb024b02",
-      "bytes": 12406
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/path_descriptions_en.py": {
-      "sha256": "705b93eb4e5e0d640e395680bf6a710ccf2b2c19079060767bec54bfc880819f",
-      "bytes": 11836
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/prepare_test_clones.ps1": {
-      "sha256": "713bca7b8fb3f7d4165f09793756057044403ef1fc90e78a715d48bb258f575a",
-      "bytes": 5273
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/prepare_test_databases.ps1": {
-      "sha256": "6840159474300722a830e3251b407d312a1068b97279bcf04d2f4b125b75f938",
-      "bytes": 5310
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/refresh_test_candidate.ps1": {
-      "sha256": "588a741b9994779cec61d8e132000310586f2010e0057c0c13c758f81697979f",
-      "bytes": 4967
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/seven_spell_data.py": {
-      "sha256": "f2cc7d3917583babb6934c3e86a3ff2882b95ccdd0110350db9a8da4cc3fe246",
-      "bytes": 11755
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/sha_aura_tooltips.py": {
-      "sha256": "3e2c35b9cc0a8fd313e94290ae6cf05936de416545efffd6130d5cb542095c06",
-      "bytes": 5882
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/start_test_server.ps1": {
-      "sha256": "e9c39cf15bc0ad783fcfe7e4abd82b600c1b6029301d9f78d168eefd2bd93a37",
-      "bytes": 2201
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_celestial_aura_tooltips.py": {
-      "sha256": "d359576df4d9de83411cb804d6bc01a9307ced60930533cf42b70ac9bc9a8d04",
-      "bytes": 3890
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_celestial_resources.py": {
-      "sha256": "82cc9e65a090914604a2c429b340430b7852d59754f40390c9fd2a94ae31cc1d",
-      "bytes": 1478
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_cultivation_architecture.py": {
-      "sha256": "bb6ad77fa94badca1c1928a578b6b21ac8d0ea6b351951efd03f1749487511de",
-      "bytes": 3185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_database_query.ps1": {
-      "sha256": "6821ce7724a4c29d5b3b1cc6f1e4c6de4bfdd0b1ad76cfc2831efaf32b261825",
-      "bytes": 1102
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_duration_crash_protocol.py": {
-      "sha256": "536142aae719ebb1653e21ee90bd02aa394fa14a4c70c83989f8e4616101b15d",
-      "bytes": 2891
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_generated_data.py": {
-      "sha256": "af6c6bc5cdfe3fd152756364d7ae9c43a653450efc096e0f0346016da918221b",
-      "bytes": 43448
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_seven_styled_icons.py": {
-      "sha256": "eb609fcca1a1b5548e2e876071a3e19458f941bf77d7c6d65fa42ccd6bdbff67",
-      "bytes": 5716
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_sha_candidate41.py": {
-      "sha256": "7541b03756520cc274dc4955be9b26785072b593a3276da4967a0fd8e4b7b1f5",
-      "bytes": 10387
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_sha_presentation.py": {
-      "sha256": "21030ef88846dcd0c63eb4f251eca3bffb984b9550bbe81c720517a69b25c107",
-      "bytes": 10151
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_tooltip_presentation.py": {
-      "sha256": "30d0317b8564f43a33d17ccf502c06cb199b69d9180ce0a5a9115c9e98c16f0b",
-      "bytes": 16051
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_tooltip_stock_values.py": {
-      "sha256": "cb940182ccc900054093c60e742ae78ffe953c0bfec574ca0a2d6ddb2583aaca",
-      "bytes": 1636
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_visibility_schema3.py": {
-      "sha256": "2d020a1b9e9df6bcbbf7ec609cfce9755a36f13dd70f85eb9f261d2196fba355",
-      "bytes": 4263
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_world_protocol.ps1": {
-      "sha256": "6b72cee0cf03f4da06573e166446d1838180a8fa6ad83d96f80361a2b3b41c9c",
-      "bytes": 1522
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_world_protocol.py": {
-      "sha256": "5564ef42f8cf25223c0058e55916fdf0d6ebf7ac5ba45160f91f77c8aefd1fee",
-      "bytes": 38334
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/tooltip_stock.py": {
-      "sha256": "d30f98d39986b1a708cef42a73cdcd888ff5933334ad477906f52b499d174e10",
-      "bytes": 5711
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/validate_rogue_path_tooltips.py": {
-      "sha256": "2635943adefcce40de40478b251eab8bea42772d3125b8aa1c67b55153967be0",
-      "bytes": 15711
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/visibility_schema3.py": {
-      "sha256": "edac0c26ac7771f4f72253a33215107040d65b2dcc5e24eee561e5563960450c",
-      "bytes": 20729
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/fresh/auth/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/fresh/characters/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/fresh/world/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/fresh/world/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/validation/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/validation/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T120852/validation/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-A.MPQ": {
-      "sha256": "6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f",
-      "bytes": 259248
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-X.MPQ": {
-      "sha256": "e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479",
-      "bytes": 27175910
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-Z.MPQ": {
-      "sha256": "496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c",
-      "bytes": 40513996
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/COMPATIBILITY.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/package-manifest.json": {
-      "sha256": "a4b1642fe585ec987884603ab0d83fbedd39619b36ca855f5f272f55ba4d339f",
-      "bytes": 28978
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/PROJECT_README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/configs/modules/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/SkillLineAbility.dbc": {
-      "sha256": "9b28119050646f25e5803ae94ed0057a7a8cd0c32974ba51dbd061ecdffeaa1b",
-      "bytes": 591605
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/Spell.dbc": {
-      "sha256": "1312bb13ea260e4049f2c2eeb17a8fd57c1ad692c8e43cd0816cb16662e8844a",
-      "bytes": 52970618
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellDescriptionVariables.dbc": {
-      "sha256": "db797fc63a1cf567c8abc5cef6ef21e143b7fd1111173dd33a37498d27cfddfe",
-      "bytes": 9794
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellIcon.dbc": {
-      "sha256": "c4b09e7163a0cb325c4dfb08b8c04af539218a463219928f6fc2718f500b7e29",
-      "bytes": 157045
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellRadius.dbc": {
-      "sha256": "8015708e990bdf990ed34b9ce52c15ebbb26abd1ab4f92c138bddf35449a1c8e",
-      "bytes": 965
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellRange.dbc": {
-      "sha256": "335aafe78a1cd8f60eb24c1dbd81f12788346d82ef7299a541ef9815587a4288",
-      "bytes": 11640
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/server/worldserver.exe": {
-      "sha256": "76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20",
-      "bytes": 59084288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/.gitignore": {
-      "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
-      "bytes": 387
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/CHANGELOG_RU.md": {
-      "sha256": "3a5bb9f42a6a3116c9ad5ead7f6ebd7b7b57e7de19adaa940053977d4e37f820",
-      "bytes": 1202
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/build_patch.ps1": {
-      "sha256": "c7dc6006528374ebfea61cb73d2e65d22ce15cd15dea78883158770ad4ac9b7f",
-      "bytes": 908
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/deploy_cultivation.ps1": {
-      "sha256": "88c41b6c52669fc3c48933528da1c381c4191eef10407f6f8510c8891cf38934",
-      "bytes": 9042
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/deploy_visibility.ps1": {
-      "sha256": "d9dd16830c3cf6ae4b5612f6abeb458a6e6556919fefcd6cacb15dfa404e25ef",
-      "bytes": 12415
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/framexml/CultivationRogueHeader.lua": {
-      "sha256": "e9c2f7b8232c2e79ff815d8d84318095d89ea8fe351fd16890ba824ccb94242b",
-      "bytes": 4653
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/conf/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/core-patches/cultivation.patch": {
-      "sha256": "96489ed309f97e1039b44367cf7e9b2b33e820367657c3e4562667f7f3147479",
-      "bytes": 22995
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/cultivation_rogue_spell_manifest.json": {
-      "sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
-      "bytes": 186341
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/auth/base/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/characters/base/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/world/base/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/world/base/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/compatibility_matrix.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/icon_audit_report.md": {
-      "sha256": "7c8c80041da374a3d6302de3aa8bde627181cdf4bf076d986324b424915ca9c9",
-      "bytes": 1538
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/implementation_notes.md": {
-      "sha256": "02fa434424dab98e2185dd12bb48658dace3b571782c2e991924417d8da9ed9c",
-      "bytes": 11407
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/passive_talent_audit_report.md": {
-      "sha256": "e8130971d6b9d9084bdc947b43a4c0e26314ce6a4e3e001436b7c08ff93bf9bd",
-      "bytes": 1084
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/seven_styled_icons.md": {
-      "sha256": "2e535465fdea20ed77627f00ae48363a328bb4c56c6a0832399b36600b1fa6fd",
-      "bytes": 5405
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/spell_id_map.md": {
-      "sha256": "abcb493e29052146b7bba4a1de5cf4f83fc8c85959aa99f176e7a51f4713cf94",
-      "bytes": 31917
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/test_plan.md": {
-      "sha256": "f43beb1f8ebe8cc2cfd1081ab228272d90215b1d90c66af66f80ddbb363607e6",
-      "bytes": 16341
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/tooltip_audit.md": {
-      "sha256": "ae7eadba845cd84b4279d272f5e24b86b04421815b3ab47b8aec25e0b3a8f2e8",
-      "bytes": 1004
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/tooltip_presentation_candidate5.md": {
-      "sha256": "250a8718e53f484e28a30a3fcd8a6b832db09afc5094e512b1a2532364d6acb6",
-      "bytes": 5760
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/README.md": {
-      "sha256": "0183adc08d39c65ce4c17f071afe79df1d5fc69adeaa8473858b8afec9b7f627",
-      "bytes": 897
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/release-manifest.json": {
-      "sha256": "797624174a544dd32a1e9b6a4be9583a21057c42d24175deaffba06f4496bda3",
-      "bytes": 17605
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/Cultivation.h": {
-      "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
-      "bytes": 146
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/CultivationCommand.cpp": {
-      "sha256": "1766d954ae7374d4a5922589fa08bfdca87c1d1c52a6ed2f6d033e39963b6dbd",
-      "bytes": 3590
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/mod_cultivation_loader.cpp": {
-      "sha256": "6e0701391dbcc5441e5b9c3d7570537da63a6e20d97ad404cb0d779d027f7dea",
-      "bytes": 146
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/CultivationRogue.h": {
-      "sha256": "d67a94fa1b88ff3f72980bcb26cde9b6cba7c57fa4da18622d341f6a7506a9a8",
-      "bytes": 2856
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RogueCommand.h": {
-      "sha256": "7e1ac651a3a084892d0e8a59b09df71c3ceac18f255c10d24e5abb6229d10037",
-      "bytes": 247
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathAssassination.cpp": {
-      "sha256": "4eefcb53c6c46d0d3e2e2ab2f235f82c561959910a18d8d839204cf14ba4cafe",
-      "bytes": 6724
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathBalanceMath.h": {
-      "sha256": "d05aec48cdc2c73cac23160ce408f4dff88b956b72c72456fe3a39c66ae1de48",
-      "bytes": 1091
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCelestialRegression.cpp": {
-      "sha256": "8140c9331d934be40cf073525bcb627e65c8b7880c07a42f4189cd288da7fe9e",
-      "bytes": 59495
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCombat.cpp": {
-      "sha256": "1301cc4978cb955f6420bafd29d5ccbe09237518eccdd67d8ddd882082d8492d",
-      "bytes": 5395
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCommand.cpp": {
-      "sha256": "d5964c4d07bd861db9b7fb055a819c272ea8f59e7227811f515d211695434a08",
-      "bytes": 8320
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCommonSpells.cpp": {
-      "sha256": "9cc696a82dcfcbc106d44f1bbfd32370a55fbbcbdb92f69dfe4955c9b6b0cd7c",
-      "bytes": 70717
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathConfig.cpp": {
-      "sha256": "89cc01af714c8555b6e37c178a3ee12c4d0ab4bafae88b12d070dd2e9b599e16",
-      "bytes": 3607
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathMechanics.h": {
-      "sha256": "88aed8438ac302c4678b547f9de1634ea1c62c90a2dd02db2cc1e8a181d82198",
-      "bytes": 5190
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathPlayerScript.cpp": {
-      "sha256": "d6b73bea713a7f42a905cd9ca6d6911e126f4d10ae794e8dce6265c7bd921a2e",
-      "bytes": 10781
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSevenBalance.h": {
-      "sha256": "265b747abd405bb59fa5fac9305ef6541091a1348f863d0fd76d8011e52918bd",
-      "bytes": 3738
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSevenSpells.cpp": {
-      "sha256": "5cc379b42144809364491602832eaefa1192665e5c2b68b8399a2be06a0825f9",
-      "bytes": 29068
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSpellService.cpp": {
-      "sha256": "8c3b2c88d5fc58b88ab8ff6998f31d10e5632ad1e8742849cd6b3344ca6af8d2",
-      "bytes": 33523
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSubtlety.cpp": {
-      "sha256": "fbb7ff284661ca92790d3a8d21d95fe65ae50369b1afe4f0c26e680b51840ed5",
-      "bytes": 5545
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RogueSubsystem.cpp": {
-      "sha256": "9aa405c68a1511b33a92f393598c96e0f1a0f3a1252d2dff3ffb76ed890e9c86",
-      "bytes": 747
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tests/balance_math.cpp": {
-      "sha256": "e64f2a6b3367922a2829f4703fc70668d3e10b3f03b700fe5b10121dad431192",
-      "bytes": 1059
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/audit_rogue_visibility.py": {
-      "sha256": "2b742b071ea411b492bab48d71bc64f471901d18adc3db25ea475e8a270da97f",
-      "bytes": 6819
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_data.ps1": {
-      "sha256": "8a2a31e9b5e7667e1092828e7b55a9f095b3e1dc07b5e0bfe043d1f34c626aea",
-      "bytes": 3291
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_path_icons.py": {
-      "sha256": "455d6244f0c48b5683e08dafbd8112413f36967f18af717ed6f865b00c0a0abe",
-      "bytes": 6161
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_server.cmd": {
-      "sha256": "71c4063a660b41b6aff21fce1e1cbdc82f248437bde7b3f266ffa38ad79a539f",
-      "bytes": 531
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/celestial_aura_tooltips.py": {
-      "sha256": "f6f90ccd2204d0bece4c615c865c3a09d4a7a717b56e6a9de28802f099b9235d",
-      "bytes": 7232
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/celestial_spell_data.py": {
-      "sha256": "9b783df5c9e64b85f2308d47f058de4dd0cec2659d9d0ad027cc6fb291cb8ab5",
-      "bytes": 10239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/collect_evidence.py": {
-      "sha256": "5a19eaf95ee36d248b755875d811d72a2fd25192ea331792e0b0fe4207a5d405",
-      "bytes": 4574
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_release_manifest.py": {
-      "sha256": "2b2ba97b2c6d3bfbfa806c78ee02de71214bf7bad291ddd52ebad6d66e0c6b3b",
-      "bytes": 1911
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_rogue_paths.py": {
-      "sha256": "53612cae94858ac60b8422f852beac0b39824c84238d3c41833873bc2e6a728d",
-      "bytes": 75401
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_schema4_migration.py": {
-      "sha256": "0b95d023879edb91e49d324ca3118c7d794f606b3e15ec897b7330f2c9881b44",
-      "bytes": 4906
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_schema6_migration.py": {
-      "sha256": "3aabce005be28d6b3ee387e67f0688a0ec0f89438fd360974e74c270a0c6a291",
-      "bytes": 1678
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_visibility_migration.py": {
-      "sha256": "ff1d87d0e78362fc88a1a7f977d5298a3ef2c3f10f634bda69ff5da52ab4835b",
-      "bytes": 4411
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/icon_pipeline/build_stealth_mastery_icons.py": {
-      "sha256": "966099a0e8cd4eb721de398232e86aa917212cec3a482e362e720aeace7af9a0",
-      "bytes": 4795
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/inspect_stock_tooltips.py": {
-      "sha256": "cdf947073f82b834719aae376c42ff2e8f0fa6cf665072ad2508c52a4bb2460b",
-      "bytes": 1502
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/migrate_technical_presentation.py": {
-      "sha256": "8ea221ade01bb333774ee8ec7387c79bfc4efe99219b60945ce90ff8a928158e",
-      "bytes": 9651
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/migrate_visibility_manifest.py": {
-      "sha256": "7daa6ea343d45d66fd8cee80c4775c8c2a4835993b3beb94b39bf2b18b6680f4",
-      "bytes": 11614
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_celestial_candidate.py": {
-      "sha256": "abf850274667dc5ca592a698fc069b65854b221913f6437d6020d6fc4ef302fa",
-      "bytes": 4615
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_celestial_metadata.py": {
-      "sha256": "f85b6d90860bbd35b850e75a040fac89755ad3740ed8b4e6ecb06047edf98529",
-      "bytes": 3486
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_full_candidate.ps1": {
-      "sha256": "0b3e634f0233f16c144d383ca4b50a45782e2dbb4fa49275af457d10633286df",
-      "bytes": 7065
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_metadata.py": {
-      "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",
-      "bytes": 7792
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_seven_candidate.py": {
-      "sha256": "7a8423f472b0280b8cc25f6af2a5214016edd43c5592efcde7272dc741036bcd",
-      "bytes": 3471
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_visibility_candidate.py": {
-      "sha256": "7879c7dfe136305e0120126c95738fcd2c1ea56a5fa29b7eb9e0e8afbb024b02",
-      "bytes": 12406
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/path_descriptions_en.py": {
-      "sha256": "705b93eb4e5e0d640e395680bf6a710ccf2b2c19079060767bec54bfc880819f",
-      "bytes": 11836
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/prepare_test_clones.ps1": {
-      "sha256": "713bca7b8fb3f7d4165f09793756057044403ef1fc90e78a715d48bb258f575a",
-      "bytes": 5273
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/prepare_test_databases.ps1": {
-      "sha256": "6840159474300722a830e3251b407d312a1068b97279bcf04d2f4b125b75f938",
-      "bytes": 5310
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/refresh_test_candidate.ps1": {
-      "sha256": "588a741b9994779cec61d8e132000310586f2010e0057c0c13c758f81697979f",
-      "bytes": 4967
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/seven_spell_data.py": {
-      "sha256": "f2cc7d3917583babb6934c3e86a3ff2882b95ccdd0110350db9a8da4cc3fe246",
-      "bytes": 11755
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/sha_aura_tooltips.py": {
-      "sha256": "3e2c35b9cc0a8fd313e94290ae6cf05936de416545efffd6130d5cb542095c06",
-      "bytes": 5882
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/start_test_server.ps1": {
-      "sha256": "e9c39cf15bc0ad783fcfe7e4abd82b600c1b6029301d9f78d168eefd2bd93a37",
-      "bytes": 2201
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_celestial_aura_tooltips.py": {
-      "sha256": "d359576df4d9de83411cb804d6bc01a9307ced60930533cf42b70ac9bc9a8d04",
-      "bytes": 3890
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_celestial_resources.py": {
-      "sha256": "82cc9e65a090914604a2c429b340430b7852d59754f40390c9fd2a94ae31cc1d",
-      "bytes": 1478
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_cultivation_architecture.py": {
-      "sha256": "bb6ad77fa94badca1c1928a578b6b21ac8d0ea6b351951efd03f1749487511de",
-      "bytes": 3185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_database_query.ps1": {
-      "sha256": "6821ce7724a4c29d5b3b1cc6f1e4c6de4bfdd0b1ad76cfc2831efaf32b261825",
-      "bytes": 1102
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_duration_crash_protocol.py": {
-      "sha256": "536142aae719ebb1653e21ee90bd02aa394fa14a4c70c83989f8e4616101b15d",
-      "bytes": 2891
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_generated_data.py": {
-      "sha256": "af6c6bc5cdfe3fd152756364d7ae9c43a653450efc096e0f0346016da918221b",
-      "bytes": 43448
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_seven_styled_icons.py": {
-      "sha256": "eb609fcca1a1b5548e2e876071a3e19458f941bf77d7c6d65fa42ccd6bdbff67",
-      "bytes": 5716
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_sha_candidate41.py": {
-      "sha256": "7541b03756520cc274dc4955be9b26785072b593a3276da4967a0fd8e4b7b1f5",
-      "bytes": 10387
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_sha_presentation.py": {
-      "sha256": "21030ef88846dcd0c63eb4f251eca3bffb984b9550bbe81c720517a69b25c107",
-      "bytes": 10151
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_tooltip_presentation.py": {
-      "sha256": "30d0317b8564f43a33d17ccf502c06cb199b69d9180ce0a5a9115c9e98c16f0b",
-      "bytes": 16051
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_tooltip_stock_values.py": {
-      "sha256": "cb940182ccc900054093c60e742ae78ffe953c0bfec574ca0a2d6ddb2583aaca",
-      "bytes": 1636
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_visibility_schema3.py": {
-      "sha256": "2d020a1b9e9df6bcbbf7ec609cfce9755a36f13dd70f85eb9f261d2196fba355",
-      "bytes": 4263
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_world_protocol.ps1": {
-      "sha256": "6b72cee0cf03f4da06573e166446d1838180a8fa6ad83d96f80361a2b3b41c9c",
-      "bytes": 1522
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_world_protocol.py": {
-      "sha256": "5564ef42f8cf25223c0058e55916fdf0d6ebf7ac5ba45160f91f77c8aefd1fee",
-      "bytes": 38334
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/tooltip_stock.py": {
-      "sha256": "d30f98d39986b1a708cef42a73cdcd888ff5933334ad477906f52b499d174e10",
-      "bytes": 5711
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/validate_rogue_path_tooltips.py": {
-      "sha256": "2635943adefcce40de40478b251eab8bea42772d3125b8aa1c67b55153967be0",
-      "bytes": 15711
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/visibility_schema3.py": {
-      "sha256": "edac0c26ac7771f4f72253a33215107040d65b2dcc5e24eee561e5563960450c",
-      "bytes": 20729
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/fresh/auth/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/fresh/characters/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/fresh/world/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/fresh/world/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/validation/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/validation/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/staging-v2.0.0-candidate1-20260904T121128/validation/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-A.MPQ": {
-      "sha256": "6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f",
-      "bytes": 259248
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-X.MPQ": {
-      "sha256": "e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479",
-      "bytes": 27175910
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/client/Data/ruRU/patch-ruRU-Z.MPQ": {
-      "sha256": "496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c",
-      "bytes": 40513996
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/COMPATIBILITY.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/package-manifest.json": {
-      "sha256": "7420616e19853c007f4c72de1ca3c2ae9d7cfc2d4714054b22c30316775b1b53",
-      "bytes": 28978
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/PROJECT_README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/configs/modules/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/SkillLineAbility.dbc": {
-      "sha256": "9b28119050646f25e5803ae94ed0057a7a8cd0c32974ba51dbd061ecdffeaa1b",
-      "bytes": 591605
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/Spell.dbc": {
-      "sha256": "1312bb13ea260e4049f2c2eeb17a8fd57c1ad692c8e43cd0816cb16662e8844a",
-      "bytes": 52970618
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellDescriptionVariables.dbc": {
-      "sha256": "db797fc63a1cf567c8abc5cef6ef21e143b7fd1111173dd33a37498d27cfddfe",
-      "bytes": 9794
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellIcon.dbc": {
-      "sha256": "c4b09e7163a0cb325c4dfb08b8c04af539218a463219928f6fc2718f500b7e29",
-      "bytes": 157045
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellRadius.dbc": {
-      "sha256": "8015708e990bdf990ed34b9ce52c15ebbb26abd1ab4f92c138bddf35449a1c8e",
-      "bytes": 965
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/data/dbc/SpellRange.dbc": {
-      "sha256": "335aafe78a1cd8f60eb24c1dbd81f12788346d82ef7299a541ef9815587a4288",
-      "bytes": 11640
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/server/worldserver.exe": {
-      "sha256": "76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20",
-      "bytes": 59084288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/.gitignore": {
-      "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
-      "bytes": 387
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/CHANGELOG_RU.md": {
-      "sha256": "3a5bb9f42a6a3116c9ad5ead7f6ebd7b7b57e7de19adaa940053977d4e37f820",
-      "bytes": 1202
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/build_patch.ps1": {
-      "sha256": "c7dc6006528374ebfea61cb73d2e65d22ce15cd15dea78883158770ad4ac9b7f",
-      "bytes": 908
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/deploy_cultivation.ps1": {
-      "sha256": "88c41b6c52669fc3c48933528da1c381c4191eef10407f6f8510c8891cf38934",
-      "bytes": 9042
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/deploy_visibility.ps1": {
-      "sha256": "d9dd16830c3cf6ae4b5612f6abeb458a6e6556919fefcd6cacb15dfa404e25ef",
-      "bytes": 12415
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/client_patch/framexml/CultivationRogueHeader.lua": {
-      "sha256": "e9c2f7b8232c2e79ff815d8d84318095d89ea8fe351fd16890ba824ccb94242b",
-      "bytes": 4653
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/conf/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/core-patches/cultivation.patch": {
-      "sha256": "96489ed309f97e1039b44367cf7e9b2b33e820367657c3e4562667f7f3147479",
-      "bytes": 22995
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/cultivation_rogue_spell_manifest.json": {
-      "sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
-      "bytes": 186341
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/auth/base/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/characters/base/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/migrations/2.0.0/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/world/base/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/data/sql/world/base/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/compatibility_matrix.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/icon_audit_report.md": {
-      "sha256": "7c8c80041da374a3d6302de3aa8bde627181cdf4bf076d986324b424915ca9c9",
-      "bytes": 1538
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/implementation_notes.md": {
-      "sha256": "02fa434424dab98e2185dd12bb48658dace3b571782c2e991924417d8da9ed9c",
-      "bytes": 11407
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/passive_talent_audit_report.md": {
-      "sha256": "e8130971d6b9d9084bdc947b43a4c0e26314ce6a4e3e001436b7c08ff93bf9bd",
-      "bytes": 1084
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/seven_styled_icons.md": {
-      "sha256": "2e535465fdea20ed77627f00ae48363a328bb4c56c6a0832399b36600b1fa6fd",
-      "bytes": 5405
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/spell_id_map.md": {
-      "sha256": "abcb493e29052146b7bba4a1de5cf4f83fc8c85959aa99f176e7a51f4713cf94",
-      "bytes": 31917
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/test_plan.md": {
-      "sha256": "f43beb1f8ebe8cc2cfd1081ab228272d90215b1d90c66af66f80ddbb363607e6",
-      "bytes": 16341
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/tooltip_audit.md": {
-      "sha256": "ae7eadba845cd84b4279d272f5e24b86b04421815b3ab47b8aec25e0b3a8f2e8",
-      "bytes": 1004
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/docs/tooltip_presentation_candidate5.md": {
-      "sha256": "250a8718e53f484e28a30a3fcd8a6b832db09afc5094e512b1a2532364d6acb6",
-      "bytes": 5760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/README.md": {
-      "sha256": "0183adc08d39c65ce4c17f071afe79df1d5fc69adeaa8473858b8afec9b7f627",
-      "bytes": 897
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/release-manifest.json": {
-      "sha256": "797624174a544dd32a1e9b6a4be9583a21057c42d24175deaffba06f4496bda3",
-      "bytes": 17605
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/Cultivation.h": {
-      "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
-      "bytes": 146
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/CultivationCommand.cpp": {
-      "sha256": "1766d954ae7374d4a5922589fa08bfdca87c1d1c52a6ed2f6d033e39963b6dbd",
-      "bytes": 3590
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/mod_cultivation_loader.cpp": {
-      "sha256": "6e0701391dbcc5441e5b9c3d7570537da63a6e20d97ad404cb0d779d027f7dea",
-      "bytes": 146
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/CultivationRogue.h": {
-      "sha256": "d67a94fa1b88ff3f72980bcb26cde9b6cba7c57fa4da18622d341f6a7506a9a8",
-      "bytes": 2856
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RogueCommand.h": {
-      "sha256": "7e1ac651a3a084892d0e8a59b09df71c3ceac18f255c10d24e5abb6229d10037",
-      "bytes": 247
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathAssassination.cpp": {
-      "sha256": "4eefcb53c6c46d0d3e2e2ab2f235f82c561959910a18d8d839204cf14ba4cafe",
-      "bytes": 6724
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathBalanceMath.h": {
-      "sha256": "d05aec48cdc2c73cac23160ce408f4dff88b956b72c72456fe3a39c66ae1de48",
-      "bytes": 1091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCelestialRegression.cpp": {
-      "sha256": "8140c9331d934be40cf073525bcb627e65c8b7880c07a42f4189cd288da7fe9e",
-      "bytes": 59495
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCombat.cpp": {
-      "sha256": "1301cc4978cb955f6420bafd29d5ccbe09237518eccdd67d8ddd882082d8492d",
-      "bytes": 5395
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCommand.cpp": {
-      "sha256": "d5964c4d07bd861db9b7fb055a819c272ea8f59e7227811f515d211695434a08",
-      "bytes": 8320
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathCommonSpells.cpp": {
-      "sha256": "9cc696a82dcfcbc106d44f1bbfd32370a55fbbcbdb92f69dfe4955c9b6b0cd7c",
-      "bytes": 70717
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathConfig.cpp": {
-      "sha256": "89cc01af714c8555b6e37c178a3ee12c4d0ab4bafae88b12d070dd2e9b599e16",
-      "bytes": 3607
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathMechanics.h": {
-      "sha256": "88aed8438ac302c4678b547f9de1634ea1c62c90a2dd02db2cc1e8a181d82198",
-      "bytes": 5190
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathPlayerScript.cpp": {
-      "sha256": "d6b73bea713a7f42a905cd9ca6d6911e126f4d10ae794e8dce6265c7bd921a2e",
-      "bytes": 10781
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSevenBalance.h": {
-      "sha256": "265b747abd405bb59fa5fac9305ef6541091a1348f863d0fd76d8011e52918bd",
-      "bytes": 3738
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSevenSpells.cpp": {
-      "sha256": "5cc379b42144809364491602832eaefa1192665e5c2b68b8399a2be06a0825f9",
-      "bytes": 29068
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSpellService.cpp": {
-      "sha256": "8c3b2c88d5fc58b88ab8ff6998f31d10e5632ad1e8742849cd6b3344ca6af8d2",
-      "bytes": 33523
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RoguePathSubtlety.cpp": {
-      "sha256": "fbb7ff284661ca92790d3a8d21d95fe65ae50369b1afe4f0c26e680b51840ed5",
-      "bytes": 5545
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/src/rogue/RogueSubsystem.cpp": {
-      "sha256": "9aa405c68a1511b33a92f393598c96e0f1a0f3a1252d2dff3ffb76ed890e9c86",
-      "bytes": 747
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tests/balance_math.cpp": {
-      "sha256": "e64f2a6b3367922a2829f4703fc70668d3e10b3f03b700fe5b10121dad431192",
-      "bytes": 1059
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/audit_rogue_visibility.py": {
-      "sha256": "2b742b071ea411b492bab48d71bc64f471901d18adc3db25ea475e8a270da97f",
-      "bytes": 6819
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_data.ps1": {
-      "sha256": "8a2a31e9b5e7667e1092828e7b55a9f095b3e1dc07b5e0bfe043d1f34c626aea",
-      "bytes": 3291
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_path_icons.py": {
-      "sha256": "455d6244f0c48b5683e08dafbd8112413f36967f18af717ed6f865b00c0a0abe",
-      "bytes": 6161
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/build_server.cmd": {
-      "sha256": "71c4063a660b41b6aff21fce1e1cbdc82f248437bde7b3f266ffa38ad79a539f",
-      "bytes": 531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/celestial_aura_tooltips.py": {
-      "sha256": "f6f90ccd2204d0bece4c615c865c3a09d4a7a717b56e6a9de28802f099b9235d",
-      "bytes": 7232
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/celestial_spell_data.py": {
-      "sha256": "9b783df5c9e64b85f2308d47f058de4dd0cec2659d9d0ad027cc6fb291cb8ab5",
-      "bytes": 10239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/collect_evidence.py": {
-      "sha256": "5a19eaf95ee36d248b755875d811d72a2fd25192ea331792e0b0fe4207a5d405",
-      "bytes": 4574
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_release_manifest.py": {
-      "sha256": "2b2ba97b2c6d3bfbfa806c78ee02de71214bf7bad291ddd52ebad6d66e0c6b3b",
-      "bytes": 1911
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_rogue_paths.py": {
-      "sha256": "53612cae94858ac60b8422f852beac0b39824c84238d3c41833873bc2e6a728d",
-      "bytes": 75401
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_schema4_migration.py": {
-      "sha256": "0b95d023879edb91e49d324ca3118c7d794f606b3e15ec897b7330f2c9881b44",
-      "bytes": 4906
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_schema6_migration.py": {
-      "sha256": "3aabce005be28d6b3ee387e67f0688a0ec0f89438fd360974e74c270a0c6a291",
-      "bytes": 1678
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/generate_visibility_migration.py": {
-      "sha256": "ff1d87d0e78362fc88a1a7f977d5298a3ef2c3f10f634bda69ff5da52ab4835b",
-      "bytes": 4411
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/icon_pipeline/build_stealth_mastery_icons.py": {
-      "sha256": "966099a0e8cd4eb721de398232e86aa917212cec3a482e362e720aeace7af9a0",
-      "bytes": 4795
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/inspect_stock_tooltips.py": {
-      "sha256": "cdf947073f82b834719aae376c42ff2e8f0fa6cf665072ad2508c52a4bb2460b",
-      "bytes": 1502
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/migrate_technical_presentation.py": {
-      "sha256": "8ea221ade01bb333774ee8ec7387c79bfc4efe99219b60945ce90ff8a928158e",
-      "bytes": 9651
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/migrate_visibility_manifest.py": {
-      "sha256": "7daa6ea343d45d66fd8cee80c4775c8c2a4835993b3beb94b39bf2b18b6680f4",
-      "bytes": 11614
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_celestial_candidate.py": {
-      "sha256": "abf850274667dc5ca592a698fc069b65854b221913f6437d6020d6fc4ef302fa",
-      "bytes": 4615
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_celestial_metadata.py": {
-      "sha256": "f85b6d90860bbd35b850e75a040fac89755ad3740ed8b4e6ecb06047edf98529",
-      "bytes": 3486
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_full_candidate.ps1": {
-      "sha256": "0b3e634f0233f16c144d383ca4b50a45782e2dbb4fa49275af457d10633286df",
-      "bytes": 7065
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_metadata.py": {
-      "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",
-      "bytes": 7792
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_seven_candidate.py": {
-      "sha256": "7a8423f472b0280b8cc25f6af2a5214016edd43c5592efcde7272dc741036bcd",
-      "bytes": 3471
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/package_visibility_candidate.py": {
-      "sha256": "7879c7dfe136305e0120126c95738fcd2c1ea56a5fa29b7eb9e0e8afbb024b02",
-      "bytes": 12406
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/path_descriptions_en.py": {
-      "sha256": "705b93eb4e5e0d640e395680bf6a710ccf2b2c19079060767bec54bfc880819f",
-      "bytes": 11836
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/prepare_test_clones.ps1": {
-      "sha256": "713bca7b8fb3f7d4165f09793756057044403ef1fc90e78a715d48bb258f575a",
-      "bytes": 5273
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/prepare_test_databases.ps1": {
-      "sha256": "6840159474300722a830e3251b407d312a1068b97279bcf04d2f4b125b75f938",
-      "bytes": 5310
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/refresh_test_candidate.ps1": {
-      "sha256": "588a741b9994779cec61d8e132000310586f2010e0057c0c13c758f81697979f",
-      "bytes": 4967
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/seven_spell_data.py": {
-      "sha256": "f2cc7d3917583babb6934c3e86a3ff2882b95ccdd0110350db9a8da4cc3fe246",
-      "bytes": 11755
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/sha_aura_tooltips.py": {
-      "sha256": "3e2c35b9cc0a8fd313e94290ae6cf05936de416545efffd6130d5cb542095c06",
-      "bytes": 5882
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/start_test_server.ps1": {
-      "sha256": "e9c39cf15bc0ad783fcfe7e4abd82b600c1b6029301d9f78d168eefd2bd93a37",
-      "bytes": 2201
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_celestial_aura_tooltips.py": {
-      "sha256": "d359576df4d9de83411cb804d6bc01a9307ced60930533cf42b70ac9bc9a8d04",
-      "bytes": 3890
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_celestial_resources.py": {
-      "sha256": "82cc9e65a090914604a2c429b340430b7852d59754f40390c9fd2a94ae31cc1d",
-      "bytes": 1478
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_cultivation_architecture.py": {
-      "sha256": "bb6ad77fa94badca1c1928a578b6b21ac8d0ea6b351951efd03f1749487511de",
-      "bytes": 3185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_database_query.ps1": {
-      "sha256": "6821ce7724a4c29d5b3b1cc6f1e4c6de4bfdd0b1ad76cfc2831efaf32b261825",
-      "bytes": 1102
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_duration_crash_protocol.py": {
-      "sha256": "536142aae719ebb1653e21ee90bd02aa394fa14a4c70c83989f8e4616101b15d",
-      "bytes": 2891
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_generated_data.py": {
-      "sha256": "af6c6bc5cdfe3fd152756364d7ae9c43a653450efc096e0f0346016da918221b",
-      "bytes": 43448
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_seven_styled_icons.py": {
-      "sha256": "eb609fcca1a1b5548e2e876071a3e19458f941bf77d7c6d65fa42ccd6bdbff67",
-      "bytes": 5716
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_sha_candidate41.py": {
-      "sha256": "7541b03756520cc274dc4955be9b26785072b593a3276da4967a0fd8e4b7b1f5",
-      "bytes": 10387
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_sha_presentation.py": {
-      "sha256": "21030ef88846dcd0c63eb4f251eca3bffb984b9550bbe81c720517a69b25c107",
-      "bytes": 10151
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_tooltip_presentation.py": {
-      "sha256": "30d0317b8564f43a33d17ccf502c06cb199b69d9180ce0a5a9115c9e98c16f0b",
-      "bytes": 16051
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_tooltip_stock_values.py": {
-      "sha256": "cb940182ccc900054093c60e742ae78ffe953c0bfec574ca0a2d6ddb2583aaca",
-      "bytes": 1636
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_visibility_schema3.py": {
-      "sha256": "2d020a1b9e9df6bcbbf7ec609cfce9755a36f13dd70f85eb9f261d2196fba355",
-      "bytes": 4263
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_world_protocol.ps1": {
-      "sha256": "6b72cee0cf03f4da06573e166446d1838180a8fa6ad83d96f80361a2b3b41c9c",
-      "bytes": 1522
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/test_world_protocol.py": {
-      "sha256": "5564ef42f8cf25223c0058e55916fdf0d6ebf7ac5ba45160f91f77c8aefd1fee",
-      "bytes": 38334
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/tooltip_stock.py": {
-      "sha256": "d30f98d39986b1a708cef42a73cdcd888ff5933334ad477906f52b499d174e10",
-      "bytes": 5711
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/validate_rogue_path_tooltips.py": {
-      "sha256": "2635943adefcce40de40478b251eab8bea42772d3125b8aa1c67b55153967be0",
-      "bytes": 15711
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/tools/visibility_schema3.py": {
-      "sha256": "edac0c26ac7771f4f72253a33215107040d65b2dcc5e24eee561e5563960450c",
-      "bytes": 20729
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/source/mod-cultivation/validation/v2.0.0-candidate1/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/fresh/auth/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/fresh/characters/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/fresh/world/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/fresh/world/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/sql/upgrade-from-rogue-paths/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/validation/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/validation/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T120852/validation/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-A.MPQ": {
-      "sha256": "6b6055e66d0944b61b7cf33ca2a0da27a6575732c2d5ffc263c5fd8e86dbc69f",
-      "bytes": 259248
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-X.MPQ": {
-      "sha256": "e80ae73b2355bd957e417b06f05b829553e07c2189585c1517e154d7dc836479",
-      "bytes": 27175910
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/client/Data/ruRU/patch-ruRU-Z.MPQ": {
-      "sha256": "496b493c082cedd1b0f3633dcd8577b6790285ef740601d8f402c2a3dddc148c",
-      "bytes": 40513996
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/COMPATIBILITY.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/package-manifest.json": {
-      "sha256": "a4b1642fe585ec987884603ab0d83fbedd39619b36ca855f5f272f55ba4d339f",
-      "bytes": 28978
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/PROJECT_README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/configs/modules/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/SkillLineAbility.dbc": {
-      "sha256": "9b28119050646f25e5803ae94ed0057a7a8cd0c32974ba51dbd061ecdffeaa1b",
-      "bytes": 591605
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/Spell.dbc": {
-      "sha256": "1312bb13ea260e4049f2c2eeb17a8fd57c1ad692c8e43cd0816cb16662e8844a",
-      "bytes": 52970618
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellDescriptionVariables.dbc": {
-      "sha256": "db797fc63a1cf567c8abc5cef6ef21e143b7fd1111173dd33a37498d27cfddfe",
-      "bytes": 9794
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellIcon.dbc": {
-      "sha256": "c4b09e7163a0cb325c4dfb08b8c04af539218a463219928f6fc2718f500b7e29",
-      "bytes": 157045
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellRadius.dbc": {
-      "sha256": "8015708e990bdf990ed34b9ce52c15ebbb26abd1ab4f92c138bddf35449a1c8e",
-      "bytes": 965
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/data/dbc/SpellRange.dbc": {
-      "sha256": "335aafe78a1cd8f60eb24c1dbd81f12788346d82ef7299a541ef9815587a4288",
-      "bytes": 11640
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/server/worldserver.exe": {
-      "sha256": "76eba14c788e1fb2aa8b3761b35c4e7929072b4cebc7e076a39af8a8d6ea8b20",
-      "bytes": 59084288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/.gitignore": {
-      "sha256": "06fc2cf6cd1019b1fef3b16ad4ad4f1c0f4c006794d99f1772bded8003e162e9",
-      "bytes": 387
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/CHANGELOG_RU.md": {
-      "sha256": "3a5bb9f42a6a3116c9ad5ead7f6ebd7b7b57e7de19adaa940053977d4e37f820",
-      "bytes": 1202
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/build_patch.ps1": {
-      "sha256": "c7dc6006528374ebfea61cb73d2e65d22ce15cd15dea78883158770ad4ac9b7f",
-      "bytes": 908
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/deploy_cultivation.ps1": {
-      "sha256": "88c41b6c52669fc3c48933528da1c381c4191eef10407f6f8510c8891cf38934",
-      "bytes": 9042
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/deploy_visibility.ps1": {
-      "sha256": "d9dd16830c3cf6ae4b5612f6abeb458a6e6556919fefcd6cacb15dfa404e25ef",
-      "bytes": 12415
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/client_patch/framexml/CultivationRogueHeader.lua": {
-      "sha256": "e9c2f7b8232c2e79ff815d8d84318095d89ea8fe351fd16890ba824ccb94242b",
-      "bytes": 4653
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/conf/mod_cultivation.conf.dist": {
-      "sha256": "93d3c3b4f0b2f41d41f9205e7a789645d3ee368a513725bc7301e21d4f1ecf96",
-      "bytes": 3942
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/core-patches/cultivation.patch": {
-      "sha256": "96489ed309f97e1039b44367cf7e9b2b33e820367657c3e4562667f7f3147479",
-      "bytes": 22995
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/cultivation_rogue_spell_manifest.json": {
-      "sha256": "d7045f5774333622d4279fc8f682e5566028f69c8347c8a07ed0da0a52484711",
-      "bytes": 186341
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/auth/base/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/characters/base/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/migrations/2.0.0/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/world/base/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/data/sql/world/base/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/compatibility_matrix.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/icon_audit_report.md": {
-      "sha256": "7c8c80041da374a3d6302de3aa8bde627181cdf4bf076d986324b424915ca9c9",
-      "bytes": 1538
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/implementation_notes.md": {
-      "sha256": "02fa434424dab98e2185dd12bb48658dace3b571782c2e991924417d8da9ed9c",
-      "bytes": 11407
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/passive_talent_audit_report.md": {
-      "sha256": "e8130971d6b9d9084bdc947b43a4c0e26314ce6a4e3e001436b7c08ff93bf9bd",
-      "bytes": 1084
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/seven_styled_icons.md": {
-      "sha256": "2e535465fdea20ed77627f00ae48363a328bb4c56c6a0832399b36600b1fa6fd",
-      "bytes": 5405
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/spell_id_map.md": {
-      "sha256": "abcb493e29052146b7bba4a1de5cf4f83fc8c85959aa99f176e7a51f4713cf94",
-      "bytes": 31917
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/test_plan.md": {
-      "sha256": "f43beb1f8ebe8cc2cfd1081ab228272d90215b1d90c66af66f80ddbb363607e6",
-      "bytes": 16341
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/tooltip_audit.md": {
-      "sha256": "ae7eadba845cd84b4279d272f5e24b86b04421815b3ab47b8aec25e0b3a8f2e8",
-      "bytes": 1004
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/docs/tooltip_presentation_candidate5.md": {
-      "sha256": "250a8718e53f484e28a30a3fcd8a6b832db09afc5094e512b1a2532364d6acb6",
-      "bytes": 5760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/installer/Install-Cultivation.ps1": {
-      "sha256": "b3f014a578038fffadf4588c51a12c237e8d392cfde150fec5adb048c647b611",
-      "bytes": 11367
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/installer/README_RU.md": {
-      "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
-      "bytes": 2173
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/LICENSE": {
-      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
-      "bytes": 18091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/README.md": {
-      "sha256": "0183adc08d39c65ce4c17f071afe79df1d5fc69adeaa8473858b8afec9b7f627",
-      "bytes": 897
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/README_RU.md": {
-      "sha256": "e52a27c622481d9da8412e79a9c93e8cd517dccbce7a5615ec2bbdc20e25caea",
-      "bytes": 7531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/release-manifest.json": {
-      "sha256": "797624174a544dd32a1e9b6a4be9583a21057c42d24175deaffba06f4496bda3",
-      "bytes": 17605
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/Cultivation.h": {
-      "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
-      "bytes": 146
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/CultivationCommand.cpp": {
-      "sha256": "1766d954ae7374d4a5922589fa08bfdca87c1d1c52a6ed2f6d033e39963b6dbd",
-      "bytes": 3590
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/mod_cultivation_loader.cpp": {
-      "sha256": "6e0701391dbcc5441e5b9c3d7570537da63a6e20d97ad404cb0d779d027f7dea",
-      "bytes": 146
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/CultivationRogue.h": {
-      "sha256": "d67a94fa1b88ff3f72980bcb26cde9b6cba7c57fa4da18622d341f6a7506a9a8",
-      "bytes": 2856
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RogueCommand.h": {
-      "sha256": "7e1ac651a3a084892d0e8a59b09df71c3ceac18f255c10d24e5abb6229d10037",
-      "bytes": 247
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathAssassination.cpp": {
-      "sha256": "4eefcb53c6c46d0d3e2e2ab2f235f82c561959910a18d8d839204cf14ba4cafe",
-      "bytes": 6724
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathBalanceMath.h": {
-      "sha256": "d05aec48cdc2c73cac23160ce408f4dff88b956b72c72456fe3a39c66ae1de48",
-      "bytes": 1091
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCelestialRegression.cpp": {
-      "sha256": "8140c9331d934be40cf073525bcb627e65c8b7880c07a42f4189cd288da7fe9e",
-      "bytes": 59495
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCombat.cpp": {
-      "sha256": "1301cc4978cb955f6420bafd29d5ccbe09237518eccdd67d8ddd882082d8492d",
-      "bytes": 5395
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCommand.cpp": {
-      "sha256": "d5964c4d07bd861db9b7fb055a819c272ea8f59e7227811f515d211695434a08",
-      "bytes": 8320
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathCommonSpells.cpp": {
-      "sha256": "9cc696a82dcfcbc106d44f1bbfd32370a55fbbcbdb92f69dfe4955c9b6b0cd7c",
-      "bytes": 70717
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathConfig.cpp": {
-      "sha256": "89cc01af714c8555b6e37c178a3ee12c4d0ab4bafae88b12d070dd2e9b599e16",
-      "bytes": 3607
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathMechanics.h": {
-      "sha256": "88aed8438ac302c4678b547f9de1634ea1c62c90a2dd02db2cc1e8a181d82198",
-      "bytes": 5190
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathPlayerScript.cpp": {
-      "sha256": "d6b73bea713a7f42a905cd9ca6d6911e126f4d10ae794e8dce6265c7bd921a2e",
-      "bytes": 10781
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSevenBalance.h": {
-      "sha256": "265b747abd405bb59fa5fac9305ef6541091a1348f863d0fd76d8011e52918bd",
-      "bytes": 3738
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSevenSpells.cpp": {
-      "sha256": "5cc379b42144809364491602832eaefa1192665e5c2b68b8399a2be06a0825f9",
-      "bytes": 29068
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSpellService.cpp": {
-      "sha256": "8c3b2c88d5fc58b88ab8ff6998f31d10e5632ad1e8742849cd6b3344ca6af8d2",
-      "bytes": 33523
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RoguePathSubtlety.cpp": {
-      "sha256": "fbb7ff284661ca92790d3a8d21d95fe65ae50369b1afe4f0c26e680b51840ed5",
-      "bytes": 5545
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/src/rogue/RogueSubsystem.cpp": {
-      "sha256": "9aa405c68a1511b33a92f393598c96e0f1a0f3a1252d2dff3ffb76ed890e9c86",
-      "bytes": 747
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tests/balance_math.cpp": {
-      "sha256": "e64f2a6b3367922a2829f4703fc70668d3e10b3f03b700fe5b10121dad431192",
-      "bytes": 1059
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/audit_rogue_visibility.py": {
-      "sha256": "2b742b071ea411b492bab48d71bc64f471901d18adc3db25ea475e8a270da97f",
-      "bytes": 6819
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_data.ps1": {
-      "sha256": "8a2a31e9b5e7667e1092828e7b55a9f095b3e1dc07b5e0bfe043d1f34c626aea",
-      "bytes": 3291
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_path_icons.py": {
-      "sha256": "455d6244f0c48b5683e08dafbd8112413f36967f18af717ed6f865b00c0a0abe",
-      "bytes": 6161
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/build_server.cmd": {
-      "sha256": "71c4063a660b41b6aff21fce1e1cbdc82f248437bde7b3f266ffa38ad79a539f",
-      "bytes": 531
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/celestial_aura_tooltips.py": {
-      "sha256": "f6f90ccd2204d0bece4c615c865c3a09d4a7a717b56e6a9de28802f099b9235d",
-      "bytes": 7232
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/celestial_spell_data.py": {
-      "sha256": "9b783df5c9e64b85f2308d47f058de4dd0cec2659d9d0ad027cc6fb291cb8ab5",
-      "bytes": 10239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/collect_evidence.py": {
-      "sha256": "5a19eaf95ee36d248b755875d811d72a2fd25192ea331792e0b0fe4207a5d405",
-      "bytes": 4574
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_release_manifest.py": {
-      "sha256": "2b2ba97b2c6d3bfbfa806c78ee02de71214bf7bad291ddd52ebad6d66e0c6b3b",
-      "bytes": 1911
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_rogue_paths.py": {
-      "sha256": "53612cae94858ac60b8422f852beac0b39824c84238d3c41833873bc2e6a728d",
-      "bytes": 75401
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_schema4_migration.py": {
-      "sha256": "0b95d023879edb91e49d324ca3118c7d794f606b3e15ec897b7330f2c9881b44",
-      "bytes": 4906
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_schema6_migration.py": {
-      "sha256": "3aabce005be28d6b3ee387e67f0688a0ec0f89438fd360974e74c270a0c6a291",
-      "bytes": 1678
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/generate_visibility_migration.py": {
-      "sha256": "ff1d87d0e78362fc88a1a7f977d5298a3ef2c3f10f634bda69ff5da52ab4835b",
-      "bytes": 4411
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/icon_pipeline/build_stealth_mastery_icons.py": {
-      "sha256": "966099a0e8cd4eb721de398232e86aa917212cec3a482e362e720aeace7af9a0",
-      "bytes": 4795
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/inspect_stock_tooltips.py": {
-      "sha256": "cdf947073f82b834719aae376c42ff2e8f0fa6cf665072ad2508c52a4bb2460b",
-      "bytes": 1502
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/migrate_technical_presentation.py": {
-      "sha256": "8ea221ade01bb333774ee8ec7387c79bfc4efe99219b60945ce90ff8a928158e",
-      "bytes": 9651
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/migrate_visibility_manifest.py": {
-      "sha256": "7daa6ea343d45d66fd8cee80c4775c8c2a4835993b3beb94b39bf2b18b6680f4",
-      "bytes": 11614
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_celestial_candidate.py": {
-      "sha256": "abf850274667dc5ca592a698fc069b65854b221913f6437d6020d6fc4ef302fa",
-      "bytes": 4615
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_celestial_metadata.py": {
-      "sha256": "f85b6d90860bbd35b850e75a040fac89755ad3740ed8b4e6ecb06047edf98529",
-      "bytes": 3486
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_full_candidate.ps1": {
-      "sha256": "0b3e634f0233f16c144d383ca4b50a45782e2dbb4fa49275af457d10633286df",
-      "bytes": 7065
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_metadata.py": {
-      "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",
-      "bytes": 7792
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_seven_candidate.py": {
-      "sha256": "7a8423f472b0280b8cc25f6af2a5214016edd43c5592efcde7272dc741036bcd",
-      "bytes": 3471
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/package_visibility_candidate.py": {
-      "sha256": "7879c7dfe136305e0120126c95738fcd2c1ea56a5fa29b7eb9e0e8afbb024b02",
-      "bytes": 12406
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/path_descriptions_en.py": {
-      "sha256": "705b93eb4e5e0d640e395680bf6a710ccf2b2c19079060767bec54bfc880819f",
-      "bytes": 11836
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/prepare_test_clones.ps1": {
-      "sha256": "713bca7b8fb3f7d4165f09793756057044403ef1fc90e78a715d48bb258f575a",
-      "bytes": 5273
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/prepare_test_databases.ps1": {
-      "sha256": "6840159474300722a830e3251b407d312a1068b97279bcf04d2f4b125b75f938",
-      "bytes": 5310
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/refresh_test_candidate.ps1": {
-      "sha256": "588a741b9994779cec61d8e132000310586f2010e0057c0c13c758f81697979f",
-      "bytes": 4967
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/seven_spell_data.py": {
-      "sha256": "f2cc7d3917583babb6934c3e86a3ff2882b95ccdd0110350db9a8da4cc3fe246",
-      "bytes": 11755
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/sha_aura_tooltips.py": {
-      "sha256": "3e2c35b9cc0a8fd313e94290ae6cf05936de416545efffd6130d5cb542095c06",
-      "bytes": 5882
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/start_test_server.ps1": {
-      "sha256": "e9c39cf15bc0ad783fcfe7e4abd82b600c1b6029301d9f78d168eefd2bd93a37",
-      "bytes": 2201
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_celestial_aura_tooltips.py": {
-      "sha256": "d359576df4d9de83411cb804d6bc01a9307ced60930533cf42b70ac9bc9a8d04",
-      "bytes": 3890
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_celestial_resources.py": {
-      "sha256": "82cc9e65a090914604a2c429b340430b7852d59754f40390c9fd2a94ae31cc1d",
-      "bytes": 1478
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_cultivation_architecture.py": {
-      "sha256": "bb6ad77fa94badca1c1928a578b6b21ac8d0ea6b351951efd03f1749487511de",
-      "bytes": 3185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_database_query.ps1": {
-      "sha256": "6821ce7724a4c29d5b3b1cc6f1e4c6de4bfdd0b1ad76cfc2831efaf32b261825",
-      "bytes": 1102
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_duration_crash_protocol.py": {
-      "sha256": "536142aae719ebb1653e21ee90bd02aa394fa14a4c70c83989f8e4616101b15d",
-      "bytes": 2891
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_generated_data.py": {
-      "sha256": "af6c6bc5cdfe3fd152756364d7ae9c43a653450efc096e0f0346016da918221b",
-      "bytes": 43448
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_seven_styled_icons.py": {
-      "sha256": "eb609fcca1a1b5548e2e876071a3e19458f941bf77d7c6d65fa42ccd6bdbff67",
-      "bytes": 5716
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_sha_candidate41.py": {
-      "sha256": "7541b03756520cc274dc4955be9b26785072b593a3276da4967a0fd8e4b7b1f5",
-      "bytes": 10387
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_sha_presentation.py": {
-      "sha256": "21030ef88846dcd0c63eb4f251eca3bffb984b9550bbe81c720517a69b25c107",
-      "bytes": 10151
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_tooltip_presentation.py": {
-      "sha256": "30d0317b8564f43a33d17ccf502c06cb199b69d9180ce0a5a9115c9e98c16f0b",
-      "bytes": 16051
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_tooltip_stock_values.py": {
-      "sha256": "cb940182ccc900054093c60e742ae78ffe953c0bfec574ca0a2d6ddb2583aaca",
-      "bytes": 1636
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_visibility_schema3.py": {
-      "sha256": "2d020a1b9e9df6bcbbf7ec609cfce9755a36f13dd70f85eb9f261d2196fba355",
-      "bytes": 4263
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_world_protocol.ps1": {
-      "sha256": "6b72cee0cf03f4da06573e166446d1838180a8fa6ad83d96f80361a2b3b41c9c",
-      "bytes": 1522
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/test_world_protocol.py": {
-      "sha256": "5564ef42f8cf25223c0058e55916fdf0d6ebf7ac5ba45160f91f77c8aefd1fee",
-      "bytes": 38334
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/tooltip_stock.py": {
-      "sha256": "d30f98d39986b1a708cef42a73cdcd888ff5933334ad477906f52b499d174e10",
-      "bytes": 5711
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/validate_rogue_path_tooltips.py": {
-      "sha256": "2635943adefcce40de40478b251eab8bea42772d3125b8aa1c67b55153967be0",
-      "bytes": 15711
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/tools/visibility_schema3.py": {
-      "sha256": "edac0c26ac7771f4f72253a33215107040d65b2dcc5e24eee561e5563960450c",
-      "bytes": 20729
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/source/mod-cultivation/validation/v2.0.0-candidate1/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/fresh/auth/cultivation_rbac.sql": {
-      "sha256": "a88e268a071ea3f089e4bf727f367725aa72a06abc9b28feb34a3ba96c744dd7",
-      "bytes": 290
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/fresh/characters/character_cultivation_rogue.sql": {
-      "sha256": "4684a555e25d5ee652ef58ba1c97ec7d0a5eedbef5bfa26347f843073c1009bb",
-      "bytes": 953
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/fresh/world/cultivation_command.sql": {
-      "sha256": "68eb059097a1a242c9e149719f657c081dfb10b653368afc7e66a5d5647c27cb",
-      "bytes": 245
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/fresh/world/cultivation_rogue_spells.sql": {
-      "sha256": "707abfdfae44f6db6f09e59994594927144ddf1e2ea59cf6609908f4b6f3b60b",
-      "bytes": 24338
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.postflight.sql": {
-      "sha256": "3ccde639503f197ece45ddfafa77171feacce3264240a3d6c4c05cff6ac0651b",
-      "bytes": 288
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.preflight.sql": {
-      "sha256": "6de9029ced78a762e4c3e287235aa399f28fa743f0f6bb559930568230c7217e",
-      "bytes": 728
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.rollback.sql": {
-      "sha256": "241e2a471049861ba6e323b9ce86e87eb8cdf4352b0c7e748f2e2100d9c633e5",
-      "bytes": 185
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/auth.up.sql": {
-      "sha256": "ff62a273de0b3d8b0e617ea001308657063dda5da28420f7020064735ec706fa",
-      "bytes": 355
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.postflight.sql": {
-      "sha256": "0b1901a33375d07fa478ee5fd729bef308738da06d3deccb787550442c03d562",
-      "bytes": 573
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.preflight.sql": {
-      "sha256": "583aa52d300ed77f23b2b41bd9ae71bab80bf634efeb52047e08e8312ff7bc09",
-      "bytes": 1239
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.rollback.sql": {
-      "sha256": "6153b0c3fed162bab07ba779a690bd1e4d9b2e3524b32aea60de6234aa971245",
-      "bytes": 1295
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/characters.up.sql": {
-      "sha256": "2fd2941287440210c4f33130f294f700c3534b244a84624b404a3dfc0fc1132d",
-      "bytes": 1254
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/manifest.json": {
-      "sha256": "f7424a4fb53f85dc296bde87b4614cc1645f91e47dcd3fa595c7112b9a45606f",
-      "bytes": 1660
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.postflight.sql": {
-      "sha256": "dcf1f0cd5bb7c683856293667f8817a77dfe7690d8feef5deb825c9df9e57864",
-      "bytes": 602
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.preflight.sql": {
-      "sha256": "09b9b08dd9f00689a993c25f4276ac29478e6d5840f9933e2b38d0db6f6dcf0e",
-      "bytes": 762
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.rollback.sql": {
-      "sha256": "b9051bca8ecd33a1f8018b30f66fa233782a9a5ab0e9ab7c5526cc59f2cb6c4f",
-      "bytes": 576
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/sql/upgrade-from-rogue-paths/world.up.sql": {
-      "sha256": "3cc9dd133a446e8427543e4406077a95cfdde605da01f5772779b3cd756c97ca",
-      "bytes": 1467
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/validation/restart_protocol_test.json": {
-      "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",
-      "bytes": 393
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/validation/summary.json": {
-      "sha256": "14a96acc71b09d4906195c904df27d0b192b4626d7c763bf7e23868ff985bd3d",
-      "bytes": 1498
-    },
-    "dist/verify-v2.0.0-candidate1-20260904T121128/validation/world_protocol_test.json": {
-      "sha256": "197ec1831590ca58d0356719385ed4bd2c268dbeac5f3a82c6b216a23a8c20da",
-      "bytes": 2760
+    "docs/audit-fixes-20260905.md": {
+      "sha256": "91fc93da5f37b06d210710d0ec351130e7cdb6419d174614ffb3ae3684e132bf",
+      "bytes": 8846
     },
     "docs/compatibility_matrix.md": {
-      "sha256": "484fd195651ea606ba671bdae61a6d10c40c37b733356a920e98644b56b33838",
-      "bytes": 14878
+      "sha256": "59c0140aad2797f7ff18ed32d49da653dec1870b75974faac413476e65f7dba6",
+      "bytes": 15840
     },
     "docs/icon_audit_report.md": {
       "sha256": "7c8c80041da374a3d6302de3aa8bde627181cdf4bf076d986324b424915ca9c9",
@@ -2479,6 +137,10 @@
       "sha256": "02fa434424dab98e2185dd12bb48658dace3b571782c2e991924417d8da9ed9c",
       "bytes": 11407
     },
+    "docs/install-v2.0.0.md": {
+      "sha256": "952e34c53e7868fa537b5a81930a1c98b46996eb72772c8eaa0c7bdb5f453d69",
+      "bytes": 4984
+    },
     "docs/passive_talent_audit_report.md": {
       "sha256": "e8130971d6b9d9084bdc947b43a4c0e26314ce6a4e3e001436b7c08ff93bf9bd",
       "bytes": 1084
@@ -2486,6 +148,10 @@
     "docs/seven_styled_icons.md": {
       "sha256": "2e535465fdea20ed77627f00ae48363a328bb4c56c6a0832399b36600b1fa6fd",
       "bytes": 5405
+    },
+    "docs/shadowstep-20260905.md": {
+      "sha256": "5c9fd560487980b7feefba5555de57d55c05fba79a9f2947fa46676491246de6",
+      "bytes": 5414
     },
     "docs/spell_id_map.md": {
       "sha256": "abcb493e29052146b7bba4a1de5cf4f83fc8c85959aa99f176e7a51f4713cf94",
@@ -2508,32 +174,36 @@
       "bytes": 1107
     },
     "installer/Install-Cultivation.ps1": {
-      "sha256": "7549475f009d3962138f65a5b180a435a3f3968f318ef576f96ca0b0f146ce2d",
-      "bytes": 12029
+      "sha256": "18980f239ff0244143edee5e1c8c0136278c826546b0288d8eb33d8552887481",
+      "bytes": 14119
     },
     "installer/README_RU.md": {
       "sha256": "84d104b8307a085125e16771563ff12f15a7f76f39c7c5803bd31017b4dc5911",
       "bytes": 2173
+    },
+    "installer/Rollback-Cultivation.ps1": {
+      "sha256": "32f568e6ac4315ef3b22d996330c7e9b0c3f33f139213983b2f8554ddc5388eb",
+      "bytes": 1494
     },
     "LICENSE": {
       "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
       "bytes": 18091
     },
     "README.md": {
-      "sha256": "0183adc08d39c65ce4c17f071afe79df1d5fc69adeaa8473858b8afec9b7f627",
-      "bytes": 897
+      "sha256": "3ae1ac50e28d2611c91f95fdd30666be46739e171b1adc7fb6f0068ee89a97d1",
+      "bytes": 1088
     },
     "README_RU.md": {
-      "sha256": "4be3bec82529e651764bdf8490f597360f2218e36127d75a9a1255cff6bd009d",
-      "bytes": 7608
+      "sha256": "f83af8537adf6750e285bc3156e70f7d999742b30fd7de0ce4dfae8ca5463be5",
+      "bytes": 7875
     },
     "src/Cultivation.h": {
       "sha256": "b54331c64009e40413cc2ef8749647b3c51ebecb375dd8468e7049eed4e5d73f",
       "bytes": 146
     },
     "src/CultivationCommand.cpp": {
-      "sha256": "1766d954ae7374d4a5922589fa08bfdca87c1d1c52a6ed2f6d033e39963b6dbd",
-      "bytes": 3590
+      "sha256": "f5d8933590a496665ef90ec8136f53020fc3009d7dd80e35f6295d0f46adfe3d",
+      "bytes": 3784
     },
     "src/mod_cultivation_loader.cpp": {
       "sha256": "6e0701391dbcc5441e5b9c3d7570537da63a6e20d97ad404cb0d779d027f7dea",
@@ -2556,32 +226,32 @@
       "bytes": 1091
     },
     "src/rogue/RoguePathCelestialRegression.cpp": {
-      "sha256": "8140c9331d934be40cf073525bcb627e65c8b7880c07a42f4189cd288da7fe9e",
-      "bytes": 59495
+      "sha256": "3a63bff0c8b4c8d7b804b3f22f77c6188fce85c2c6f5b45ce4740f8f8422cc0e",
+      "bytes": 75003
     },
     "src/rogue/RoguePathCombat.cpp": {
       "sha256": "1301cc4978cb955f6420bafd29d5ccbe09237518eccdd67d8ddd882082d8492d",
       "bytes": 5395
     },
     "src/rogue/RoguePathCommand.cpp": {
-      "sha256": "d5964c4d07bd861db9b7fb055a819c272ea8f59e7227811f515d211695434a08",
-      "bytes": 8320
+      "sha256": "a54ace0844f8a6ac84b7836c8c8dd3531f760fd81fd3b6645dca25210262449d",
+      "bytes": 8433
     },
     "src/rogue/RoguePathCommonSpells.cpp": {
-      "sha256": "9cc696a82dcfcbc106d44f1bbfd32370a55fbbcbdb92f69dfe4955c9b6b0cd7c",
-      "bytes": 70717
+      "sha256": "7028df8afcbcc10c85dabc860475ddd5f93f5e3b5ecd39930ce7f4d9fa97429f",
+      "bytes": 72584
     },
     "src/rogue/RoguePathConfig.cpp": {
       "sha256": "89cc01af714c8555b6e37c178a3ee12c4d0ab4bafae88b12d070dd2e9b599e16",
       "bytes": 3607
     },
     "src/rogue/RoguePathMechanics.h": {
-      "sha256": "88aed8438ac302c4678b547f9de1634ea1c62c90a2dd02db2cc1e8a181d82198",
-      "bytes": 5190
+      "sha256": "2fa9615bc680cde926fec9e06cce1a0db4dd62c67b93d3b6abfbbbc08146ff17",
+      "bytes": 5039
     },
     "src/rogue/RoguePathPlayerScript.cpp": {
-      "sha256": "d6b73bea713a7f42a905cd9ca6d6911e126f4d10ae794e8dce6265c7bd921a2e",
-      "bytes": 10781
+      "sha256": "c44a817137675f86d66fdba6565a9c00866e3724c36c88548905e457cff8d7d9",
+      "bytes": 10312
     },
     "src/rogue/RoguePathSevenBalance.h": {
       "sha256": "265b747abd405bb59fa5fac9305ef6541091a1348f863d0fd76d8011e52918bd",
@@ -2596,8 +266,8 @@
       "bytes": 33523
     },
     "src/rogue/RoguePathSubtlety.cpp": {
-      "sha256": "fbb7ff284661ca92790d3a8d21d95fe65ae50369b1afe4f0c26e680b51840ed5",
-      "bytes": 5545
+      "sha256": "f5a98f6301de4a256cf0e251d301acd7821e7a69b61f60f3869ba07fe72d8fbb",
+      "bytes": 5532
     },
     "src/rogue/RogueSubsystem.cpp": {
       "sha256": "9aa405c68a1511b33a92f393598c96e0f1a0f3a1252d2dff3ffb76ed890e9c86",
@@ -2612,8 +282,8 @@
       "bytes": 6819
     },
     "tools/build_data.ps1": {
-      "sha256": "8a2a31e9b5e7667e1092828e7b55a9f095b3e1dc07b5e0bfe043d1f34c626aea",
-      "bytes": 3291
+      "sha256": "9a51bf7230d8bd3f1df2a539ea7e39a962594cd72e20faac58d82d1051a710e0",
+      "bytes": 3711
     },
     "tools/build_path_icons.py": {
       "sha256": "455d6244f0c48b5683e08dafbd8112413f36967f18af717ed6f865b00c0a0abe",
@@ -2635,13 +305,17 @@
       "sha256": "5a19eaf95ee36d248b755875d811d72a2fd25192ea331792e0b0fe4207a5d405",
       "bytes": 4574
     },
+    "tools/dbc_string_integrity.py": {
+      "sha256": "554d428d2e4377702c1e29d7593116b5fa5f21ea746a5eea2f76683fd251a3f3",
+      "bytes": 2453
+    },
     "tools/generate_release_manifest.py": {
-      "sha256": "97f7c836a3cf824b867d8ff9de41ab45cb4b1d639010d7a73973209dd30ba696",
-      "bytes": 1911
+      "sha256": "7804119fd6434ff4734c03cedba285e45e4776424d205bd2fa82278bd4f896b8",
+      "bytes": 2752
     },
     "tools/generate_rogue_paths.py": {
-      "sha256": "53612cae94858ac60b8422f852beac0b39824c84238d3c41833873bc2e6a728d",
-      "bytes": 75401
+      "sha256": "b72b24530e182987f33cf655b4c88da4057a059487b032ad9a014628980d632a",
+      "bytes": 77165
     },
     "tools/generate_schema4_migration.py": {
       "sha256": "b4f9a8f10d31e65ad9c7e31db68cd14d24b74578e1ccf46ec647d262c2f245a9",
@@ -2671,6 +345,14 @@
       "sha256": "7daa6ea343d45d66fd8cee80c4775c8c2a4835993b3beb94b39bf2b18b6680f4",
       "bytes": 11614
     },
+    "tools/native_talent_metadata.py": {
+      "sha256": "e39057c4200b0cf91ee06c67eed794aeb9f3c7ff6b308432de639a783644f0af",
+      "bytes": 2372
+    },
+    "tools/package_audit_candidate.py": {
+      "sha256": "396ccea10014b61d9ec9692e9ed331e56ef8befeebe39ca7ff96e51f57f9fc04",
+      "bytes": 5776
+    },
     "tools/package_celestial_candidate.py": {
       "sha256": "abf850274667dc5ca592a698fc069b65854b221913f6437d6020d6fc4ef302fa",
       "bytes": 4615
@@ -2691,17 +373,25 @@
       "sha256": "b3e3c65f8df9a5c54c5f7a16152628874c32247c267b0124fdc62a2f661e9104",
       "bytes": 7792
     },
+    "tools/package_release.ps1": {
+      "sha256": "30a1ff1d9b1fbbdfe8d32f498c6a9eba8a95a40defd69c45f30bbbbc95045a18",
+      "bytes": 7345
+    },
     "tools/package_seven_candidate.py": {
       "sha256": "7a8423f472b0280b8cc25f6af2a5214016edd43c5592efcde7272dc741036bcd",
       "bytes": 3471
+    },
+    "tools/package_shadowstep_candidate.py": {
+      "sha256": "7faa7102028727a472e6f7f7f93d992d37fae845e49248f275b271bb351105c9",
+      "bytes": 5647
     },
     "tools/package_visibility_candidate.py": {
       "sha256": "7879c7dfe136305e0120126c95738fcd2c1ea56a5fa29b7eb9e0e8afbb024b02",
       "bytes": 12406
     },
     "tools/path_descriptions_en.py": {
-      "sha256": "705b93eb4e5e0d640e395680bf6a710ccf2b2c19079060767bec54bfc880819f",
-      "bytes": 11836
+      "sha256": "4c8786607e506780014f643560524f1d23016c0163a5ca7e29ca3f586ece1355",
+      "bytes": 11906
     },
     "tools/prepare_test_clones.ps1": {
       "sha256": "713bca7b8fb3f7d4165f09793756057044403ef1fc90e78a715d48bb258f575a",
@@ -2711,21 +401,37 @@
       "sha256": "6840159474300722a830e3251b407d312a1068b97279bcf04d2f4b125b75f938",
       "bytes": 5310
     },
+    "tools/record_audit_runtime.py": {
+      "sha256": "4dd7e5989aa44d8a0e5b0fef8d38410156bfb062740b3a9d9ecc22951118d124",
+      "bytes": 2530
+    },
     "tools/refresh_test_candidate.ps1": {
       "sha256": "588a741b9994779cec61d8e132000310586f2010e0057c0c13c758f81697979f",
       "bytes": 4967
+    },
+    "tools/run_audit_checks.py": {
+      "sha256": "d680d3bd1bc2b32df3e27bb90a960edea25f52f0b91b78dcc68d108edc3cd29f",
+      "bytes": 2426
     },
     "tools/seven_spell_data.py": {
       "sha256": "f2cc7d3917583babb6934c3e86a3ff2882b95ccdd0110350db9a8da4cc3fe246",
       "bytes": 11755
     },
     "tools/sha_aura_tooltips.py": {
-      "sha256": "3e2c35b9cc0a8fd313e94290ae6cf05936de416545efffd6130d5cb542095c06",
-      "bytes": 5882
+      "sha256": "70571d0cecb16d2f835959c006dbff7f0b9659abeeb0c9eaffaffca60dd1f8d6",
+      "bytes": 5872
+    },
+    "tools/shadowstep_clone_sql.py": {
+      "sha256": "582776d409c5ffaedf0592da2d1b29ad4d12dd51c9814fb942952a3f27f8fc57",
+      "bytes": 1594
     },
     "tools/start_test_server.ps1": {
       "sha256": "3f9ea8f7895be54553b65e3bc18cf0a935614e62f8270c7657dbfc55464c44b8",
       "bytes": 2286
+    },
+    "tools/test_audit_fixes.py": {
+      "sha256": "597acba90d885463d2d8fe0e2cb14899835edac0c6b9f47a0916bb059b082db2",
+      "bytes": 6669
     },
     "tools/test_celestial_aura_tooltips.py": {
       "sha256": "f48ea69409bafe497ee1556a65e29fea696e4e83f78cddbd97a7292ef6e612ae",
@@ -2748,8 +454,12 @@
       "bytes": 2891
     },
     "tools/test_generated_data.py": {
-      "sha256": "af6c6bc5cdfe3fd152756364d7ae9c43a653450efc096e0f0346016da918221b",
-      "bytes": 43448
+      "sha256": "b0c46d0ad83db2bf6373f56e3af384d254577b7be598206e7ab5ff1c316062ea",
+      "bytes": 43528
+    },
+    "tools/test_native_header.py": {
+      "sha256": "5967a6796495f97e71e6ccec1c7013f311ac38ff44185e645701187838e6b641",
+      "bytes": 5071
     },
     "tools/test_seven_styled_icons.py": {
       "sha256": "eb609fcca1a1b5548e2e876071a3e19458f941bf77d7c6d65fa42ccd6bdbff67",
@@ -2760,8 +470,12 @@
       "bytes": 10387
     },
     "tools/test_sha_presentation.py": {
-      "sha256": "21030ef88846dcd0c63eb4f251eca3bffb984b9550bbe81c720517a69b25c107",
-      "bytes": 10151
+      "sha256": "95dc6d9ea5a7c48ee8b476d775f57c491f53d81859926ce7e22b63f1ec218913",
+      "bytes": 11492
+    },
+    "tools/test_shadowstep_contract.py": {
+      "sha256": "11ed29e415c083a07c62452e3dc9a2372ae9a6acd07dd998ccfad341bdba13ea",
+      "bytes": 1492
     },
     "tools/test_tooltip_presentation.py": {
       "sha256": "30d0317b8564f43a33d17ccf502c06cb199b69d9180ce0a5a9115c9e98c16f0b",
@@ -2776,12 +490,12 @@
       "bytes": 4263
     },
     "tools/test_world_protocol.ps1": {
-      "sha256": "6b72cee0cf03f4da06573e166446d1838180a8fa6ad83d96f80361a2b3b41c9c",
-      "bytes": 1522
+      "sha256": "c790e0dd41da6d0e3f4124c56caa8f1c94961ac2168d9b1fd04ac01acebde83d",
+      "bytes": 1607
     },
     "tools/test_world_protocol.py": {
-      "sha256": "5564ef42f8cf25223c0058e55916fdf0d6ebf7ac5ba45160f91f77c8aefd1fee",
-      "bytes": 38334
+      "sha256": "26e99cbd2f780588e35a5d8ac74c185988cda4c5a0feb1aa97f938e734e49b4f",
+      "bytes": 41075
     },
     "tools/tooltip_stock.py": {
       "sha256": "d30f98d39986b1a708cef42a73cdcd888ff5933334ad477906f52b499d174e10",
@@ -2794,6 +508,10 @@
     "tools/visibility_schema3.py": {
       "sha256": "edac0c26ac7771f4f72253a33215107040d65b2dcc5e24eee561e5563960450c",
       "bytes": 20729
+    },
+    "validation/v2.0.0/acceptance.json": {
+      "sha256": "b0212a5a3669518ded97197418a521d7b425671e1136dae90f85f4140d66c4e1",
+      "bytes": 1305
     },
     "validation/v2.0.0-candidate1/restart_protocol_test.json": {
       "sha256": "ede5b156bb2dc281a0a27a6c7d262b53faee0278c85f27943186dbd3c982d3e1",

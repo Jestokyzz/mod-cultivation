@@ -1,0 +1,23 @@
+{
+  "version": "v2.0.0",
+  "accepted_by_user": true,
+  "accepted_date": "2026-09-05",
+  "production_startup": "passed; disabled replacement groups=0",
+  "source_data_lua_checks": 102,
+  "shadowstep_native_checks": 84,
+  "sha_common_native_checks": 68,
+  "resource_native_checks": 51,
+  "ordinary_player_protocol": "passed",
+  "installer_file_fixture": "passed: executed Install-Cultivation.ps1 -SkipSql in isolated client/server directories; all installed artifact hashes verified",
+  "archive_integrity": "every ZIP payload entry verified against package SHA-256 manifest",
+  "sql": "unchanged since the tested schema-6 installation; production updater reports all databases up-to-date",
+  "gui": "user accepted; agent observed logged-in NWQ and talent tree, did not independently replay all tooltips",
+  "limitations": [
+    "Full PvP DR sequence not repeated",
+    "Hemorrhage failed-hit and damage-magnitude edge cases not fully repeated",
+    "Dance Garrote periodic health-delta acceptance not repeated",
+    "Premeditation target-change/finisher edge cases remain",
+    "One initial Ghostly harness failure remains unexplained; fourteen subsequent fresh runs passed",
+    "Fresh-install SQL plus updated installer was not end-to-end repeated; only schema-6 file upgrade fixture was executed"
+  ]
+}
