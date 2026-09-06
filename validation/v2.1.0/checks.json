@@ -1,0 +1,38 @@
+{
+  "path_status": {
+    "status": "PASS",
+    "source_sha256": "5e1d4577b4aede439162ac2fc3d8c90c0056c5848a0076f2eba630740e3d5a47"
+  },
+  "mentor_lua51": {
+    "status": "PASS",
+    "source_sha256": "88682e7ecbd8b2ef9d9ee4907ccbe4a5e7e6155a02bf2c7c3a4bf607fe98cb0e"
+  },
+  "model_tracks": {
+    "status": "PASS",
+    "source_sha256": "357a47f3784093362cf0797595d15a5e237a659b9d507223f0a7fd4df31fc2a4"
+  },
+  "model_cycles": {
+    "status": "PASS",
+    "source_sha256": "089f1e33f047e16ed3ce9b60ac89f176d8ff9b9643b6f69de24725e78cc2faa5"
+  },
+  "server_startup": {
+    "status": "PASS"
+  },
+  "npc_sql_fresh_and_idempotence": {
+    "status": "PASS",
+    "method": "temporary schema-compatible tables; compared names/roles/flags/script to current four NPCs"
+  },
+  "models_readback": {
+    "status": "PASS",
+    "files": 663
+  },
+  "mapping": {
+    "status": "EXCLUDED",
+    "removed_from_test": true
+  },
+  "user_acceptance": {
+    "status": "approved",
+    "date": "2026-09-06",
+    "scope": "release approved excluding deferred mapping; no assertion that every lifecycle scenario was rerun"
+  }
+}

@@ -1,5 +1,10 @@
 # mod-cultivation
 
+Current release: **v2.1.0**, user-approved on 2026-09-06, excluding deferred environmental mapping.
+See [installation](docs/install-v2.1.0.md), [release notes](docs/CHANGELOG_v2.1.0_RU.md),
+[shared model registry](models-manifest.json) and [model porting rules](docs/MODEL_PORTING_RU.md).
+Shared NPC/assets/UI live at module root; `src/rogue` remains the class implementation.
+
 `mod-cultivation` is an AzerothCore 3.3.5a umbrella module for cultivation-style class subsystems.
 
 The first subsystem is `rogue`, which contains the Celestial and Sha rogue variants. The public command surface is namespaced accordingly:

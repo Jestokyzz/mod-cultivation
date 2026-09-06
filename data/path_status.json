@@ -1,0 +1,19 @@
+{
+  "baseline_spell": 86500,
+  "statuses": [
+    {"path":"celestial", "spell_id":86802, "icon_id":645203,
+     "virtual_path":"Interface\\Icons\\achievement_faction_celestials",
+     "source_png":"client_patch/assets/celestial_path.png",
+     "source_sha256":"2c6fb4beeddacae11fed8f2e503ef07409c7f40c8a0c60985aec8c363e5cd1be",
+     "name_ru":"Просветленный Небожитель", "name_en":"Celestial Enlightenment",
+     "text_ru":"Вы следуете пути Небожителей. Их благословение усиливает ваши способности.",
+     "text_en":"You follow the path of the Celestials. Their blessing empowers your abilities."},
+    {"path":"sha", "spell_id":86803, "icon_id":651083,
+     "virtual_path":"Interface\\Icons\\sha_ability_rogue_envelopingshadows",
+     "source_png":"client_patch/assets/sha_path.png",
+     "source_sha256":"21f0e68f6e73d613ceb8ab286b737bc69c303a0ccaecfb08cb3ba8e08eb06d38",
+     "name_ru":"Оскверненный Ша", "name_en":"Sha Corruption",
+     "text_ru":"Вы приняли силу Ша. Ваши способности усилены тёмной энергией.",
+     "text_en":"You have embraced the power of the Sha. Dark energy empowers your abilities."}
+  ]
+}

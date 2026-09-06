@@ -11,7 +11,8 @@ param(
     [string]$AuthDatabase = 'acore_auth',
     [string]$WorldDatabase = 'acore_world',
     [string]$CharactersDatabase = 'acore_characters',
-    [switch]$SkipSql
+    [switch]$SkipSql,
+    [switch]$UpgradeFrom200
 )
 
 $ErrorActionPreference = 'Stop'
@@ -47,7 +48,7 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
     throw "Package manifest is missing: $manifestPath"
 }
 $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
-if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.0.0') {
+if ($manifest.package -ne 'mod-cultivation' -or $manifest.candidate -ne 'v2.1.0') {
     throw 'Unexpected package identity.'
 }
 foreach ($entry in $manifest.files) {
@@ -89,13 +90,17 @@ foreach ($archive in $archives) {
     $actual = (Get-FileHash -LiteralPath $archive.FullName).Hash.ToLowerInvariant()
     if (-not $baseline -or ($actual -ne $baseline.Value -and ($replacement.Count -ne 1 -or $actual -ne $replacement[0].sha256))) { throw "Unsupported client patch chain: $relative" }
 }
-if ($archives.Count -ne @($manifest.compatibility.client_inventory.PSObject.Properties).Count) { throw 'Missing required client patch owner' }
+foreach ($required in $manifest.compatibility.client_inventory.PSObject.Properties) {
+    $replacement = @($manifest.files | Where-Object path -eq ('client/'+$required.Name))
+    if ($replacement.Count -eq 0 -and !(Test-Path -LiteralPath (Join-Path $ClientRoot $required.Name))) { throw 'Missing required client patch owner' }
+}
 foreach ($virtual in @('DBFilesClient\Spell.dbc','Interface\FrameXML\FrameXML.toc','Interface\FrameXML\CustomItemTooltips.lua')) {
     if (Test-Path -LiteralPath (Join-Path $ClientRoot $virtual)) { throw "Loose override: $virtual" }
 }
 
 if (-not (Test-Path -LiteralPath $BackupRoot -PathType Container)) { throw "Backup root is unavailable: $BackupRoot" }
 $BackupRoot = (Resolve-Path -LiteralPath $BackupRoot).Path
+if ($BackupRoot -ne 'F:\JestokyCraft Backups' -or (Get-PSDrive F).Free -lt 10GB) { throw 'Verified F backup root with 10 GB free required' }
 if ((Test-IsWithin $BackupRoot $ServerRoot) -or (Test-IsWithin $BackupRoot $ClientRoot) -or
     (Test-IsWithin $ServerRoot $BackupRoot) -or (Test-IsWithin $ClientRoot $BackupRoot)) {
     throw 'Backup root must be outside both server and client roots.'
@@ -109,20 +114,18 @@ if ($running.Count -gt 0) {
 }
 
 $stamp = Get-Date -Format 'yyyyMMddTHHmmss'
-$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.0.0-$stamp"
+$backup = Join-Path $BackupRoot "cultivation\pre-install-v2.1.0-$stamp"
 if (Test-Path -LiteralPath $backup) { throw "Backup destination already exists: $backup" }
 New-Item -ItemType Directory -Path $backup | Out-Null
 
-$transfers = @(
-    @{ Source='client\Data\ruRU\patch-ruRU-A.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-A.MPQ') },
-    @{ Source='client\Data\ruRU\patch-ruRU-Z.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-Z.MPQ') },
-    @{ Source='client\Data\ruRU\patch-ruRU-X.MPQ'; Target=(Join-Path $ClientRoot 'Data\ruRU\patch-ruRU-X.MPQ') },
-    @{ Source='server\worldserver.exe'; Target=(Join-Path $ServerRoot 'worldserver.exe') }
-)
+$transfers = @(@{ Source='server\worldserver.exe'; Target=(Join-Path $ServerRoot 'worldserver.exe') })
+foreach ($entry in $manifest.files | Where-Object {$_.path -like 'client/Data/*.MPQ'}) {
+    $transfers += @{Source=$entry.path;Target=(Join-Path $ClientRoot $entry.path.Substring(7))}
+}
 if (-not (Test-Path -LiteralPath (Join-Path $ServerRoot 'configs\modules\mod_cultivation.conf'))) {
     $transfers += @{ Source='server\configs\modules\mod_cultivation.conf.dist'; Target=(Join-Path $ServerRoot 'configs\modules\mod_cultivation.conf') }
 }
-foreach ($name in @('Spell.dbc','SkillLineAbility.dbc','SpellDescriptionVariables.dbc','SpellIcon.dbc','SpellRadius.dbc','SpellRange.dbc')) {
+foreach ($name in @('Spell.dbc','SkillLineAbility.dbc','SpellDescriptionVariables.dbc','SpellIcon.dbc','SpellRadius.dbc','SpellRange.dbc','CreatureDisplayInfo.dbc','CreatureModelData.dbc')) {
     $transfers += @{ Source="server\data\dbc\$name"; Target=(Join-Path $ServerDataRoot "dbc\$name") }
 }
 
@@ -175,9 +178,17 @@ try {
         if ((Invoke-DbQuery $AuthDatabase "SELECT COUNT(*) FROM rbac_permissions WHERE id=1001 AND name<>'Command: cultivation';")[0] -ne '0') {
             throw 'RBAC permission 1001 is owned by another feature.'
         }
-        if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406;")[0] -ne '0') {
+        if (!$UpgradeFrom200 -and (Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406;")[0] -ne '0') {
             throw 'Creature template 900406 is already owned; use the versioned upgrade path instead of a fresh install.'
         }
+        if ($UpgradeFrom200 -and (Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406 AND ScriptName='npc_cultivation_rogue_shadowstep_clone';")[0] -ne '1') { throw 'Expected v2.0.0 baseline missing' }
+        foreach ($check in @(
+            'SELECT COUNT(*) FROM creature_template WHERE entry BETWEEN 900701 AND 900704;',
+            'SELECT COUNT(*) FROM creature WHERE guid BETWEEN 900701 AND 900704 OR id BETWEEN 900701 AND 900704;',
+            'SELECT COUNT(*) FROM creature_template_model WHERE CreatureID BETWEEN 900701 AND 900704;',
+            'SELECT COUNT(*) FROM creature_model_info WHERE DisplayID BETWEEN 60001 AND 60004;',
+            'SELECT COUNT(*) FROM npc_vendor WHERE entry BETWEEN 900701 AND 900704;'
+        )) { if ((Invoke-DbQuery $WorldDatabase $check)[0] -ne '0') { throw 'New NPC IDs already owned: use reviewed migration, do not overwrite' } }
 
         $dbBackupDir = Join-Path $backup 'databases'
         New-Item -ItemType Directory -Path $dbBackupDir | Out-Null
@@ -200,7 +211,7 @@ try {
     $backupManifest = [ordered]@{
         status = 'verified-backup'
         package = 'mod-cultivation'
-        candidate = 'v2.0.0'
+        candidate = 'v2.1.0'
         created = (Get-Date).ToString('o')
         files = $fileBackupRows
         databases = $databaseBackups
@@ -209,10 +220,16 @@ try {
     $backupManifest | ConvertTo-Json -Depth 7 | Set-Content -LiteralPath $backupManifestPath -Encoding utf8
 
     if (-not $SkipSql) {
+      if (!$UpgradeFrom200) {
         Invoke-DbFile $AuthDatabase (Join-Path $packageRoot 'sql\fresh\auth\cultivation_rbac.sql')
         Invoke-DbFile $CharactersDatabase (Join-Path $packageRoot 'sql\fresh\characters\character_cultivation_rogue.sql')
         Invoke-DbFile $WorldDatabase (Join-Path $packageRoot 'sql\fresh\world\cultivation_command.sql')
         Invoke-DbFile $WorldDatabase (Join-Path $packageRoot 'sql\fresh\world\cultivation_rogue_spells.sql')
+      }
+        Invoke-DbFile $WorldDatabase (Join-Path $packageRoot 'sql\v2.1.0\world.up.sql')
+        if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry IN(900703,900704) AND ScriptName='npc_cultivation_rogue_mentor' AND npcflag=1;")[0] -ne '2') { throw 'Mentor postflight failed' }
+        if ((Invoke-DbQuery $WorldDatabase 'SELECT COUNT(*) FROM creature WHERE guid BETWEEN 900701 AND 900704;')[0] -ne '4') { throw 'NPC spawn postflight failed' }
+        if ((Invoke-DbQuery $WorldDatabase 'SELECT COUNT(*) FROM npc_vendor WHERE entry BETWEEN 900701 AND 900704;')[0] -ne '0') { throw 'Quartermasters must remain empty' }
         if ((Invoke-DbQuery $AuthDatabase "SELECT COUNT(*) FROM rbac_permissions WHERE id=1001 AND name='Command: cultivation';")[0] -ne '1') { throw 'Auth SQL postflight failed.' }
         if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM command WHERE name='cultivation';")[0] -ne '1') { throw 'World SQL postflight failed.' }
         if ((Invoke-DbQuery $WorldDatabase "SELECT COUNT(*) FROM creature_template WHERE entry=900406 AND ScriptName='npc_cultivation_rogue_shadowstep_clone';")[0] -ne '1') { throw 'Shadowstep clone SQL postflight failed.' }
@@ -231,7 +248,7 @@ try {
 
     $backupManifest.status = 'installed-release-target-smoke-pending'
     $backupManifest | ConvertTo-Json -Depth 7 | Set-Content -LiteralPath $backupManifestPath -Encoding utf8
-    Write-Host "Cultivation v2.0.0 installed. Launch Wow-NWQ.exe. Backup: $backup"
+    Write-Host "Cultivation v2.1.0 installed. Launch Wow-NWQ.exe. Backup: $backup"
     Write-Host 'Verify .cultivation rogue status and perform GUI/gameplay acceptance.'
 } finally {
     $env:MYSQL_PWD = $previousPassword

@@ -8,6 +8,7 @@ void AddRoguePathAssassinationScripts();
 void AddRoguePathCombatScripts();
 void AddRoguePathSubtletyScripts();
 void AddRoguePathSevenScripts();
+void AddRogueMentorScripts();
 }
 
 namespace Cultivation
@@ -15,6 +16,7 @@ namespace Cultivation
 void AddRogueSubsystemScripts()
 {
     Rogue::AddRoguePathPlayerScripts();
+    Rogue::AddRogueMentorScripts();
     Rogue::AddRoguePathCommonSpellScripts();
     Rogue::AddRoguePathAssassinationScripts();
     Rogue::AddRoguePathSubtletyScripts();

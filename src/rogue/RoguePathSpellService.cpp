@@ -1,5 +1,6 @@
 #include "CultivationRogue.h"
 #include "RoguePathMechanics.h"
+#include "PathStatus.h"
 
 #include "CharacterDatabase.h"
 #include "DBCStores.h"
@@ -365,6 +366,8 @@ bool SpellService::SyncPlayerSpells(Player* player)
     RoguePath path = GetPath(player);
     if (path == RoguePath::None)
     {
+        player->RemoveAurasDueToSpell(PathStatus::Celestial);
+        player->RemoveAurasDueToSpell(PathStatus::Sha);
         SyncVisibleTalentPassives(player);
         bool hasVariant = player->HasSpell(Generated::CelestialPathPassive) || player->HasSpell(Generated::ShaPathPassive);
         for (Generated::SpellVariantRow const& row : Generated::SpellVariants)
@@ -440,6 +443,10 @@ bool SpellService::SyncPlayerSpells(Player* player)
         player->CastSpell(player, pathPassive, true);
 
     RemoveOppositePathAuras(player, path);
+    uint32 status = path == RoguePath::Celestial ? PathStatus::Celestial : PathStatus::Sha;
+    player->RemoveAurasDueToSpell(path == RoguePath::Celestial ? PathStatus::Sha : PathStatus::Celestial);
+    if (!player->HasAura(status))
+        player->CastSpell(player, status, true);
     SyncVisibleTalentPassives(player);
     Mechanics::SyncCelestialPreparationGlyph(player);
     for (CooldownTransfer const& transfer : capturedCooldowns)
@@ -525,6 +532,8 @@ bool SpellService::RestoreStandardSpells(Player* player)
 
     RemoveSpellFromActiveSpec(player, Generated::CelestialPathPassive);
     RemoveSpellFromActiveSpec(player, Generated::ShaPathPassive);
+    player->RemoveAurasDueToSpell(PathStatus::Celestial);
+    player->RemoveAurasDueToSpell(PathStatus::Sha);
     for (auto const& display : Generated::DisplayPassives)
         RemoveSpellFromActiveSpec(player, display.spell);
     player->RemoveAurasDueToSpell(63848);
@@ -545,6 +554,17 @@ bool SpellService::RestoreStandardSpells(Player* player)
 bool SpellService::ValidateMappings(std::string& error) const
 {
     std::lock_guard<std::recursive_mutex> lock(_stateMutex);
+    for (uint32 id : {PathStatus::Celestial, PathStatus::Sha})
+    {
+        SpellInfo const* info = sSpellMgr->GetSpellInfo(id);
+        if (!info || !info->HasAttribute(SPELL_ATTR0_NO_AURA_CANCEL) ||
+            !info->HasAttribute(SPELL_ATTR0_AURA_IS_DEBUFF) ||
+            !info->HasAttribute(SPELL_ATTR3_ALLOW_AURA_WHILE_DEAD) || info->GetDuration() != -1)
+        {
+            error = "missing or invalid cultivation allegiance status " + std::to_string(id);
+            return false;
+        }
+    }
     _disabledGroups.clear();
     auto requireScript = [&error](uint32 spellId, std::string_view logical, char const* name)
     {

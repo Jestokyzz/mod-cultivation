@@ -5,6 +5,9 @@
 #include "Chat.h"
 #include "Player.h"
 #include "WorldSession.h"
+#include "Creature.h"
+#include "ScriptMgr.h"
+#include "ScriptedGossip.h"
 #include "generated/RoguePathGeneratedSpells.h"
 
 #include <string>
@@ -33,7 +36,7 @@ std::string Trimmed(std::string_view value)
     return std::string(value.substr(first, last - first + 1));
 }
 
-bool CheckChangeAllowed(ChatHandler* handler, Player* player, RoguePath requested)
+bool CheckChangeAllowed(ChatHandler* handler, Player* player, RoguePath requested, bool byCommand = true)
 {
     Config const& config = GetConfig();
     if (!config.enable || !IsDataValid())
@@ -42,7 +45,7 @@ bool CheckChangeAllowed(ChatHandler* handler, Player* player, RoguePath requeste
             "Cultivation / Rogue is disabled or failed data validation.");
         return false;
     }
-    if (!config.allowPlayerCommand)
+    if (byCommand && !config.allowPlayerCommand)
     {
         Send(handler, "Выбор пути командой отключён.", "Path selection by command is disabled.");
         return false;
@@ -176,4 +179,52 @@ bool HandleCultivationCommand(ChatHandler* handler, std::string_view arguments)
                 "The path was reset. Standard rogue abilities were restored.");
         return true;
 }
+
+class CultivationRogueMentor final : public CreatureScript
+{
+public:
+    CultivationRogueMentor() : CreatureScript("npc_cultivation_rogue_mentor") { }
+
+    static RoguePath PathFor(Creature const* creature)
+    {
+        if (creature->GetEntry() == 900703) return RoguePath::Sha;
+        if (creature->GetEntry() == 900704) return RoguePath::Celestial;
+        return RoguePath::None;
+    }
+
+    bool OnGossipHello(Player* player, Creature* creature) override
+    {
+        auto path = PathFor(creature);
+        if (path == RoguePath::None) return false;
+        ClearGossipMenuFor(player);
+        AddGossipItemFor(player, GOSSIP_ICON_CHAT,
+            path == RoguePath::Sha ? "Изучить: Ша" : "Изучить: Небожители",
+            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + static_cast<uint32>(path));
+        SendGossipMenuFor(player, DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
+        return true;
+    }
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 sender, uint32 action) override
+    {
+        auto path = PathFor(creature);
+        if (path == RoguePath::None || sender != GOSSIP_SENDER_MAIN ||
+            action != GOSSIP_ACTION_INFO_DEF + static_cast<uint32>(path) ||
+            player->PlayerTalkClass->GetGossipMenu().GetSenderGUID() != creature->GetGUID() ||
+            !player->IsWithinDistInMap(creature, INTERACTION_DISTANCE))
+            return false;
+        ClearGossipMenuFor(player);
+        CloseGossipMenuFor(player);
+        ChatHandler handler(player->GetSession());
+        if (!CheckChangeAllowed(&handler, player, path, false)) return true;
+        if (!sCultivationRogueSpellService.SetPath(player, path))
+        {
+            Send(&handler, "Не удалось принять культивацию.", "Could not accept cultivation.");
+            return true;
+        }
+        Send(&handler, "Культивация изучена.", "Cultivation learned.");
+        return true;
+    }
+};
+
+void AddRogueMentorScripts() { new CultivationRogueMentor(); }
 }

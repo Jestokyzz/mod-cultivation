@@ -1179,6 +1179,9 @@ def main() -> None:
         raise ValueError("Client/server generated spell semantics differ before write")
 
     generated_skill = patch_skill_line(skill_rows, entries, manifest)
+    import path_status
+    path_status.patch(sys.modules[__name__], client_rows, client_strings)
+    path_status.patch(sys.modules[__name__], server_rows, server_strings)
     dbc_string_integrity.validate(client_rows, client_strings)
     dbc_string_integrity.validate(server_rows, server_strings)
     write_dbc(args.client_spell_output, client_rows, client_strings)
@@ -1196,7 +1199,8 @@ def main() -> None:
 
     client_semantics = semantic_non_string_rows(args.client_spell_output)
     server_semantics = semantic_non_string_rows(args.server_spell_output)
-    custom_ids = sorted(row["spell_id"] for row in generated_client)
+    custom_ids = sorted([row["spell_id"] for row in generated_client] +
+                        [item['spell_id'] for item in path_status.spec()['statuses']])
     semantic_mismatches = [spell_id for spell_id in custom_ids if client_semantics[spell_id] != server_semantics[spell_id]]
     if semantic_mismatches:
         raise ValueError(f"Client/server custom spell semantic mismatch: {semantic_mismatches}")
@@ -1214,6 +1218,7 @@ def main() -> None:
         "active_rank_variants": sum(1 for row in generated_client if row["section"] == "active_spells"),
         "passive_rank_variants": sum(1 for row in generated_client if row["section"] == "passive_spells"),
         "technical_spells": len(manifest["technical_spells"]),
+        "path_status_spells": path_status.spec()['statuses'],
         "skill_line_rows": len(generated_skill),
         "custom_spell_id_min": min(custom_ids),
         "custom_spell_id_max": max(custom_ids),

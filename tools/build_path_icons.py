@@ -91,6 +91,15 @@ def main():
     expected_count = manifest['path_icons']['count'] + len(manifest['path_icons'].get('shared_icons', []))
     if len(result) != expected_count:
         raise ValueError('Texture count differs from central manifest')
+    import path_status
+    path_status.icons(dbc, rows, strings)
+    for item in path_status.spec()['statuses']:
+        source=MODULE/item['source_png']
+        if dbc.sha256(source)!=item['source_sha256']: raise ValueError('Status PNG hash mismatch')
+        dest=WORK/'icon-staging'/Path(*item['virtual_path'].split('\\')).with_suffix('.blp')
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        if encode(str(source).encode(),str(dest).encode(),3,0): raise ValueError('Status BLP conversion failed')
+        result.append(dict(logical_name=item['path']+'_path_status',icon_id=item['icon_id'],virtual_path=item['virtual_path']+'.blp',png=str(source),png_sha256=dbc.sha256(source),blp=str(dest),blp_sha256=dbc.sha256(dest)))
     for dest in (MODULE / 'client_patch/staging/DBFilesClient/SpellIcon.dbc', MODULE / 'generated/server/dbc/SpellIcon.dbc'):
         dbc.write_dbc(dest, sorted(rows), strings)
     (WORK / 'icons-manifest.json').write_text(json.dumps(dict(status='passed', source='approved +2px unchanged', files=result), indent=2)+'\n', encoding='utf-8')

@@ -1,0 +1,68 @@
+--- a/Interface/FrameXML/BuffFrame.lua
++++ b/Interface/FrameXML/BuffFrame.lua
+@@ -81,7 +81,7 @@
+ function BuffFrame_Update()
+ 	-- Handle Buffs
+ 	BUFF_ACTUAL_DISPLAY = 0;
+-	local solitaryBuff = nil;
++	local solitaryBuffs = {};
+ 	ConsolidatedBuffs.pauseUpdate = true;
+ 	table.wipe(consolidatedBuffs);
+ 	for i=1, BUFF_MAX_DISPLAY do
+@@ -89,7 +89,7 @@
+ 		if ( updateResult == 1 ) then
+ 			BUFF_ACTUAL_DISPLAY = BUFF_ACTUAL_DISPLAY + 1;
+ 		elseif ( updateResult == 2 ) then
+-			solitaryBuff = _G["BuffButton"..i];
++			table.insert(solitaryBuffs, _G["BuffButton"..i]);
+ 		end
+ 	end
+ 	BuffFrame.numConsolidated = #consolidatedBuffs;
+@@ -112,8 +112,8 @@
+ 			DEBUFF_ACTUAL_DISPLAY = DEBUFF_ACTUAL_DISPLAY + 1;
+ 		end
+ 	end
+-	if ( solitaryBuff ) then
+-		SolitaryAuraButton_UpdateAnchor(solitaryBuff, DEBUFF_ACTUAL_DISPLAY + 1);
++	for i, statusBuff in ipairs(solitaryBuffs) do
++		SolitaryAuraButton_UpdateAnchor(statusBuff, DEBUFF_ACTUAL_DISPLAY + i);
+ 	end
+ end
+ 
+@@ -150,7 +150,8 @@
+ 		return nil;
+ 	else
+ 		local helpful = (filter == "HELPFUL");
+-		local solitaryAura = spellId == SOLITARY_SPELL_ID;
++		local cultivationAura = spellId == 86802 or spellId == 86803;
++		local solitaryAura = spellId == SOLITARY_SPELL_ID or cultivationAura;
+ 
+ 		-- If button doesn't exist make it
+ 		if ( not buff ) then
+@@ -183,6 +184,11 @@
+ 				buff.solitaryBorder:SetTexCoord(0.296875, 0.5703125, 0, 0.515625);
+ 				buff.solitaryBorder:SetVertexColor(0.10, 1.00, 0.10);
+ 			end
++			if cultivationAura then
++				buff.solitaryBorder:SetVertexColor(0.80, 0, 0);
++			else
++				buff.solitaryBorder:SetVertexColor(0.10, 1.00, 0.10);
++			end
+ 			buff.solitaryBorder:Show();
+ 		end
+ 		-- Set filter-specific attributes
+@@ -195,7 +201,8 @@
+ 			if ( debuffSlot ) then
+ 				if ( solitaryAura ) then
+ 					buff.symbol:Hide();
+-					debuffSlot:SetVertexColor(0.10, 1.00, 0.10);
++					if cultivationAura then debuffSlot:SetVertexColor(0.80, 0, 0);
++					else debuffSlot:SetVertexColor(0.10, 1.00, 0.10); end
+ 				else
+ 					local color;
+ 					if ( debuffType ) then
+@@ -905,4 +912,3 @@
+ 		QD_UpdateTradeHonorBorders();
+ 	end
+ end);
+-
